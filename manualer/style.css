@@ -1,0 +1,14 @@
+.underline{
+	border-bottom: 3px solid #FFF;
+	padding: 20px 0;
+}
+img{
+	width: 50%;
+	margin:10px auto;
+	border: 2px solid #FFF;
+}
+@media screen and (max-width: 730px) {
+	img{
+		width: 100%;
+	}
+}

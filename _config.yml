@@ -1,0 +1,25 @@
+title: TeDDyProjekt
+email: teddykladdkak@gmail.com
+description: Projekt med mål att möta och utmana problem i Hälso- och sjukvården, vi möter som patient och vårdpersonal.
+url: https://teddyprojekt.se
+keywords: sjuksköterska, teddy, projekt, teddyprojekt, slutanteckning, lathund, pillerräknare, pillerraknare, html, css, javascript, jquery, musik, foto, totaltystnad, teddykladdkak, teddy__kladdkaka, teddysweden, eHälsa, eNursing, eHealth, medicinteknik, DW, digital, digitalisering, whiteboard, vårdinformatik
+twitter_username: teddykladdkaka
+github_username:  teddykladdkak
+linkedin_username: mattias-masback
+
+plugins:
+  - jekyll-feed
+
+exclude:
+    - Starta.sh
+    - inspiration/
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

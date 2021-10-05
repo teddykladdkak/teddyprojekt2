@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Uppmärksamhetssignal</title>
+	<style type="text/css">
+		table, tr, td{
+			border: 0px solid black;
+		}
+		table{
+			width:200px;
+			height:200px;
+			background-image: url('signal.gif');
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			border-collapse: collapse;
+		}
+	</style>
+	<script type="text/javascript">
+		function alertsymboladdnumber(element){var tableelement = document.getElementById('ikon');var numberobject = [];var historynumbers = tableelement.getAttribute('data-numbers').split('');if(alertsymboladdnumbercheck(element.getAttribute('data-value'), historynumbers)){for (var i = historynumbers.length - 1; i >= 0; i--) {numberobject.push(historynumbers[i]);};numberobject.push(element.getAttribute('data-value'));numberobject.sort();var allnumbers = numberobject.join('');tableelement.setAttribute('data-numbers', allnumbers);element.setAttribute('onclick', 'alertsymbolremovenumber(this);');tableelement.style.backgroundImage = "url('signal." + allnumbers + ".gif')";};};
+		function alertsymbolremovenumber(element){var tableelement = document.getElementById('ikon');var historynumbers = tableelement.getAttribute('data-numbers').split('');if(alertsymbolremovenumbercheck(element.getAttribute('data-value'), historynumbers)){var indextoremove = historynumbers.indexOf(element.getAttribute('data-value'));historynumbers.splice(indextoremove, 1);if(historynumbers.length == 0){var allnumbers = historynumbers.join('');}else{var allnumbers = '.' + historynumbers.join('');};tableelement.setAttribute('data-numbers', historynumbers.join(''));element.setAttribute('onclick', 'alertsymboladdnumber(this);');tableelement.style.backgroundImage = "url('signal" + allnumbers + ".gif')";};};
+		function alertsymboladdnumbercheck(number, allnumbers){if(number == 0){if(allnumbers.indexOf('4') == -1){return false}else{return true};}else if(number == 1){if(allnumbers.indexOf('0') == -1){return false}else{return true};}else{return true;};};
+		function alertsymbolremovenumbercheck(number, allnumbers){if(number == 0){if(allnumbers.indexOf('1') == -1){return true}else{return false};}else if(number == 4){if(allnumbers.indexOf('0') == -1){return true}else{return false};}else{return true;};};
+	</script>
+</head>
+<body>
+<table id="ikon" data-numbers="">
+	<tr>
+		<td rowspan="3" onclick="alertsymboladdnumber(this);" data-value="6"></td>
+		<td rowspan="2" onclick="alertsymboladdnumber(this);" data-value="1"></td>
+		<td rowspan="3" onclick="alertsymboladdnumber(this);" data-value="2"></td>
+	</tr>
+	<tr></tr>
+	<tr>
+		<td rowspan="2" onclick="alertsymboladdnumber(this);" data-value="0"></td>
+	</tr>
+	<tr>
+		<td rowspan="3" onclick="alertsymboladdnumber(this);" data-value="5"></td>
+		<td rowspan="3" onclick="alertsymboladdnumber(this);" data-value="3"></td>
+	</tr>
+	<tr>
+		<td rowspan="2" onclick="alertsymboladdnumber(this);" data-value="4"></td>
+	</tr>
+</table>
+</body>
+</html>

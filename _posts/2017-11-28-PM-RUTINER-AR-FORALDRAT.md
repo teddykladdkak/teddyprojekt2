@@ -1,0 +1,13 @@
+---
+layout: post
+title: "PM/RUTINER ÄR FÖRÅLDRAT"
+date: 2017-11-28 08:00:00 +0200
+categories: utveckling
+---
+Inom dagens hälso- och sjukvård används idag PM och rutiner på papper. Efter att man började strama åt och försöka ta bort alla pärmar och papper, placerade man dessa på sjukhusets intrasida. Inget löste detta mer än att du kunde få tag på pappret på fler ställen. Att informationen blev mer lättillgänglig skulle i alla fall jag anse vara oförändrat, för vilken vårdpersonal har koll på när ett PM ändras på intrasidan? Vem vill ta sig tid och använda ett papper skrivet PM?
+
+Idag har vi till exempel Googles söktjänst som exempel. Söker man på vad kilo är i liter, får man inte bara bästa sidan som förklarar omvandlingen, utan man får det även direkt uträknat. Detta är en slags lathund. Vidare är Google en protal för alla hemsidor, användare vet att om de söker på något här så kommer det till den sida de vill, det krävs inte fler sökmotorer för att hitta en specifik sida. Inom vården har man i många år varit flitiga att föra fram lathundar, i form av små papper som man kan stoppa i fickan och ha med sig i omvårdnadsarbetet. Detta är en begränsad information, dels för att den ska få plats på en liten lapp, även måste fortfarande användaren aktivt tänka till.
+
+En viktig punkt vilket jag ofta trycker på när det gäller utveckling av IT-stöd inom vården, är att man måste beakta antalet nyutbildad vårdpersonal och de som väljer att byta avdelning i allt större utsträckning. I dagens läge är det otroligt få avdelningar som inte på ett eller annat sätt lider av personalbrist, eller precis löst problemet men har nu istället en massa nya arbetskollegor. Vi måste stärka rutiner och PM, få ut dem i vårdarbetet och skapa dom så att de är ett stöd för vårdpersonalen. Detta leder i slutändan till en säkrare vård för patienten.
+
+Mitt projekt Lathund visar på detta, jag har samlat ihop alla lathundar och PM/rutiner som fanns på min första avdelning som sjuksköterska. Vissa lathundar var bara att använda rakt av, andra krävde lite arbete från min sida att omvandla från ett 2-5 sidigt PM till en smidig funktion. Det behöver inte vara så komplicerat, eller rättare sagt det får inte lov att vara allt för komplicerat, för då kommer det inte användas och med det inte vara ett stöd i omvårdnadsarbetet. Vidare är det en plats där man kan finna all information som behövs för att svara på frågor hur man arbetar på en specifik avdelning.

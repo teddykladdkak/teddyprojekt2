@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lillebu - Kontakt</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="res/style.css">
+	<script type="application/javascript" src="res/script.js"></script>
+</head>
+<body onload="installMessage();">
+	<div id="menywrapper">
+		<div id="meny">
+			<a href="index.html">Start</a>
+			<a href="goodtoknow.html">Bra att veta</a>
+			<a href="kal.html">Kalender</a>
+			<a href="listor.html">Listor</a>
+			<a href="hytteboken.html">Hytteboken/Historia</a>
+			<a href="kontakt.html">Kontakt</a>
+			<a href="regler.html">Relger</a>
+			<a href="checkaut.html">Checka ut</a>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="messengerwrapper">
+			<div id="messenger">
+				<div id="registrera"></div>
+				<div id="registrerainne">
+					<div>
+						<p>Innan du kan skriva något behöver du registrera ditt namn:</p>
+						<input type="text" id="namn" onkeydown="checkkey(event, 'reg');">
+						<input type="button" value="Registrera" onclick="registrera();">
+					</div>
+				</div>
+				<div id="meddelanden"></div>
+				<table id="message">
+					<tr>
+						<td>
+							<textarea id="text" onkeydown="checkkey(event, 'skicka');"></textarea>
+						</td>
+						<td>
+							<input type="button" value="Skicka" onclick="skickaMeddelande();">
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

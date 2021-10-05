@@ -1,0 +1,872 @@
+<html style="background-color: #d6d7d7;">
+<head>
+  <title>Lathund</title>
+  <LINK REL="SHORTCUT ICON" HREF="favicon.ico">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="SublimeText2 3.1">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-startup-image" href="ico/startup.png" />
+  <link href="ico/startup-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+  <link href="ico/startup-640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+  <link href="ico/startup-320x460.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="ico/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="ico/apple-touch-icon-57x57.png">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<input class="menu" type="checkbox" id="menu">
+<label class="menu" for="menu" onclick></label>
+<nav role="off-canvas">
+    <ul>
+        <li><a href="#">Information</a></li>
+        <li><a href="#">Uppdateringar</a></li>
+        <li><a href="#">MEWS</a></li>
+        <li><a href="#">EDA</a></li>
+        <li><a href="#">Fallrisk</a></li>
+        <li><a href="#">Movicol</a></li>
+        <li><a href="#">VAS</a></li>
+        <li><a href="#">Dropptakt</a></li>
+        <li><a href="#">Dokumentation</a></li>
+        <li><a href="#">Karta</a></li>
+        <li><a href="#">Trycksår</a></li>
+        <li><a href="#">Preoprutin</a></li>
+        <li><a href="#">Nutrition</a></li>
+        <li><a href="#">Kcal Cal</a></li>
+        <li><a href="#">Ordination</a></li>
+        <li><a href="#">Vätskefördelning</a></li>
+        <li><a href="#">Hypovolemi</a></li>
+        <li><a href="#">YouTube</a></li>
+        <!--<li><a href="#">Lösenord</a></li>-->
+    </ul>
+</nav>
+
+<div class="content">
+<div id="uppdateringar">
+<h1>Att göra</h1><ul>
+      <li>Stöd för Windows Phone & Android.</li>
+      <li>Lägga till mottagningar i karta.</li>
+  </ul>
+    <h1>Uppdateringar</h1>
+    <!--<h3>Nuvarande version är <span class="version">[Laddar version]</span>. Nedan följer uppdateringar som gjorts.</h3>-->
+    <hr><b>2014-02-13</b><ul>
+      <li>Lagt till Perspiratio uträkning i nutrition</li>
+      <li>Lagt till funktion i nutrition för att räkna ut vätskebalans, valbart! Om rutorna lämnas tomma startas inte denna uträkning. Tidigare information om patienten behövs också, för att funktionen skall starta.</li>
+    </ul>
+    <hr><b>2014-02-11</b><ul>
+      <li>Efter föreläsning i vätskebalans har vätskemängd i kroppen uträkning skapats, med vätskefördelning.</li>
+      <li>Ändrat namn för platsen där ordinationsmallen för melior finns, till "Ordinationer"</li>
+      <li>Lagt till lista med indikaitoner för uttorkning.</li>
+    </ul>
+    <hr><b>2013-12-16</b><ul>
+    <li>Lagt till nya grupper under dokumentation. Eventuellt kommer denna text i framtiden troligen läggas under egen rubrik.</li>
+  </ul>
+  <hr><b>2013-10-11</b>
+  <ul>
+    <li>Kcal räknare skapad.</li>
+  </ul>
+  <hr><b>2013-10-09</b>
+  <ul>
+    <li>Ändrat nutrition efter VGRs riktlinjer i uträkning av energibehov utifrån BMR (Vg. se information - nutrition).</li>
+    <li>Börja om funktion i trycksår.</li>
+  </ul>
+  <hr/><b>2013-10-08</b>
+  <ul>
+    <li>Stabilitets förbättringar</li>
+    <li>Funktion i MEWS som ger råd/frågar om man ska kontakta MIG-team är klar!</li>
+  </ul>
+  <hr/><b>2013-10-06</b>
+  <ul>
+    <li>Ändrat färgkombinationen.</li>
+    <li>Gjort rättstavning genom all text i appen.</li>
+    <li>Ankomstsamtal är tillagt i dokumentation.</li>
+    <li>Startat med rekommendation fuktion till att ringa MIG-team i MEWS. <s>OBSERVERA bugg om ej alla värden är inskrivna visas MIG-rekommendationen</s></li>
+  </ul>
+  <hr/><b>2013-10-05</b>
+  <ul>
+    <li>Script som enbart tillåter siffror används i textfält där enbart siffror skall användas.</li>
+    <li>Ändrar preoprutin samt EDA så att telefoner med äldre webbläsare skall kunna använda dem.</li>
+  </ul>
+</div>
+<div id="information">
+<h1>Information</h1>
+<p>[v. <span class="version">[Laddar version]</span>]</p>
+<p>Denna app/hemsida är ett ihop klistrande av flertalet lathundar m.m. som jag personligen använder i mitt arbete som sjuksköterska på SU/S. Det är ett projekt som framförallt är inofficiellt och skapat privat. Jag har inget ansvar genom mitt jobb att skapa denna sida.<br/><br/>Observera att information i denna app inte är granskad till 100% och information kan vara felaktig. Använd lathundarna med en kritisk blick.<br/><br/>Nedan kommer kort information om de olika lathundarna</p>
+<h2>Stödjer följande</h2>
+<p>Enligt browser test skall följande i punktlistan och nyare versioner fungera med denna app.<br/>Skapad främst genom Chrome (Skrivbord versionen) och iPhone (mobil versionen).</p>
+<ul>
+  <li>iPhone/iPad</li>
+  <li>Chrome 25</li>
+  <li>Internet Explorer 10</li>
+  <li>Firefox 3.6 & 18</li>
+  <li>Opera 12.14</li>
+  <li>Safari 5.1</li>
+  <li>LG Nexus 4</li>
+</ul>
+<hr/>
+<h2>MEWS</h2>
+<p>Denna lathund baseras på MEWS-skalan vilket skall göras efter en patient anlänt till avdelning samt vid oro över patients allmänstatus.</p><p>Parametrarna är tagna från Melior. Vidare läsning <a href="http://www.ncbi.nlm.nih.gov/pubmed/17153870" target="_blank">"Fewer heart arrest cases and better occupational environment with the mobile medical emergency team. The MET method has undisputed advantages according to a pilot project" [Andersson C, Olsson M, HHverfner A, Engström M, Läkartidningen 2006 103(46):3613-6]</a>.<p></p>OBSERVERA denna funktion ger dig inga svar utan sammanfattar enbart alla parametrar och räknar ut poängen.</p>
+<hr/>
+<h2>EDA</h2>
+<p>Information är taget från smärtprotokoll, rutiner från smärtenheten.<br/>Räknar ut när epidural-KAD kan dras samt när KAD kan dras.<br/>Dokumentation efter dragning av EDA-KAD är relativt dåliga, där av finns det med en uträkning som visar exakt vilka tidpunkter man skall undersöka patients känsel samt funktion (Bromage).</p>
+<hr/>
+<h2>Fallrisk</h2> <h3>(inte klar)</h3>
+<p>Enligt PM från område 3 [dat:2008-05-16] måste patient uppfylla minst 2 olika kategorier för att det ska vara aktuellt att sätta fallrisk. Utifrån detta skapades denna lathund som staplar upp det olika områdena och sedan räknar hur många det är samt visar för användaren vilka områden det är. Om ifall fallrisk är det lärorikt att läsa, Sveriges Kommuner och Landstings skrift; <a href="http://webbutik.skl.se/bilder/artiklar/pdf/7164-628-6.pdf?issuusl=ignore" target="_blank">"Förebygg fall och fallskador i samband med vård"</a>.<br/><br/>Eventuellt framöver kommer tillägg att göras, där rekommendationer kommer att läggas till om vidare åtgärder.</p>
+<hr/>
+<h2>Movicol</h2>
+<p>Visar avförings analys tabell, om hur doseringen med Movicol m.m. skall justeras.<br/>Tabellens namn är Bristolskala och är tagen från <a href="http://www.moxalole.se/for-halso-sjukvarden/dosering/" target="_blank">"Moxalole" hemsida</a>.
+<hr/>
+<h2>VAS</h2>
+<p>VAS skalan är tagen från en VAS-sticka. Ger möjlighet till användare att dra från en sida till en annan beroende på intensiteten i smärtan. När "Beräkna" klickas på, visas patients nummer mellan 0-10 samt VAS-skalans bedömning.<br/><br/>OBSERVERA! Smärta skall alltid utgå från patienten och är olika för var individ, denna lathund är enbart en hjälp på vägen i tolkningen av smärtan.</p>
+<hr/>
+<h2>Dropptakt</h2>
+<p>Ska en viss mängd dropp in på en viss tid? Då räknar denna lathund snabbt ut dropphastigheten. Uträkningen utgår från att 1 ml = 20 droppar (Vilket ofta är standard).<br/><br/>Har även lagt till en extra funktion som räknar ut hur många droppar det ska gå under enbart 15 sekunder för dig som har lite mer bråttom.</p>
+<hr/>
+<h2>Dokumentation</h2>
+<p>Alltid svårt att veta vad man egentligen ska dokumentera i vissa situationer. Där av skapades denna lathund. Målet är att öka dokumenteringen och ge mer innehåll.</p>
+<hr/>
+<h2>Karta</h2>
+<p>Tycker personligen att informationen var patienter ska vända sig samt när man själv ska ta sig till en annan avdelning är under all kritik. Även om man använder <a href="http://www.sahlgrenska.se/sv/SU/Vardutbud/" target="_blank">Sahlgrenskas Vårdutbud</a> är det många steg innan någon typ av adress kommer fram. Samt att det ofta inte är så utförlig information om var avdelningen finns och hur man tar sig dit.<br/><br/>Informationen är tagen från <a href="http://www.sahlgrenska.se/sv/SU/Vardutbud/" target="_blank">Sahlgrenskas Vårdutbud</a> och adresserna är tagna från var avdelnings egna offentliga hemsida. Har enbart valt att för tillfället fokusera på SU/S samt enbart avdelningarna.<br/><br/>OBSERVERA fel kan förekomma.</p>
+<hr/>
+<h2>Trycksår</h2>
+<p>Verktyg i bedömning av trycksårs-kategori samt trycksårs-risk. Funktionen utgår från socialstyrelsens text <a href="http://www.socialstyrelsen.se/patientsakerhet/forbattra/forhindratrycksar" target="_blank">"Att förebygga trycksår"</a>.</p><p>Text för kategorisering av trycksår är taget från "<a href="http://www.vgregion.se/sv/Skaraborgs-sjukhus/Skaraborgs-sjukhus/Hemsidor-SkaS/Sarwebben/Ny-startsida/Trycksar/Definition-trycksar/" target="_blank">VGR - Skaraborg Sjukhus - Sårwebben</a>" och "<a href="http://www.vardhandboken.se/Texter/Trycksar/Riskbedomning/" target="_blank">Vårdhandboken - Trycksår</a>".<br/>Kategoriseringen visar graden av trycksåret.</p><p>Trycksårs-risk texten är taget från "<a href="http://www.vardhandboken.se/Texter/Trycksar/Modifierad-Nortonskala/" target="_blank">Vårdhandboken - Modifierad Nortonskala</a>".<br/>Om patient får under 20 poäng i graderingen finns det en ökad risk för tryckskada.</p>
+<hr/>
+<h2>Preop rutin</h2>
+<p>Utifrån patients ålder skall följande vara gjort innan operation. Taget från Rutin - Provtagning/Undersökning preoperativt för elektiva ryggpatienter.</p>
+<hr/>
+<h2>Nutrition</h2>
+<p>Genom att skriva in följande värden:</p>
+<ul>
+  <li>Längd</li>
+  <li>Vikt</li>
+  <li>Ålder</li>
+  <li>Kön</li>
+  <li>Aktivitet</li>
+</ul>
+<p>Räknas olika värden gällande en individs nutrition ut. Flera olika formler används för att ge en större bild av vilka mål man ska uppnå för full nutrition.<br/>Vidare nedan kommer var formel att förklaras mer djupgående. Viktigt att observera att formlerna inte bejakar kroppsbyggnaden. Följ råden med ett kritiskt öga.</p>
+<h3>BMR</h3>
+<p>BMR står för "Basal Metabolic Rate" och räknar ut en persons basalmetabolism. Hur mycket kcal under ett dygn en person minst behöver. Först och främst utgår formeln från att det är skillnad mellan man och kvinna. Den använder sedan längd, vikt och ålder för att räkna ut ett svar. Taget från <a href="http://www.pnas.org/content/4/12/370" target="_blank">A Biometric Study Of Human Basal Metabolism (by J. Arthur Harris and Francis G. Benedict)</a> och <a href="http://www.bmi-calculator.net/bmr-calculator/bmr-formula.php" target="_blank">BMR formula</a>.</p>
+<p>Kvinnor: BMR = 655 + ( 9.6 x vikt ) + ( 1.8 x längd i cm ) - ( 4.7 x ålder )<br/>
+Men: BMR = 66 + ( 13.7 x vikt ) + ( 5 x längd i cm ) - ( 6.8 x ålder )</p>
+<h3>KBMR</h3>
+<p>Enligt <a href="http://www.vardhandboken.se/Texter/Nutrition/Energi--narings--och-vatskebehov/">Vårdhandboken</a> och <a href="http://epi.vgregion.se/upload/L%C3%A4kemedel/V%C3%A4tskor%20och%20nutrition/V%C3%A4tska_Nutrition_webb.pdf" target="_blank">VGR - Vätske- & Nutritions-behandling</a> finns det sätt att räkna ut mer djupgående patientens energibehov. Det är dels:
+<ul>
+  <li>Ålder</li>
+  <ul>
+    <li>18-30 år: + 10% av BMR.</li>
+    <li>över 70 år: - 10% av BMR.</li>
+  </ul>
+  <li>Aktivitet</li>
+  <ul>
+    <li>Sängliggandes: + 20% av BMR.</li>
+    <li>Uppegåendes: + 50% av BMR.</li>
+  </ul>
+  <li>Feber: + 10% av BMR för var grad.</li>
+</ul>
+Resultatet är utifrån patientens aktuella status.
+</p>
+<h3>BMI</h3>
+<p>BMI står för "Body Mass Index", vilket kan läsas mer av på <a href="http://www.euro.who.int/en/what-we-do/health-topics/disease-prevention/nutrition/a-healthy-lifestyle/body-mass-index-bmi" target="_blank">WHOs hemsida</a>. Syftet med denna formel är att få fram nutritionsstatusen genom att använda längd och vikt.</p>
+<p>Observera att barn under 19 år, kan denna formel enligt WHO inte användas! För dessa krävs ett separat diagram som kan hämtas från <a href="http://www.who.int/growthref/who2007_bmi_for_age/en/index.html" target="_blank">WHO hemsida</a>.</p>
+<p>kg / ( längd i m * längd i m ) = BMI</p>
+<h3>Vätskebehov</h3>
+<p>Enligt <a href="http://www.vardhandboken.se/Texter/Nutrition-parenteral/Energi--och-vatskebehov/" target="_blank">vårdhandboken</a> är det egentligen enklast att använda formeln 30*kg för att få fram det basala vätskebehovet. Formel som används är taget från <a href="http://epi.vgregion.se/upload/L%C3%A4kemedel/V%C3%A4tskor%20och%20nutrition/V%C3%A4tska_Nutrition_webb.pdf" target="_blank">Vätske- & Nutritions-behandling</a> vilket är utgivet av VGR. Taget från sida 17 där uträkningarna är olika beroende på kg under 20. Observera att denna inte skall användas till spädbarn!</p>
+<h3>Perspiratio</h3>
+<p>Uträkning hur mycket vätska som försvinner från patient andra oftast ej mätbara vägar, som tex avföring, avdunstning från andning och svett. Värdet visar hur mycket personen förlorar i ml per dag. Observera! I värdet ingår inte urin!</p>
+<p>Uträkningen är följande:<br/>(12 * kroppsvikt) + (250 * för var grad över 37) + 200 (avföring)</p>
+<h3>Vätskebalans</h3>
+<p>Utifrån perspiratio, mängd i ml vätska in och ut, räknas vätskebalansen för 1 dygn.</p>
+<p>Egentligen inget som behövs då detta kan räknas ut på egen hand då perspiratio redan är uträknat. Dock finns funktionen med som valbar, ifall man vill spara lite tid.</p>
+<hr/>
+<h2>Kcal calculator</h2>
+<p>Funktion som hjälper dig att snabbt räkna ut en patients dagliga intag av kcal.<br/>Välj utifrån kost mat. Du kan även lägga till separata produketer som ges på andra tider än lunch och middag.<br/>Välj sedan mängd (Kan vara under 1 genom att använda ".") och så räknas kcal ut.</p>
+<hr/>
+<h2>Vätskefördelning</h2>
+<p>Utifrån uträkningschema kan volymen blod i kroppen räknas ut som <b>cirkavärde</b>!</p>
+<table border="1"><tr><td>Kvinna</td><td>60 ml/kg</td></tr><tr><td>Man</td><td>70 ml/kg</td></tr><tr><td>Barn</td><td>80 ml/kg</td></tr><tr><td>Prematur</td><td>90 ml/kg</td></tr><tr><td>Gravid kvinna</td><td>100 ml/kg</td></tr></table>
+<p>Vidare kan sedan ett ungefärdligt värde räknas ut från följande procentuella uppdelningen i kroppen.</p>
+<ul>
+  <li>60% vätska består kroppen av</li>
+  <li>40% vätska finns i cellerna</li>
+  <li>20% vätska i kroppen utanför cellerna</li>
+  <li>15% vävnadsvätska mellan celler</li>
+  <li>5% vätska finns i blodet</li>
+</ul>
+<p>Utifrån första uträkningen kan då 5% av kroppens vätskevolym räknas ut. Ifrån detta kan vidare resterande liter vätska i kroppen räknas ut.</p>
+<p>Även tagit med en tabell som visar utifrån mängd blod i förlust vilket stadie man hamnar i och vad för symtom man kan se och hur koppen reagerar. Informationen är taget från <a href="http://www.internetmedicin.se/page.aspx?id=1816" target="_blank">Internetmedicin</a>.</p>
+<hr/>
+<h2>Hypervolemi</h2>
+<p>Listar indikationer samt områden av observera vid misstanke om uttorkning.
+</div>
+<!-- Start MEWS -->
+<div id="mews">
+	<h1>MEWS</h1>
+	<label for="respiration">Respiration (af/min):</label>
+		<input type="tel" name="respiration" autocorrect="off" autocapitalize="off" />
+  <label for="pox">POX (%):</label>
+    <input type="tel" name="pox" autocorrect="off" autocapitalize="off" />
+  <label for="pox">Syrgas? (0<sub>2</sub>):</label>
+  <select>
+      <option value="nej">Nej</option>
+      <option value="ja">Ja</option>
+  </select>
+	<label for="puls">Puls (slag/min):</label>
+		<input type="tel" name="puls" autocorrect="off" autocapitalize="off" />
+		<select>
+			<option>Regelbunden puls</option>
+			<option>Oregelbunden puls</option>
+		</select>
+	<label for="blodtryck">Blodtryck (mmHg):</label><br/>
+		<input class="bltr" type="tel" name="blodtryck" autocorrect="off" autocapitalize="off" />
+		<p class="bltr">/</p>
+		<input class="bltr" type="tel" name="blodtryck" autocorrect="off" autocapitalize="off" />
+<br/>
+<label for="temp">Temperatur (&deg;C):</label>
+		<input type="tel" name="temp" autocorrect="off" autocapitalize="off" />
+<label for="urin">Urinproduktion (ml & tim):</label>
+		<input type="tel" name="urin" placeholder="" autocorrect="off" autocapitalize="off" />
+		<select>
+			<option value="1">1 tim</option>
+			<option value="2">2 tim</option>
+			<option value="3">3 tim</option>
+      <option value="4">4 tim</option>
+      <option value="5">5 tim</option>
+      <option value="6">6 tim</option>
+		</select>
+<label for="medvetande">Medvetande (CNS):</label>
+		<select name="medvetande">
+			<option value="1|Förvirring tillkommen">Förvirring tillkommen</option>
+      <option value="0|Vaken">Vaken</option>
+      <option value="1|Reagerar på tilltal">Reagerar på tilltal</option>
+      <option value="2|Reagerar på smärta">Reagerar på smärta</option>
+      <option value="3|Reagerar inte">Reagerar inte</option>
+		</select>
+            <button type="submit">Beräkna</button>
+	
+        <div class="resultat">
+
+        </div>
+</div>
+<!-- Slut MEWS -->
+<!-- Start dokumentation -->
+<div id="dokumentation">
+        <h1>Dokumentation</h1>
+        <hr/>
+		<h2>Ankomstsamtal</h2>
+		<span>
+		<p>Tänk på att en anamnes är hur patienten vanligtvis har det i sitt liv och inte hur det ser ut när patienten skadat sig eller det som hänt senaste veckorna/månaderna</p>
+			<h3>Allmänna uppgifter/Allergier:</h3>
+        <p>Dessa <u>skall</u> fyllas i Fri aktivitet (Öppnas först)</p>
+      <h3>Kontaktorsak:</h3>
+        <p>Av vilken anledning kommer patient till avdelningen</p>
+			<h3>Anamnes Aktivitet:</h3>
+        <p>Riskbedömning Fallrisk! kan patienten sköta sin dagliga ADL? Använder patienten något hjälpmedel? Hur långa sträckor klarar patienten av att gå? Har patienten ett aktivt liv?</p>
+			<h3>Anamnes Andning/Cirkulation:</h3>
+        <p>Har patienten någon andnings- och/eller cirkulationssjukdom ex. Astma, hypertoni, hjärtsvikt?</p>
+			<h3>Anamnes Elimination:</h3>
+        <p>Riskbedömning UVI! hur sköter patienten miktion och defekation? Används laxermedel? Inkontinent? RIK? Permanent KAD? Suprapubis KAD?</p>
+			<h3>Anamnes Kommunikation:</h3>
+        <p>Har patienten god syn och hörsel? Används hjälpmedel? Kan patienten förstå svenska i tal och skrift?</p>
+			<h3>Anamnes Nutrition:</h3>
+        <p>Äter patienten allmän kost? Allergier? Har patienten löständer? Äter patienten själv? Sond? PEG? Välling?</p>
+			<h3>Anamnes Psykosocialt:</h3>
+        <p>Har patienten någon psykisk åkomma ex depression, ångest, oro, demens m.m.</p>
+			<h3>Anamnes Smärta:</h3>
+        <p>Har patienten någon känd smärtproblematik sedan några år tillbaka? Ex migrän, RA, Neurologisk skada sedan tidigare? Osv.</p>
+			<h3>Anamnes Sömn:</h3>
+        <p>Hur sover patienten om nätterna? Står patienten på sömnmedel?</p>
+			<h3>Boende:</h3>
+        <p>Hur ser patientens boendesituation ut? Trappor?</p>
+			<h3>Hemsjukvård:</h3>
+        <p>Har patienten hemsjukvård? Varför? Hur ofta?</p>
+			<h3>Hemtjänst:</h3>
+        <p>Har patienten hemtjänst? Varför? hur ofta?</p>
+			<h3>Färdtjänst:</h3>
+        <p>Har patienten färdtjänst? Taxi? Specialfordon?</p>
+			<h3>Behov av kuratorskontakt:</h3>
+        <p>Om patienten kan vara i behov av kurator skall detta fyllas i här.</p>
+			<h3>Biobank, medgivande:</h3>
+        <p>Informera och fråga patienten om godkännande!</p>
+			<h3>Hud/sår:</h3>
+        <p>Öppnas upp och man gör en riskbedömning för trycksår samt ser om patienten har hel hudkostym. Har patienten hudöverkänslighet?</p>
+			<h3>OBS! Det som tillkommit i och med skadetillfälle eller i anslutning till planerad op skall fyllas i under respektive huvudgrupp och skrivas under bed/åtg!</h3>
+		</span>
+		<hr/>
+        <h2>Från Operation</h2>
+        <span>
+        <h3>Aktivitet</h3>
+        <p>Vilka restriktioner gällande mobilisering finns det? (Fri mob, lassekudde, koxitläge, krage, korsett m.m.)<br/>Durarift?</p>
+        <h3>Andning, Cirkulation</h3>
+        <p>Syrgas? Cirkulatoriskt stabil? Fått enheter?</p>
+        <ul><li>
+                <h3>Blödning</h3>
+                <p>Dränage?<br/>- Aktiv/Passiv<br/>- Mängd hittills<br/>Förlorad mängd perop?</p>
+            </li><li>
+                <h3>Infartsvägar</h3>
+                <p>PVK, CVK (typ, plats, datum satt)</p>
+            </li></ul>
+        <h3>Hud/sår</h3>
+        <p>Utslag, eksem, m.m. (OBS inte operationssår!)</p>
+        <ul><li>
+                <h3>Slutet operationssår</h3>
+                <p>Operationssår (lokalisation, typ suturer? Förband obs</p>
+                <ul><li>
+                    <h3>Operationssår</h3>
+                    <p>Numrera samt lokalisation</p>
+                  </li><li>
+                    <h3>Sutur</h3>
+                    <p>Typ av sutur (se OP-berättelse)</p>
+                  </li><li>
+                    <h3>Op-sår status, åtgärd</h3>
+                    <p>Nuvarande status av opsår (mättat? Helt? Omläggning?)</p>
+                  </li></ul></li></ul>
+        <h3>MEWS-mätning</h3>
+        <p>Andning, Puls, POX, Blodtryck, Temp, Urin, Medvetande</p>
+        <h3>Elimination</h3>
+        <p>KAD? - När?<br>Bladder gjord på UVA? + mängd</p>
+        <h3>Nutrition</h3>
+        <p>Dropp? Illamående? Fasta?</p>
+        <h3>Psykosocialt</h3>
+        <p>Allmäntillstånd, hur patient mår.</p>
+        <h3>Smärta</h3>
+        <p>Pump? (EDA, PCA)<br/>Ordinerad smärtlindring postoperativt, fungerar?</p>
+      </span><hr/>
+      <h2>Omvårdnadsepikris</h2>
+      <span>
+      <h3>Vårdtid</h3>
+        <p>ÅÅMMDD-ÅÅMMDD</p>
+      <h3>Kontaktorsak</h3>
+        <p>Anledning till att patienten befinner sig på ortopedavdelning.<br/>Elektiv eller akut?</p>
+      <h3>Operation/Behandling</h3>
+        <p>Operationsdatum samt utförd operation/behandling.<br/>Eventuella dränage.</p>
+      <h3>Hälsohistoria/Vårderfarenhet</h3>
+        <p>Tidigare operationer samt medicinska diagnoser.</p>
+      <h3>Utskriven till</h3>
+        <p>Sjukhus/Boende/Hem</p>
+      <h3>Närstående informerad</h3>
+        <p>Ja/Nej av vem?</p>
+      <h3>Aktivitet</h3>
+        <p>Fallrisk Ja/Nej<br/>Hjälpmedel?<br/>Nedsatt rörlighet/känslighet i extrimiteter.<br/>Fall på avdelningen?</p>
+      <h3>Andning/Cirkulation</h3>
+        <p>Peroperativ blödning (ml)<br/>Cellsaver (ml)<br/>Total dränförlust inkl. thoraxdrän (ml)<br/>Peroperativ transfussion (E)<br/>Postoperativ transfusion (E)<br/>Aktuellt Hb (g/l)<br/>CVK?<br/>Porta-cath (om använd)<br/>Trombosprofylax?<br/>Infektionsprofylax?</p>
+      <h3>Elimination</h3>
+        <p>KAD (dygn)<br/>Urintappning (ggr)<br/>Resurin bladder (ml)<br/>Behandling UVI?<br/>Defekation postoperativt?</p>
+      <h3>Hud</h3>
+        <p>Hel hud vid ankomst?<br/>Hudreaktion förband?<br/>Blåsbildning?<br/>Misstänkt sårinfektion? (=insatt på antibiot)<br/>Trycksår (Ankomst/vårdtid)</p>
+      <h3>Kommunikation</h3>
+        <p>Orienterad x3?<br/>Hörsel?<br/>Syn?<br/>Hjälpmedel?<br/>Modersmål? - Haft tolk?</p>
+      <h3>Nutrition</h3>
+        <p>Vätske och näringsintag under vårdtid?<br/>p-glucos (om diabetiker)<br/>Postoperativt illamående?</p>
+      <h3>Psykosocialt</h3>
+        <p>Akutkonfusion & trolig orsak<br/>Psykiskt tillstånd</p>
+      <h3>Smärta</h3>
+        <p>EDA/PCA/Smärtlindring P.o, I.v, S.c<br/>Välfungerande eller ej?<br/>Lokalisation av smärta?</p>
+      <h3>Socialt</h3>
+        <p>Besök under vårdtid?<br/>Hjälp av Närstående/Vänner i hemmet?</p>
+      <h3>Sömn</h3>
+        <p>Sömn under vårdtid?<br/>Sömntablett till natten?</p>
+      <h3>Information/undervisning</h3>
+        <p>Utskrivningsfolder?<br/>Dsk-remiss<br/>Info om förband<br/>Info om dusch<br/>Fragmin-undervisning</p>
+      <h3>Speciell omvårdnad</h3>
+        <p>Gjort innan hemgång</p>
+      <h3>Läkemedelshantering</h3>
+        <p>Recept?, Apodos?<br/>Ev. läkemedel medskickade?</p>
+      <h3>Samordning</h3>
+        <p>Återbesök<br/>Uppföljning</p>
+      <h3>Kopia</h3>
+        <p>Skickas till någon?</p>
+     </span><hr/>
+      <h2>Inskrivning - Tumör</h2>
+      <span>
+      <h3>Följande skall göras</h3>
+        <p><ul><li>Sjuksköterskeinskrivning</li><li>Läkarinskrivning</li><li>Narkosbedömning (Efter läk inskriv.)</li><li>Blodprov (Rutin tumör + BAS + Blodgrupp)</li><li>EKG om över 65 år eller hjärtsjuk</li></ul></p>
+      </span><hr/>
+      <h2>Inskrivning - Embo</h2>
+      <span>
+        <h3>Info</h3>
+        <p>Kommer 14:00</p>
+        <p>Görs på neuroRTG</p>
+        <h3>Görs</h3>
+        <p><ul><li>Skrivs in av tumörläkare</li><li>Ring embolabb så dr. kan komma och bedömma pat.</li><li>Ankomstsamtal</li><li>Blödningsprover</li><li>Narkosbedömning</li><li>1 dusch med descutan</li></ul></p>
+        </span><hr/>
+        <h2>CT-guidade biopsier</h2>
+        <span>
+        <p><ul><li>Sjuksköterskeinskrivning</li><li>Läkarinskrivning</li><li>Narkosbedömning</li><li>Blödningsprover</li><li>1 descutan dusch</li></ul></p>
+      </span><hr/>
+      <h2>Dagkirurg</h2>
+      <span>
+        <p><ul><li>Skriv in slutenvård i Melior</li><li>Öppenvårdstillfälle i Elvis</li><li>Förenklat ankomstsamtal</li><li>Obs dagkirurgblankett i journal (Fylles i av operatör)</li><li>Omvårdnadsepikris</li></ul></p>
+      </span><hr/>
+         <h2>Narkosbedömning</h2>
+         <span>
+        <p>Mån-Tors: 9:00-11:15</p>
+        <p>Mån-Tors: 13:00-15:30</p>
+        <p>Fre: 9:00-11:15</p>
+        <p>Sängbundna: OP1</p>
+        <p>Barn: På avd?</p>
+</span><hr/>
+</div>
+<!-- Slut dokumentation -->
+<!-- Start EDA -->
+<div id="eda">
+<h1>EDA</h1>
+<label for="frag">Tid Senaste Fragmin:</label>
+    <input type="tel" name="frag" placeholder=""/>
+<label for="draeda">Tidigast dra EDA:</label>
+    <input type="text" name="draeda" placeholder="" readonly/>
+<hr/>
+<label for="tideda">Tid EDA dragen:</label>
+    <input type="tel" name="tideda" placeholder=""/>
+<label for="drakad">Tidigast KAD kan dras:</label>
+    <input type="text" name="drakad" placeholder="" readonly/>
+<label for="neuroeda">Neurologiska kontroller (Bromage):</label>
+    <input type="text" name="neuroeda" placeholder="" readonly/>
+</div>
+<!-- Slut EDA -->
+<!-- Start Fallrisk -->
+<div id="fallrisk">
+<h1>Fallrisk</h1>
+
+
+<table><tr><td>
+<input type="checkbox" name="fallhem"/></td><td>
+<label for="fallhem">Tidigare fall i hemmet?</label></td></tr><tr><td>
+
+<input type="checkbox" name="fallpsyk"/></td><td>
+<label for="fallpsyk">Förvirring, demens eller psykisk sjukdom?</label></td></tr><tr><td>
+
+<input type="checkbox" name="fallsyn"/></td><td>
+<label for="fallsyn">Synhandikapp?</label></td></tr><tr><td>
+
+<input type="checkbox" name="fallskor"/></td><td>
+<label for="fallskor">Inkorrekt fotbeklädnad?</label></td></tr><tr><td>
+
+<input type="checkbox" name="fallinkont"/></td><td>
+<label for="fallinkont">Tarm eller blåsfunktionsstörning?</label></td></tr><tr><td>
+
+<input type="checkbox" name="falllkm"/></td><td>
+<label for="falllkm">Läkemedelspåverkan?</label></td></tr><tr><td>
+
+<input type="checkbox" name="fallneuro"/></td><td>
+<label for="fallneuro">Neurologisk påverkan?</label></td></tr></table>
+
+	<button type="submit">Beräkna</button>
+        <div class="resultat">
+
+        </div>
+</div>
+<!-- Slut Fallrisk -->
+<!-- Start dropptakt -->
+<div id="dropptakt">
+<h1>Dropptakt</h1>
+	<label for="liter">Mängd:</label><input type="radio" name="volume" value="l" checked>L
+    <input type="radio" name="volume" value="ml">ml<br/>
+		<input type="number" name="liter" placeholder="" />
+        <label for="time">Tid:</label><input type="radio" name="hormin" value="h" checked>h
+    <input type="radio" name="hormin" value="min">min
+		<input type="number" name="time" placeholder="" />
+        <div class="resultat">
+
+        </div>
+</div>
+<!-- Slut dropptakt -->
+<!-- VAS skalan -->
+<div id="vas">
+	<h1>VAS</h1>
+	<table><tr><td>
+        <label for="vas">Ingen smärta</label>
+	</td><td>
+	<input type="range" name="vas" min="0" max="10" step="1" value="0" />
+	</td><td>
+        <label for="vas">Värsta tänkbara smärta</label>
+	</td></tr></table>
+	<!--<button type="submit">Beräkna</button>-->
+        <div class="resultat">
+
+        </div>
+</div>
+<div id="movicol">
+<h1>Movicol dosering</h1>
+<img src="">
+</div>
+<div id="karta">
+<h1>Avdelningar SU/S</h1>
+  <select></select>
+  <div class="resultat" width="100%">
+    
+  </div>
+<button type=submit>Markera plats</button>
+<table><tr><td>
+<button type=submit>+</button></td><td>
+<button type=submit>-</button></td></tr></table>
+<div id="kartacontainer">
+<img src="" alt="Laddar Karta...">
+</div>
+</div>
+<div id="trycksar">
+  <div class="pageone">
+    <p>Har patient trycksår eller början på trycksår?</p>
+    <button type="submit">Ja</button>
+    <button type="submit">Nej</button>
+  </div>
+  <div class="gradering">
+    <h1>Kategorisering</h1>
+    <table><tr><td>
+    <input type="radio" value="1" name="gradering"/></td><td>
+    <h2>Rodnad som inte bleknar vid tryck</h2>
+    <img src="" alt="grad1">
+    <p>Hel hud med lokaliserad rodnad som inte bleknar vid tryck. Andra tecken såsom missfärgning av huden, värmeökning, ödem och förhårdnad av huden kan också indikera tryckskada.</p>
+    </td></tr><tr><td>
+    <input type="radio" value="2" name="gradering"/></td><td>
+    <h2>Delhudsskada</h2>
+    <img src="" alt="grad2">
+    <p>Delhudsskada i överhuden (epidermis). Såret är ytligt och kan ses som en blåsa eller avskavning av huden.</p>
+    </td></tr><tr><td>
+    <input type="radio" value="3" name="gradering"/></td><td>
+    <h2>Fullhudsskada</h2>
+    <img src="" alt="grad3">
+    <p>Fullhudsskada som även omfattar skada på, eller av underhudsvävnad (subkutan) och som kan nå ner till, men inte genom, underliggande stödjevävnad (fascia).</p>
+    </td></tr><tr><td>
+    <input type="radio" value="4" name="gradering"/></td><td>
+    <h2>Djup fullhudsskada</h2>
+    <img src="" alt="grad4">
+    <img src="" alt="grad4nekros">
+    <p>Omfattande skada, vävnadsnekros eller skada av muskler, ben eller stödjande strukturer med eller utan fullhudsskada. OBS! En svart nekros bedöms som grad 4 även om huden är intakt.</p>
+    </td></tr></table>
+  </div>
+  <div class="norton">
+    <h1>Nortonskalan</h1>
+    <span>
+    <h2>Psykisk status</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="psyk"/></td><td><p>Okontaktbar</p></td></tr>
+      <tr><td><input type="radio" value="2" name="psyk"/></td><td><p>Svarar inte adekvat på tilltal</p></td></tr>
+      <tr><td><input type="radio" value="3" name="psyk"/></td><td><p>Stundtals förvirrad</p></td></tr>
+      <tr><td><input type="radio" value="4" name="psyk"/></td><td><p>Het orienterad till tid och rum</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Fysisk aktivitet</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="aktiv"/></td><td><p>Sängliggande</p></td></tr>
+      <tr><td><input type="radio" value="2" name="aktiv"/></td><td><p>Rullstolsburen (hela dagen)</p></td></tr>
+      <tr><td><input type="radio" value="3" name="aktiv"/></td><td><p>Går med hjälp av personal (eventuell rullstol för oberoende förflyttning)</p></td></tr>
+      <tr><td><input type="radio" value="4" name="aktiv"/></td><td><p>Går med eller utan hjälpmedel</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Rörelseförmåga</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="mov"/></td><td><p>Orörlig (kan inte alls bidraga vid lägesändring)</p></td></tr>
+      <tr><td><input type="radio" value="2" name="mov"/></td><td><p>Mycket begränsad (behöver fullständig hjälp vid lägesändring men kan bidraga)</p></td></tr>
+      <tr><td><input type="radio" value="3" name="mov"/></td><td><p>Något begränsad (assistans vid lägesändring)</p></td></tr>
+      <tr><td><input type="radio" value="4" name="mov"/></td><td><p>Full</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Födointag</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="mat"/></td><td><p>Mindre än halv portion</p></td></tr>
+      <tr><td><input type="radio" value="2" name="mat"/></td><td><p>Halv portion</p></td></tr>
+      <tr><td><input type="radio" value="3" name="mat"/></td><td><p>3/4 av normal portion</p></td></tr>
+      <tr><td><input type="radio" value="4" name="mat"/></td><td><p>Normal portion</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Vätskeintag</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="vtsk"/></td><td><p>Mindre än 500 ml/dag</p></td></tr>
+      <tr><td><input type="radio" value="2" name="vtsk"/></td><td><p>500-700 ml/dag</p></td></tr>
+      <tr><td><input type="radio" value="3" name="vtsk"/></td><td><p>700-1000 ml/dag</p></td></tr>
+      <tr><td><input type="radio" value="4" name="vtsk"/></td><td><p>Mer än 1000 ml/dag</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Inkontinens</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="inkont"/></td><td><p>Urin- och tarminkontinent</p></td></tr>
+      <tr><td><input type="radio" value="2" name="inkont"/></td><td><p>Urin- eller tarminkontinent (KAD)</p></td></tr>
+      <tr><td><input type="radio" value="3" name="inkont"/></td><td><p>Tillfällig (vanligen kontinent men inte just nu)</p></td></tr>
+      <tr><td><input type="radio" value="4" name="inkont"/></td><td><p>Nej</p></td></tr>
+    </table>
+    </span><span>
+    <h2>Allmäntillstånd</h2>
+    <table>
+      <tr><td><input type="radio" value="1" name="allm"/></td><td><p>Mycket dåligt (ev feber, påverkad andning, utpräglade tecken på cirk insuff ev chock , starkt smärtpåverkad, somnolent, stuporös, comatös. Huden blek eller cyanotisk, varm och fuktig eller kall och fuktig eller nedsatt turgor eller ödem)</p></td></tr>
+      <tr><td><input type="radio" value="2" name="allm"/></td><td><p>Dåligt (ev feber, påverkad andning, tecken på cirk insuff, tachycardi, ödem, hypo- eller hypertoni, smärtpåverkad, somnolent eller vaken men apatisk. Huden ev blek eller cyanotisk, varm och fuktig eller kall och fuktig, eller nedsatt turgor eller ödem) </p></td></tr>
+      <tr><td><input type="radio" value="3" name="allm"/></td><td><p>Ganska gott (afebril-subfebril, normal andning, puls och blodtryck, ev lätt tachycardi, latent hypo- eller hypertoni, ingen eller lätt smärtpåverkan, patienten vaken, hud ev blek eller cyanotisk, varm och fuktig eller kall och fuktig, eller nedsatt turgor eller ödem)</p></td></tr>
+      <tr><td><input type="radio" value="4" name="allm"/></td><td><p>Gott (afebril, normal andning, frekv, rytm, normal puls, blodtr, inte smärtpåverkad, normal hudfärg, utseende motsvarar åldern) </p></td></tr>
+    </table>
+    </span>
+  </div>
+  <div class="resultat">
+
+  </div>
+</div>
+<div id="preoprutin">
+  <h1>Preop Rutin</h1>
+  <label for="born">Född (ÅÅÅÅ)</label>
+  <input type="tel" name="born"/>
+  <select>
+    <option value="false">Frisk?</option>
+    <option value="true|frisk">Frisk sedan innan</option>
+    <option value="true|sjuk">Annan sjukdom som påverkar blodbild</option>
+  </select>
+  <button type="submit">Gå</button>
+  <div class="resultat">
+
+  </div>
+</div>
+<div id="nutrition">
+  <h1>Nutrition</h1>
+  <label for="cm">Längd (cm)</label>
+    <input type="tel" name="cm" />
+  <label for="kg">Vikt (kg)</label>
+    <input type="tel" name="kg" />
+  <label for="ar">Ålder</label>
+    <input type="tel" name="ar" />
+  <label for="kon">Kön</label>
+    <select name="kon">
+      <option value="">Välj</option>
+      <option value="man">Man</option>
+      <option value="kvinna">Kvinna</option>
+    </select>
+  <label for="aktiv">Aktivitet</label>
+    <select name="aktiv">
+      <option value="">Välj</option>
+      <option value="25">Sängbunden</option>
+      <option value="33">Delvis sängbunden</option>
+      <option value="50">Uppegåendes</option>
+    </select>
+    <table>
+      <tr>
+        <td>
+          <input type="checkbox" name="mager"/>
+        </td>
+        <td>
+          <p>Patient är undernärd</p>
+        </td>
+      </tr>
+    </table>
+    <label for="temp">Temp (&#x2103;)</label>
+      <input type="tel" name="temp" />
+    <label for="peros">Vätska Peros (ml)</label>
+      <input type="tel" name="peros" />
+    <label for="inflkm">Infusion/Läkemedel iv. (ml)</label>
+      <input type="tel" name="inflkm" />
+    <label for="urinmangd">Urinmängd (ml)</label>
+      <input type="tel" name="urinmangd" />
+    <div class="resultat">
+
+    </div>
+  </div>
+  <div id="ordination">
+	<h1>Ordination</h1>
+	<table><tr><td>x1</td><td>08</td></tr>
+	<tr><td>x2</td><td>08 - 20</td></tr>
+	<tr><td>x3</td><td>08 - 14 - 20</td></tr>
+	<tr><td>x4</td><td>08 - 12 - 16 - 20</td></tr>
+	<tr><td>x5</td><td>06 - 10 - 14 - 18 - 22</td></tr>
+	<tr><td>d2</td><td>06 - 18</td></tr>
+	<tr><td>d3</td><td>08 - 16 - 24</td></tr>
+	<tr><td>d4</td><td>06 - 12 - 18 - 24</td></tr>
+	<tr><td>d6</td><td>04 - 08 - 12 - 16 - 20 -24</td></tr>
+	<tr><td>a + b</td><td>08 - 20</td></tr>
+	<tr><td>a + b + c</td><td>08 - 14 - 20</td></tr>
+	<tr><td>a + b + c d</td><td>08 - 12 - 16 - 20</td></tr>
+	<tr><td>tn</td><td>22</td></tr>
+	<tr><td>=</td><td>Skapa egna tider</td></tr></table>
+  </div>
+  <div id="kcalcal">
+    <h1>Kcal calculator</h1>
+	  <label for="kost">Kost/Måltid</label>
+	  <select name="mat">
+		  <option value="">Välj</option>
+		  <optgroup label="A-kost">
+			<option value="port|445">Varmrätt lunch</option>
+			<option value="port|100">Dessert</option>
+			<option value="port|460">Varmrätt middag</option>
+		  </optgroup>
+		  <optgroup label="SNR-kost">
+			<option value="port|540">Varmrätt lunch</option>
+			<option value="port|65">Dessert</option>
+			<option value="port|540">Varmrätt middag</option>
+		  </optgroup>
+		  <optgroup label="E-kost">
+			<option value="port|345">Varmrätt lunch</option>
+			<option value="port|135">Dessert lunch</option>
+			<option value="port|390">Varmrätt middag</option>
+			<option value="port|140">Dessert kväll</option>
+		  </optgroup>
+		  <optgroup label="Flytande kost">
+			<option value="port|320">Varm soppa lunch</option>
+			<option value="port|310">Varm soppa middag</option>
+			<option value="port|290">Kall yoghurtsoppa lunch</option>
+			  <option value="port|180">Kall soppa middag</option>
+		  </optgroup>
+	  </select>
+	  <label for="mellan">Mellanmål/Frukost/Kvällsmat</label>
+    <select name="mellan">
+    	<option value="">Välj</option>
+		<optgroup label="Frukost/smörgås">
+			<option value="st|45">Hårdbrödskiva (st)</option>
+			<option value="st|60">Mjukbrödskiva</option>
+			<option value="0|20">Lättmargarin (40%)</option>
+			<option value="0|30">Margarin (70%)</option>
+			<option value="skivor|35">Ost (28%)</option>
+			<option value="skivor|30">Ost (17%)</option>
+			<option value="msk|35">Mjukost</option>
+			<option value="skivor|15">Skinka</option>
+			<option value="skivor|30">Medwurst/korv</option>
+			<option value="msk|35">Leverpastej</option>
+			<option value="msk|15">Kaviar</option>
+			<option value="tsk|15">Marmelad</option>
+			<option value="tsk|7">Marmelad light</option>
+			<option value="dl|75">Välling</option>
+			<option value="dl|100">Fruktyoghurt</option>
+			<option value="dl|150">Müsli</option>
+			<option value="dl|55">Cornflakes</option>
+			<option value="dl|95">Risgryn- & managrynsgröt</option>
+			<option value="dl|65">Havregrynsgröt</option>
+			<option value="msk|35">Sylt/mos</option>
+			<option value="msk|30">Sylt/mos light</option>
+			<option value="st|80">Ägg</option>
+			<option value="bit|10">Sill inlagd</option>
+		</optgroup>
+		<optgroup label="Vetebröd/kakor m.m.">
+			<option value="st|85">Vetebröd skiva</option>
+			<option value="st|114">Vetebröd bulle</option>
+			<option value="st|45">Skorpa</option>
+			<option value="st|30">Kex, pepparkaka</option>
+			<option value="st|15">Smörgåsrån</option>
+			<option value="st|65">Digestivekex</option>
+			<option value="st|25">Salt kex</option>
+			<option value="st|25">Riskaka</option>
+			<option value="st|100">Sockerkaka</option>
+			<option value="st|65">Småkaka</option>
+			<option value="st|30">Wafers</option>
+		</optgroup>
+		<optgroup label="Desert">
+			<option value="dl|70">Kräm</option>
+			<option value="dl|60">Fruktsoppa</option>
+			<option value="dl|55">Nyponsoppa</option>
+			<option value="dl|20">Nyponsoppa osock</option>
+			<option value="dl|90">Fromage</option>
+			<option value="dl|90">Chokladpudding</option>
+			<option value="port|360">Paj med vaniljsås</option>
+			<option value="port|300">Ris malta med saftsås</option>
+			<option value="port|200">Desertkaka</option>
+			<option value="st|120">Pannkaka</option>
+			<option value="dl|100">Glass grädde</option>
+			<option value="st|80">Glassbägare light</option>
+			<option value="st|50">Isglass pinne</option>
+		</optgroup>
+		<optgroup label="Frukt">
+			<option value="st|65">Apelsin</option>
+			<option value="st|95">Banan</option>
+			<option value="dl|60">Bär</option>
+			<option value="st|30">Clementin/kiwi</option>
+			<option value="dl|85">Konserverad fruktsallad</option>
+			<option value="halva|45">Konserverad persika</option>
+			<option value="st|4">Vindruvor</option>
+			<option value="st|65">Äpple/päron</option>
+		</optgroup>
+		<optgroup label="Dyck/mjölk/övrigt">
+			<option value="dl|60">Standardmjölk/fil</option>
+			<option value="dl|50">Mellanmjölk/fil</option>
+			<option value="dl|40">Lättmjölk/fil</option>
+			<option value="dl|45">Saft/läsk/juice</option>
+			<option value="dl|1">Saft fun light</option>
+			<option value="dl|27">Lättöl</option>
+			<option value="dl|73">Chokladdryck</option>
+			<option value="dl|4">Drickbuljong</option>
+			<option value="dl|137">Kaffegrädde (10%)</option>
+			<option value="msk|55">Vispgrädde ovispad</option>
+			<option value="msk|30">Vispgrädde vispad</option>
+			<option value="dl|45">Proviva</option>
+			<option value="dl|90">Fruktyoghurt (2%)</option>
+			<option value="dl|130">Fruktyoghurt (7%)</option>
+			<option value="st|230">Risifrutti</option>
+		</optgroup>
+    <optgroup label="Extra">
+      <option value="st|160">Frusen mango paket</option>
+      <option value="st|118">Nutrilett pulver påse</option>
+      <option value="st|209">Nutrilett bar brownie</option>
+      <option value="st|180">Nudlar</option>
+      <option value="dl|323">Creme fraiche</option>
+    </optgroup>
+    </select>
+	  <label for="antal">Mängd i <span></span></label>
+    <input type="number" name="antal" />
+    <button type="submit">Lägg till</button>
+    <div class="resultat">
+      <table>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              Resultat
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <!--<div id="losenord">
+    <h1>Lösenord</h1>
+    <table>
+      <tr>
+        <td>Melior</td>
+        <td>Minst 6 tecken. Nummer och siffror måste finnas.</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><input type="checkbox" name="show" /></td>
+        <td><input type="password" name="psw" /></td>
+      </tr>
+    </table>
+    <button type="submit">Kolla</button>
+  </div>-->
+  <div id="vatskefordelning">
+    <h1>Vätskefördelning</h1>
+    <label for="kg">Kön/Ålder/Status</label>
+    <select name="konstatus">
+      <option value="">Välj</option>
+      <option value="60">Kvinna</option>
+      <option value="70">Man</option>
+      <option value="80">Barn (&#60;10år)</option>
+      <option value="90">Prematur</option>
+      <option value="100">Gravid kvinna</option>
+    </select>
+    <label for="kg">Vikt (kg)</label>
+    <input type="tel" name="kg" />
+    <div class="resultat">
+    </div>
+  </div>
+  <div id="hypovolemi">
+    <h1>Hypovolemi</h1>
+    <p>(Uttorkning. Chock orsakad av för låg blodvolym).<br/>Nedan följer lista på indikationer vilket kan öka risken.</p>
+    <ul>
+      <li>Ålder (Högre ålder = ökad risk)</li>
+      <li>Törst</li>
+      <li>Kalla extremiteter</li>
+      <li>Ökad kapillär fyllnadstid</li>
+      <li>Ökad andning (Andningsfrekvens)</li>
+      <li>Takykardi (Puls över 100 slag/min)</li>
+      <li>Lågt blodtryck</li>
+      <li>Nedsatt urinproduktion (Normal 1 ml/kg/h)</li>
+      <li>Laktacidos (Hyperventilation, kräkningar och diffus buksmärta)</li>
+      <li>Medvetandegrad</li>
+      <li>Högt Hb, Na, Krea</li>
+    </ul>
+</div>
+<div id="youtube">
+  </div>
+</body>
+<script type="application/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="application/javascript" src="avdsu_s.js"></script>
+<script type="application/javascript" src="script.js"></script>
+</html>

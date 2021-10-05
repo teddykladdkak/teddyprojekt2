@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR-kod login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="instascan.min.js"></script>
+    <style type="text/css">
+      video{
+        width: 50px;
+      }
+      input{
+        zoom: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Kom och Gå, QR-inloggning</h1>
+    <p>Detta projektets mål är att snabba upp inloggningen för vårdpersonal inom Västra Götalandsregionen. OBS! Detta projekt är inte i drift.</p>
+    <p>Applikationen fungerar enbart på sidor med Kom och Gå (Heroma). I nuläget enbart stöd för Google Chrome.</p>
+    <p>QR-kod läsare som klistrar in användarnamn eller personnummer i textfönstret för användarnamn och klickar automatiskt på login-knappen.</p>
+    <p>Du behöver en Webbkamera, den läser av kontinuerligt, för säkerhets skull placera webbkameran ner mot marken och inte rakt fram. All video upptagning och sökning av QR-koder sker lokalt!</p>
+    <p>Ingen data eller film skickas utanför datorn med denna applikation. QR-läsningen sker med hjälp av "Instascan.js" (<a href="https://github.com/schmich/instascan">https://github.com/schmich/instascan)</a>.</p>
+    <h2>Ladda ner</h2>
+    <p>Version 0.0.1: <a href="KomOGa_(0.0.1).crx" download="">".crx"</a>, <a href="KomOGa_(0.0.1).zip" download="">".zip"</a>, <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/komochga/app">GitHub</a></p>
+    <h2>Demo</h2>
+    <p>För att testa funktionaliteten måste du godkänna att din webbkamera får användas. Skriv ut en QR-kod från någon generator på internet, ex: <a href="https://www.the-qrcode-generator.com/">https://www.the-qrcode-generator.com/</a>.
+    <p>Visa QR-koden för webbkameran, texten du har i QR-koden kommer nu klistras in i textrutan nedanför och knappen "login" komma automatiskt klickas på.</p>
+    <video id="preview" style="display: none;"></video><br/>
+    <input type="text" id="login"><br/>
+    <input type="button" value="Logga in" id="loginknapp" onclick="loggain();"><br/>
+    <div id="resultat"></div>
+    <script type="text/javascript">
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+        console.log(content);
+        document.getElementById('login').value = content;
+        document.getElementById('loginknapp').click();
+      });
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+      function loggain(){
+        var p = document.createElement('p');
+          var ptext = document.createTextNode('Användare "' + document.getElementById('login').value + '" har loggat in.')
+            p.appendChild(ptext);
+        document.getElementById('resultat').appendChild(p);
+      };
+    </script>
+  </body>
+</html>

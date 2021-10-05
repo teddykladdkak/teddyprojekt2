@@ -1,0 +1,9 @@
+---
+layout: post
+title: "KLICKBASERAD DOKUMENTATION"
+date: 2017-12-05 08:00:00 +0200
+categories: utveckling
+---
+I dagens läge dokumenterar vi mycket parametrar, händelse, åtgärder vilka i sig är upprepande och skrivs ungefär på samma sätt för var patient. I vården idag jobbas mycket med att göra standardiserade vårdplaner eller andra typer av sökord med underliggande formulär och valmöjligheter för att styra upp sättet vi dokumenterar detta på bästa sätt. Johan Thunberg hade ett föredrag om deras försök till implementering av IVA-system i Norrbotten och avslutade med välvalda ord. Vi som kliniker läser inte dokumentation för att få reda på parametrar vi kan se på annan plats, utan det vi vill utläsa från dokumentationen är vår upplevelse av patienten, till exempel hur den luktar, hur jag som kliniker känner, vad mina tankar/bedömningar är. Resten är såklart väsentligt men går oftast att utläsa från annan plats. Här ser jag en av mina mål om klickbaserad journalföring som inte en förvärrande faktor utan en hjälp till att få dokumentationen mer individanpassad. I och med att man standardiserar den journalföring som oftast är repitativ, ger det utrymme för vårdpersonalen att dokumentera det mjuka, något som oftast glöms bort i all upprepande dokumentation, eller prioriteras bort pga den återupprepande dokumentationen tar sådan tid.
+
+Detta är såklart enbart en liten del av alla vinster med klickbaserad dokumentation. Andra vinster är till exempel möjligheten till att dokumentera mobilt vid patienten. Det snabbar även upp dokumentationsprocessen, genom att personalen slipper skriva var bokstav för hand. Vidare standardiseras vad som ska dokumenteras. IT-stödet har möjlighet att forma dokumentationskulturen inom vården. Slutligen blir den återupprepande dokumentationen registrerbar och möjlighet att koppla till statistik system.

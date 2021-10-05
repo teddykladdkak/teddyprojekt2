@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link href="" class="ico1" sizes="152x152" rel="apple-touch-icon"><link href="" class="ico2" sizes="144x144" rel="apple-touch-icon"><link href="" class="ico3" sizes="120x120" rel="apple-touch-icon"><link href="" class="ico4" sizes="114x114" rel="apple-touch-icon"><link href="" class="ico5" sizes="76x76" rel="apple-touch-icon"><link href="" class="ico6" sizes="72x72" rel="apple-touch-icon"><link href="" class="ico7" sizes="60x60" rel="apple-touch-icon"><link href="" class="ico8" sizes="57x57" rel="apple-touch-icon"><script type="application/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<style type="text/css">* { margin: 0px; padding: 0px; } iframe { width: 100%; height: 100%; } .install { display: none; } input { width:100%; }</style>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var hash = window.location.hash.substring(1);
+			if (hash == "") { $('iframe').hide(); $('.install').show(); }else{
+				var url = hash.split('#')[0]; var icolink = hash.split('#')[1]; var cutdown = url.replace('http://','').replace('https://','').replace('www.',''); var namn = cutdown.split("."); var storbok = namn[0].split(''); var storbokfirst = storbok[0].toUpperCase(); var rubrik = storbokfirst + namn[0].substring(1); $('title').text(rubrik); $('iframe').attr('src', url);
+				/*  http://makeappicon.com/  */
+				if (icolink == "") { } else { var o = 'http://makeappicon.com/upload/'; $('.ico1').attr('href', o + icolink +  '/ios7/Icon-76@2x.png'); $('.ico2').attr('href', o + icolink +  '/ios/Icon-72@2x.png'); $('.ico3').attr('href', o + icolink +  '/ios7/Icon-60@2x.png'); $('.ico4').attr('href', o + icolink +  '/ios/Icon@2x.png'); $('.ico5').attr('href', o + icolink +  '/ios7/Icon-76.png'); $('.ico6').attr('href', o + icolink +  '/ios/Icon-72.png'); $('.ico7').attr('href', o + icolink +  '/ios7/Icon-60.png'); $('.ico8').attr('href', o + icolink +  '/ios/Icon.png'); };
+			};
+			$('.install button').click(function(){ var installurl = $('.install input[name=installurl]').val(); var installicon = $('.install input[name=installicon]').val().replace('http://makeappicon.com/download/', '').replace('#', ''); window.location.hash = installurl + '#' + installicon; location.reload(); });
+		});
+	</script>
+</head>
+<body><iframe src="" frameBorder="0"></iframe><div class="install"><p>Länk till hemmsida</p><input type="text" name="installurl" /><br/><p>Gå till <a href="http://makeappicon.com/" target="_blank">http://makeappicon.com/</a> och ladda upp ikon-bilden.<br/>Kopiera sedan url texten som skapats och klistra in nedan.</p><input type="text" name="installicon" /><br/><button>Skapa</button></div><br/><br/><p>javascript:(function(){var head = document.getElementsByTagName('head')[0];var viewport = document.createElement('meta');viewport.setAttribute('name', 'viewport');viewport.setAttribute('content', 'initial-scale=1, maximum-scale=1, user-scalable=no');head.appendChild(viewport);var webbcapable = document.createElement('meta');webbcapable.setAttribute('name', 'apple-mobile-web-app-capable');webbcapable.setAttribute('content', 'yes');head.appendChild(webbcapable);var statusbar = document.createElement('meta');statusbar.setAttribute('name', 'apple-mobile-web-app-status-bar-style');statusbar.setAttribute('content', 'black');head.appendChild(statusbar);})();</p></body>
+</html>

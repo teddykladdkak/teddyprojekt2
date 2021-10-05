@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pillerr&#228;knare</title>
+	<script type="text/javascript">
+		var avdelningar = ['avdelning 16 sahlgrenska', 'avdelning 349a sahlgrenska', 'test avdelning']
+			var avdelning16sahlgrenska = ['1-1', '2-1', '3-1', '4-1', '4-2', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4', '7-1', '7-2', '7-X', '8-1', '8-2', '8-X', '9-1', '10-1', '10-2', '10-3', '10-4', '11-1', '11-2', '11-3', '11-4', '12-1', '12-2', '12-3', '12-X', '14-1', '14-2', '15-1', 'Behandling', 'Extr-1', 'Extr-2', 'Extr-3', 'Extr-4', 'Extr-5'];
+			var avdelning349asahlgrenska = ['1-1', '1-2', '1-3', '2-1', '2-2', '3-1', '3-2', '4-1', '5-1', '6-1', '6-2', '6-3', '7-1', '7-2', '8-1', '8-2', '8-3', 'PlanIn-1', 'PlanIn-2', 'Extra-1', 'Extra-2', 'Extra-3', 'Extra-4'];
+			var testavdelning =  ['A', 'B', 'C', 'D', 'E', 'F'];
+		var lkm = [
+			'Oxynorm 5 mg',
+			'Oxycontin 5 mg',
+			'Oxycontin 10 mg',
+			'Oxycontin 20 mg',
+			'Panocod',
+			'Stesolid 5 mg',
+			'Oxascand 5 mg',
+			'Imovane 5 mg',
+			'Imovane 7,5 mg',
+			'Stilnoct 5 mg'
+		];
+		var config = {
+		   farger : {
+		      backgroundejvald: '#FFFFFF',
+		      textejvald: '#000000',
+		      backgroundvald: '#000000',
+		      textvald: '#FFFFFF',
+		      backgroundandraval: 	['#000000', '#ED5E2F', '#00FF00', '#0000FF', '#B88A00', '#FFFF00'],
+		      textandraval: 		['#FFFFFF', '#FFFFFF', '#000000', '#FFFFFF', '#FFFFFF', '#000000']
+		   }
+		};
+	</script>
+	<style>
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+	.head, #sangplatser, #list, #resultat, #start h2 {
+		padding: 10px;
+	}
+	.wrapper {
+		padding-top: 10px;
+	}
+	#resultat table{border:2px solid black;margin-top:5px;margin-bottom:5px;font-size: 18px;}
+	#resultat td{border:1px solid black;}
+	#resultat td:nth-child(1){text-align: center;}
+	#sangplatser input[type=checkbox]{display: none;}
+	#sangplatser, #start{font-size: 18px;}
+	body{-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;}
+	h2{margin-bottom: 0px;white-space: nowrap;}
+	.bigbutton{margin: 15px auto;}
+	.hide{display: none;}
+	#list input[type=text]{border-style: none;border-bottom: 1px solid black;max-width: 400px;width: 80%;font-size:14pt;margin-left: 5px;}
+	#resultat input[type=text]{border-style: none;width: 100%;}
+	.bigbutton, .buttonelement{
+		font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+		text-decoration: none;
+		text-align: center;
+		padding: 10px;
+		font-size: 18px;
+		text-transform: uppercase;
+		border: 0px none;
+		background-color:#000;
+		color:#FFF;
+		cursor:pointer;
+		white-space: nowrap;
+	}
+	.buttonelement{
+		margin: 15px 15px 0px 0px;
+		display:inline-block;
+	}
+	.buttonelement span:nth-child(2){
+		background-color:#FFF;
+		color:#000;
+		padding: 0px 10px;
+		margin: 0px 10px;
+	}
+	.buttonelement span:nth-child(3){
+		font-weight:bold;
+	}
+	.buttonelement table {
+		border:0px;
+		border-collapse: collapse;
+		width:100%;
+	}
+	.buttonelement td {
+    border: 1px solid black;
+		background-color:#FFF;
+		color:#000;
+	}
+	.buttonelement td:nth-child(2){
+		text-align:center;color:red;font-weight:bold;cursor:pointer;
+	}
+	table tr:first-child{font-weight: bold;}
+	.color{height:20px;width:20px;display: inline-block;}
+	#colorwrapper{white-space: nowrap;}
+	.head textarea{border: 0px none;outline:0px none;}
+	.checkboxonclick{cursor:row-resize;}
+	#footer{text-align: center;font-size: 10px !important;color: #000000;margin-top:10px;}
+	#footer a{text-decoration: none;color: #000000;}
+	#footer a:hover{color: #FFA500;text-decoration: overline underline;}
+	.contentwrapper {min-height: 40%;}
+	.avslutawrapper{
+	text-align:right;	
+	}
+	.avsluta {height:20px;padding:5px;background-color:#000;color:#FFF;font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;text-decoration: none;text-align: center;font-size: 18px;text-transform: uppercase;border: 0px none;outline: 0px none;cursor:pointer; display: inline;}
+	
+	/*@media print{
+		#footer, #resultat h2, #list, .bigbutton, .head, #sangplatser{display: none!important;}
+		.sign, #resultat{display:block!important;}
+	}*/
+	.prompt{
+		width: 400px;
+		position: absolute;
+		top: 0px;
+		left: 50%;
+		margin-left: -200px; /*half the size of width*/
+		background-color:#000;
+		color:#FFF;
+		border-style: solid;
+    	border-width: medium;
+    	padding:10px;
+	}
+	.prompt textarea{
+		width:100%;
+	}
+	.prompt .buttonelement{
+		width: 40%;
+		text-align: center;
+		background-color:#FFF!important;
+		color:#000!important;
+	}
+	</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="mobile-web-app-capable" />
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="manifest" href="manifest.json">
+	<link rel="shortcut icon" href="ico/piller_homescreen.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="ico/piller_homescreen.ico" />
+	<link rel="icon" type="image/png" href="ico/piller_homescreen512x512.png" />
+	<link rel="icon" type="image/png" href="ico/piller_homescreen196x196.png" />
+	<link rel="apple-touch-icon-precomposed" href="ico/piller_homescreen180x180.png"/>
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="ico/piller_homescreen76x76.png">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="ico/piller_homescreen120x120.png">
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="ico/piller_homescreen152x152.png">
+	<script type="text/javascript">
+		function tid(){var dt = new Date();if(dt.getHours() <= 9){var h = '0' + dt.getHours();}else{var h = dt.getHours();};if(dt.getMinutes() <= 9){var m = '0' + dt.getMinutes();}else{var m = dt.getMinutes();};return h + ':' + m;};
+		function setcolor(element){
+			config.farger.backgroundvald = element.style.backgroundColor;
+			localStorage.setItem('colorbackground', element.style.backgroundColor);
+			config.farger.textvald = element.style.color;
+			localStorage.setItem('colortext', element.style.color);
+			color();
+		};
+		function colorbuttons(){
+			var wrapper = document.getElementById('colorwrapper');
+			for(i = 0; i < config.farger.backgroundandraval.length; i++){
+				var div = document.createElement('div');
+					div.setAttribute('style', 'background-color: ' + config.farger.backgroundandraval[i] + ';color: ' + config.farger.textandraval[i] + ';');
+					div.setAttribute('class', 'color');
+					div.setAttribute('onclick', 'setcolor(this);');
+				wrapper.appendChild(div);
+			};
+		};
+		function color(){
+			var checkedandactiveelements = document.getElementsByClassName('checkedandactive');
+			for (var i = checkedandactiveelements.length - 1; i >= 0; i--) {
+				checkedandactiveelements[i].style.color = config.farger.textvald;
+				checkedandactiveelements[i].style.backgroundColor = config.farger.backgroundvald;
+			};
+			var buttonelementelements = document.getElementsByClassName('buttonelement');
+			for (var i = buttonelementelements.length - 1; i >= 0; i--) {
+				buttonelementelements[i].style.color = config.farger.textvald;
+				buttonelementelements[i].style.backgroundColor = config.farger.backgroundvald;
+			};
+			var bigbuttonelements = document.getElementsByClassName('bigbutton');
+			for (var i = bigbuttonelements.length - 1; i >= 0; i--) {
+				bigbuttonelements[i].style.color = config.farger.textvald;bigbuttonelements[i].style.backgroundColor = config.farger.backgroundvald;
+			};
+		};
+		function button(lkm){//Skapar läkemedelsknapparna
+			var buttonelement = document.createElement('div');
+				buttonelement.setAttribute('class', 'buttonelement ' + lkm.replace(/[^A-Za-z0-9]/g, ''));
+				var buttonelementnamn = document.createElement('span');
+					buttonelementnamn.setAttribute('onclick', 'buttonadd(this);');
+					var buttonelementnamntext = document.createTextNode(lkm);
+					buttonelementnamn.appendChild(buttonelementnamntext);
+				buttonelement.appendChild(buttonelementnamn);
+				var buttonelementnummer = document.createElement('span');
+					buttonelementnummer.setAttribute('onclick', 'buttonadd(this);');
+					var buttonelementnummertext = document.createTextNode('0');
+					buttonelementnummer.appendChild(buttonelementnummertext);
+				buttonelement.appendChild(buttonelementnummer);
+				var buttonelementmenu = document.createElement('span');
+					buttonelementmenu.setAttribute('onclick', 'buttonmenu(this);');
+					var buttonelementmenutext = document.createTextNode(String.fromCharCode(9776));
+					buttonelementmenu.appendChild(buttonelementmenutext);
+				buttonelement.appendChild(buttonelementmenu);
+				var buttonelementtable = document.createElement('table');
+					buttonelementtable.setAttribute('style', 'display: none;');
+					var buttonelementtabletbody = document.createElement('tbody');
+						var buttonelementtabletbodytr = document.createElement('tr');
+							var buttonelementtabletbodytrtd = document.createElement('td');
+								var buttonelementtabletbodytrtdtext = document.createTextNode('Tid');
+								buttonelementtabletbodytrtd.appendChild(buttonelementtabletbodytrtdtext);
+							buttonelementtabletbodytr.appendChild(buttonelementtabletbodytrtd);
+						buttonelementtabletbody.appendChild(buttonelementtabletbodytr);
+					buttonelementtable.appendChild(buttonelementtabletbody);
+				buttonelement.appendChild(buttonelementtable);
+			return buttonelement;
+		};
+		function detectLeftButton(event) {if ('buttons' in event) {return event.buttons === 1;}else if ('which' in event){return event.which === 1;}else{return event.button === 1;};};
+		function sangvaljflera(element, event){
+			var test = detectLeftButton(event);
+			if (test){
+				sangvalj(element);
+			};
+		};
+		function sangvalj(element){
+			var todo = element.getElementsByTagName('input')[0].checked;
+			var listelementid = element.getElementsByTagName('input')[0].value;
+			var listelement = document.getElementById(listelementid);
+			if(todo){//Välj inte en säng.
+				element.getElementsByTagName('input')[0].checked = false;
+				element.setAttribute('style', 'background: ' + config.farger.backgroundejvald + ';color: ' + config.farger.textejvald + ';');
+				element.className = element.className.replace(/\bcheckedandactive\b/,'');
+				listelement.setAttribute('style', 'display: none;');
+				listelement.className = listelement.className.replace(/\b valdpat\b/,'');
+			}else{//Välj säng.
+				element.getElementsByTagName('input')[0].checked = true;
+				element.setAttribute('style', 'background: '+ config.farger.backgroundvald +';color: ' + config.farger.textvald + ';');
+				element.className = element.className + ' checkedandactive';
+				listelement.setAttribute('style', 'display:;');
+				listelement.className = listelement.className + ' valdpat';
+			};
+		};
+		function opnaavd(selectedavd){
+			localStorage.setItem('valdavd', selectedavd);
+			var sangplatser = window[selectedavd];
+			var listhtml = '';var check = '';
+			var sangplatserelement = document.getElementById('sangplatser');
+					sangplatserelementhead = document.createElement('h2');
+					var sangplatserelementheadtext = document.createTextNode('V\u00E4lj s\u00E4ngplatser');
+					sangplatserelementhead.appendChild(sangplatserelementheadtext);
+				sangplatserelement.appendChild(sangplatserelementhead);
+			var listelement = document.getElementById('list');
+			for(i = 0; i < sangplatser.length; i++){
+				var sangplatserelementdiv = document.createElement('div');
+					sangplatserelementdiv.setAttribute('class', 'checkboxonclick');
+					sangplatserelementdiv.setAttribute('id', 'listnummer' + sangplatser[i]);
+					/*sangplatserelementdiv.setAttribute('ontouch', 'sangvalj(this)');*/
+					sangplatserelementdiv.setAttribute('onmousedown', 'sangvalj(this)');
+					sangplatserelementdiv.setAttribute('onmouseover', 'sangvaljflera(this, event)');
+					var sangplatserelementdivinput = document.createElement('input');
+						sangplatserelementdivinput.setAttribute('type', 'checkbox');
+						sangplatserelementdivinput.setAttribute('value', sangplatser[i]);
+					sangplatserelementdiv.appendChild(sangplatserelementdivinput);
+					var sangplatserelementdivtext = document.createTextNode(sangplatser[i].replace('-', ':'));
+					sangplatserelementdiv.appendChild(sangplatserelementdivtext);
+				sangplatserelement.appendChild(sangplatserelementdiv);
+				var wrapper = document.createElement('div');
+					wrapper.setAttribute('class', 'wrapper');
+					wrapper.setAttribute('id', sangplatser[i]);
+					wrapper.setAttribute('style', 'display: none;');
+					var wrapperheader = document.createElement('h2');
+						var wrapperheadertext = document.createTextNode(sangplatser[i].replace('-', ':'));
+						wrapperheader.appendChild(wrapperheadertext);
+						var wrapperheaderinput = document.createElement('input');
+							wrapperheaderinput.setAttribute('type', 'text');
+							wrapperheaderinput.setAttribute('tabindex', [1 + i]);
+							wrapperheaderinput.setAttribute('placeholder', 'Patientens namn');
+						wrapperheader.appendChild(wrapperheaderinput);
+					wrapper.appendChild(wrapperheader);
+					var wrapperbutton = document.createElement('div');
+						wrapperbutton.setAttribute('class', 'button');
+						for(b = 0; b < lkm.length; b++){
+							var wrapperbuttonelements = button(lkm[b]);
+							wrapperbutton.appendChild(wrapperbuttonelements);
+						};
+						var wrapperbuttonannat = document.createElement('div');
+							wrapperbuttonannat.setAttribute('class', 'buttonelement annat');
+							wrapperbuttonannat.setAttribute('onclick', 'nyttlkm();');
+							var wrapperbuttonannatspan = document.createElement('span');
+								var wrapperbuttonannatspantext = document.createTextNode('Annat...');
+								wrapperbuttonannatspan.appendChild(wrapperbuttonannatspantext);
+							wrapperbuttonannat.appendChild(wrapperbuttonannatspan);
+						wrapperbutton.appendChild(wrapperbuttonannat);
+					wrapper.appendChild(wrapperbutton);
+				listelement.appendChild(wrapper);
+			};
+			color();
+			var start = document.getElementById('start');
+				start.className = start.className + ' hide';
+			sangplatserelement.className = sangplatserelement.className.replace(/\bhide\b/,'');
+			var hideregbutton = document.getElementById('hideregbutton');
+				hideregbutton.className = hideregbutton.className.replace(/\bhide\b/,'');
+		};
+		function next(element){
+			var todo = element.getAttribute('data');
+			var sangplatser = document.getElementById('sangplatser');
+			var list = document.getElementById('list');
+			var regbutton = document.getElementById('regbutton');
+			if(todo == '1'){
+				var allcheckedelements = document.getElementsByClassName('checkedandactive');var tolocalstorage = '';
+				for(d = 0; d < allcheckedelements.length; d++){
+					var tolocalstorage = tolocalstorage + ',' + allcheckedelements[d].getAttribute('id');
+				};
+				localStorage.setItem('sangvald', tolocalstorage.substring(1));
+				var elementtext = document.createTextNode('S\u00E4nglista');
+				element.replaceChild(elementtext, element.firstChild);
+				element.setAttribute('data', '2');
+				list.className = list.className.replace(/\bhide\b/,'');
+				sangplatser.className = sangplatser.className + ' hide';
+				regbutton.className = regbutton.className.replace(/\bhide\b/,'');
+			}else if(todo == '2'){
+				var elementtext = document.createTextNode('Patientlista');
+				element.replaceChild(elementtext, element.firstChild);
+				element.setAttribute('data', '1');
+				list.className = list.className + ' hide';
+				sangplatser.className = sangplatser.className.replace(/\bhide\b/,'');
+				regbutton.className = regbutton.className + ' hide';
+			}else{console.log('Något gick fel i "next()".')};
+		};
+		function reg(element){
+			var todo = element.getAttribute('data');
+			var list = document.getElementById('list');
+			var resultat = document.getElementById('resultat');
+			var hideregbutton = document.getElementById('hideregbutton');
+			var nollstall = document.getElementById('nollstall');
+			if(todo == '1'){//Starta registrera
+				element.setAttribute('data', '2');
+				var elementtext = document.createTextNode('Tillbaka');
+				element.replaceChild(elementtext, element.firstChild);
+				resultat.className = resultat.className.replace(/\bhide\b/,'');
+				nollstall.className = nollstall.className.replace(/\bhide\b/,'');
+				list.className = list.className + 'hide';
+				hideregbutton.className = hideregbutton.className + 'hide';
+
+				var header = document.createElement('h2');
+					var headertext = document.createTextNode('Resultat');
+					header.appendChild(headertext);
+				resultat.appendChild(header);
+				for(d = 0; d < lkm.length; d++){
+					var lkmtable = document.createElement('table');
+						lkmtable.setAttribute('style', 'display: none;');
+						var lkmtabletbody = document.createElement('tbody');
+							var lkmtabletbodytr = document.createElement('tr');
+								var lkmtabletbodytrnamn = document.createElement('td');
+									lkmtabletbodytrnamn.setAttribute('rowspan', '1');
+									var lkmtabletbodytrnamntext = document.createTextNode(lkm[d]);
+									lkmtabletbodytrnamn.appendChild(lkmtabletbodytrnamntext);
+								lkmtabletbodytr.appendChild(lkmtabletbodytrnamn);
+								var lkmtabletbodytrantal = document.createElement('td');
+									var lkmtabletbodytrantaltext = document.createTextNode('Antal tabletter');
+									lkmtabletbodytrantal.appendChild(lkmtabletbodytrantaltext);
+								lkmtabletbodytr.appendChild(lkmtabletbodytrantal);
+								var lkmtabletbodytrpatient = document.createElement('td');
+									var lkmtabletbodytrpatienttext = document.createTextNode('Patient');
+									lkmtabletbodytrpatient.appendChild(lkmtabletbodytrpatienttext);
+								lkmtabletbodytr.appendChild(lkmtabletbodytrpatient);
+							lkmtabletbody.appendChild(lkmtabletbodytr);
+							var lkmbutton = document.getElementById('list').getElementsByClassName(lkm[d].replace(/[^A-Za-z0-9]/g, ''));
+							for(c = 0; c < lkmbutton.length; c++){
+								var checkelements = lkmbutton[c].getElementsByTagName('span')[1].textContent;
+								if(checkelements == '0'){}else{
+									lkmtable.setAttribute('style', 'display:;');
+									var patientinfo = lkmbutton[c].parentElement.parentElement;
+									var patientnumber = patientinfo.getAttribute('id').replace('-', ':');
+									var patientname = patientinfo.getElementsByTagName('input')[0].value;
+									var getnumber = lkmtabletbodytrnamn.getAttribute('rowspan');
+									lkmtabletbodytrnamn.setAttribute('rowspan', 1 + parseInt(getnumber));
+									var lkmtabletbodyregistration = document.createElement('tr');
+										var lkmtabletbodyregistrationcount = document.createElement('td');
+											var lkmtabletbodyregistrationcounttext = document.createTextNode(checkelements);
+											lkmtabletbodyregistrationcount.appendChild(lkmtabletbodyregistrationcounttext);
+										lkmtabletbodyregistration.appendChild(lkmtabletbodyregistrationcount);
+										var lkmtabletbodyregistrationnumber = document.createElement('td');
+											var lkmtabletbodyregistrationnumbertext = document.createTextNode(patientnumber + ' ' + patientname);
+											lkmtabletbodyregistrationnumber.appendChild(lkmtabletbodyregistrationnumbertext);
+										lkmtabletbodyregistration.appendChild(lkmtabletbodyregistrationnumber);
+									lkmtabletbody.appendChild(lkmtabletbodyregistration);
+								};
+							};
+						lkmtable.appendChild(lkmtabletbody);
+					resultat.appendChild(lkmtable);
+				};
+			}else if(todo == '2'){//Tillbaka
+				removeresult(element, list, hideregbutton, nollstall, resultat);
+			}else{console.log('Något gick fel i reg();')};
+		};
+		function removeresult(element, list, hideregbutton, nollstall, resultat){
+			element.setAttribute('data', '1');
+			var elementtext = document.createTextNode('Registrera');
+			element.replaceChild(elementtext, element.firstChild);
+			list.className = list.className.replace(/\bhide\b/,'');
+			hideregbutton.className = hideregbutton.className.replace(/\bhide\b/,'');
+			nollstall.className = nollstall.className + 'hide';
+			var resultatwrapper = document.getElementById('resultatwrapper');
+				var nyresultelement = document.createElement('div');
+					nyresultelement.setAttribute('id', 'resultat');
+					nyresultelement.setAttribute('class', 'hide');
+				resultatwrapper.replaceChild(nyresultelement,resultat);
+		};
+		function nollstall(){
+			var element = document.getElementById('regbutton');
+			var list = document.getElementById('list');
+			var hideregbutton = document.getElementById('hideregbutton');
+			var nollstall = document.getElementById('nollstall');
+			var resultat = document.getElementById('resultat');
+			removeresult(element, list, hideregbutton, nollstall, resultat);
+
+			var wrapper = list.getElementsByClassName('wrapper');
+			
+			for(a = 0; a < wrapper.length; a++){
+				var wrapperbuttonelement = wrapper[a].getElementsByClassName('button')[0];
+				var wrapperbutton = document.createElement('div');
+					wrapperbutton.setAttribute('class', 'button');
+				for(b = 0; b < lkm.length; b++){
+					var getid = wrapper[a].getAttribute('id') + '~~' + lkm[b].replace(/[^A-Za-z0-9]/g, '');
+					localStorage.removeItem(getid);
+					var wrapperbuttonelements = button(lkm[b]);
+					wrapperbutton.appendChild(wrapperbuttonelements);
+				};
+					var wrapperbuttonannat = document.createElement('div');
+						wrapperbuttonannat.setAttribute('class', 'buttonelement annat');
+						wrapperbuttonannat.setAttribute('onclick', 'nyttlkm();');
+						var wrapperbuttonannatspan = document.createElement('span');
+							var wrapperbuttonannatspantext = document.createTextNode('Annat...');
+							wrapperbuttonannatspan.appendChild(wrapperbuttonannatspantext);
+						wrapperbuttonannat.appendChild(wrapperbuttonannatspan);
+					wrapperbutton.appendChild(wrapperbuttonannat);
+				wrapper[a].replaceChild(wrapperbutton,wrapperbuttonelement);
+			};
+			color();
+		};
+		function buttonadd(element){
+			var parent = element.parentElement;
+			var numberelement = parent.getElementsByTagName('span')[1];
+			var getnumber = numberelement.textContent;
+			var adding = parseInt(getnumber) + 1;
+			var addingtext = document.createTextNode(adding);
+			numberelement.replaceChild(addingtext,numberelement.firstChild);
+			var tablebody = parent.getElementsByTagName('tbody')[0];
+				var tablebodytr = document.createElement('tr');
+					var tablebodytrtime = document.createElement('td');
+						var tablebodytrtimetext = document.createTextNode(tid());
+						tablebodytrtime.appendChild(tablebodytrtimetext);
+					tablebodytr.appendChild(tablebodytrtime);
+					var tablebodytrdelete = document.createElement('td');
+						tablebodytrdelete.setAttribute('onclick', 'buttondelete(this);');
+						var tablebodytrdeletetext = document.createTextNode('X');
+						tablebodytrdelete.appendChild(tablebodytrdeletetext);
+					tablebodytr.appendChild(tablebodytrdelete);
+				tablebody.appendChild(tablebodytr);
+			savenumber(adding, parent);
+		};
+		function buttonmenu(element){
+			var checkifstart = element.parentElement.getElementsByTagName('tr').length;
+			if(checkifstart >= 2){
+				var tableelement = element.parentElement.getElementsByTagName('table')[0];
+				if(tableelement.getAttribute('style') == 'display: none;'){
+					tableelement.setAttribute('style', 'display:;');
+				}else if(tableelement.getAttribute('style') == 'display:;'){
+					tableelement.setAttribute('style', 'display: none;');
+				}else if(tableelement.getAttribute('style') == ''){
+					tableelement.setAttribute('style', 'display: none;');
+				}else{console.log('Något gick fel i "buttonmenu()".')};
+			}else{
+				console.log(checkifstart)
+			};
+		};
+		function buttondelete(element){
+			var parent = element.parentElement.parentElement.parentElement.parentElement;
+			var numberelement = parent.getElementsByTagName('span')[1];
+			var getnumber = numberelement.textContent;
+			var adding = parseInt(getnumber) - 1;
+			var addingtext = document.createTextNode(adding);
+			numberelement.replaceChild(addingtext,numberelement.firstChild);
+			element.parentElement.parentElement.removeChild(element.parentElement);
+			var checkifanythingleft = parent.getElementsByTagName('tr').length;
+			if(checkifanythingleft == 1){
+				var tableelement = parent.getElementsByTagName('table')[0];
+					tableelement.setAttribute('style', 'display: none;');
+			};
+			savenumber(adding, parent);
+		};
+		function savenumber(number, parent){
+			var lkmnamn = parent.getAttribute('class').replace(/\bbuttonelement \b/,'');
+			var tabletimes = parent.getElementsByTagName('tr');var timetolokalhost = '';
+				for(c = 1; c < tabletimes.length; c++){
+					var timetolokalhost = timetolokalhost + ',' + tabletimes[c].firstChild.textContent;
+				};
+			var timetolokalhost = timetolokalhost.substring(1);
+			var rumnummer = parent.parentElement.parentElement.getAttribute('id');
+			localStorage.setItem(rumnummer + '~~' + lkmnamn, number + '~~' + timetolokalhost);
+		};
+		function nyttlkm(){
+			var nyttlkm = prompt('Skriv l\344kemedelsnamn och styrka.', '');
+			if(nyttlkm == null || nyttlkm == ''){}else{
+				lkm.push(nyttlkm);
+				var saved = localStorage.getItem('lkm');
+				if(saved == null){
+					var tolocalstorage = nyttlkm;
+				}else{
+					var tolocalstorage = saved + ',' + nyttlkm;
+				};
+				localStorage.setItem('lkm', tolocalstorage);
+
+				var getwrappers = document.getElementById('list').getElementsByClassName('wrapper');
+				for(c = 0; c < getwrappers.length; c++){
+					var parent = getwrappers[c].getElementsByClassName('button')[0];
+					var annat = parent.lastChild;
+					var nybutton = button(nyttlkm);
+					parent.insertBefore(nybutton, annat);
+				};
+				color();
+			};
+		};
+		function start(){
+			checksave();
+			var element = document.getElementById('start');
+				var header = document.createElement('h2');
+					var headertext = document.createTextNode('V\u00E4lj avdelning');
+					header.appendChild(headertext);
+				element.appendChild(header);
+				for(g = 0; g < avdelningar.length; g++){
+					var button = document.createElement('div');
+						button.setAttribute('class', 'bigbutton');
+						button.setAttribute('onclick', 'opnaavd("' + avdelningar[g].replace(/[^A-Za-z0-9]/g, '') + '");');
+						button.setAttribute('style', 'background-color:' + config.farger.backgroundvald + ';color:' + config.farger.textvald + ';');
+						button.setAttribute('data', avdelningar[g].replace(/[^A-Za-z0-9]/g, ''));
+						var buttontext = document.createTextNode(avdelningar[g]);
+						button.appendChild(buttontext);
+					element.appendChild(button);
+				};
+			colorbuttons();
+		};
+		function avsluta(){var todo = confirm('S\u00E4ker p\u00E3 att du vill ta bort all information?');if(todo){localStorage.clear();location.reload();};};
+		function checksave(){
+			var nyttlkm = localStorage.getItem('lkm');
+			if(nyttlkm == null){}else{
+				var nyttlkmdivided = nyttlkm.split(',');
+				for(b = 0; b < nyttlkmdivided.length; b++){
+					lkm.push(nyttlkmdivided[b]);
+				};
+			};
+			var text = localStorage.getItem('colortext');
+			var background = localStorage.getItem('colorbackground');
+			if(!text || !background){}else{
+				config.farger.backgroundvald = background;
+				config.farger.textvald = text;
+			};
+			var valdavd = localStorage.getItem('valdavd');
+			if(!valdavd){}else{
+				opnaavd(valdavd);
+				var sangvald = localStorage.getItem('sangvald');
+				if(!sangvald){}else{
+					var sangvalddelad = sangvald.split(',');
+					for(g = 0; g < sangvalddelad.length; g++){
+						var element = document.getElementById(sangvalddelad[g]);
+						sangvalj(element)
+					};
+					var rumnummer = window[valdavd];
+					for(i = 0; i < rumnummer.length; i++){
+						for(f = 0; f < lkm.length; f++){
+							var getid = rumnummer[i] + '~~' + lkm[f].replace(/[^A-Za-z0-9]/g, '');
+							var info = localStorage.getItem(getid);
+							if(info == null){}else{
+								info.split('~~')
+								var splitinfo = info.split('~~')
+								var timeentry = splitinfo[1].split(',')
+								var buttonparent = document.getElementById(rumnummer[i]).getElementsByClassName(lkm[f].replace(/[^A-Za-z0-9]/g, ''))[0];
+								var numberelement = buttonparent.getElementsByTagName('span')[1];
+									var numberelementtext = document.createTextNode(splitinfo[0]);
+									numberelement.replaceChild(numberelementtext,numberelement.firstChild)
+								var tablebody = buttonparent.getElementsByTagName('tbody')[0];
+								for(s = 0; s < timeentry.length; s++){
+									var tablebodytr = document.createElement('tr');
+										var tablebodytrtime = document.createElement('td');
+											var tablebodytrtimetext = document.createTextNode(timeentry[s]);
+											tablebodytrtime.appendChild(tablebodytrtimetext);
+										tablebodytr.appendChild(tablebodytrtime);
+										var tablebodytrdelete = document.createElement('td');
+											tablebodytrdelete.setAttribute('onclick', 'buttondelete(this);');
+											var tablebodytrdeletetext = document.createTextNode('X');
+											tablebodytrdelete.appendChild(tablebodytrdeletetext);
+										tablebodytr.appendChild(tablebodytrdelete);
+									tablebody.appendChild(tablebodytr);
+								};
+							};
+						};
+					};
+					document.getElementById('patientlistabutton').click();
+				};
+				return false;
+			};
+		};
+	</script>
+		
+</head>
+<body class='wsite-theme-light' onload="start();">
+	<div class="avslutawrapper"><span class="avsluta" onclick="avsluta();">Avsluta</span></div>
+<div class="head">
+<h1>Pillerr&#228;knare <span id="colorwrapper"></span></h1>
+</div>
+<div id="start"></div>
+<div class="contentwrapper">
+	<div id="sangplatser" class="hide"></div>
+	<div id="hideregbutton" class="hide">
+		<div class="bigbutton" data="1" id="patientlistabutton" onclick="next(this);">Patientlista</div>
+	</div>
+	<div id="list" class="hide"></div>
+	<div class="bigbutton hide reg" id="regbutton" data="1" onclick="reg(this);">Registrera</div>
+	<span id="resultatwrapper"><div id="resultat" class="hide"></div></span>
+	<div class="bigbutton hide" id="nollstall" onclick="nollstall();">Nollst&#228;ll</div>
+</div>
+<div id="footer"><a href="https://www.dropbox.com/" target="blank" alt="Lagra filer och redigera p&#229; ett enkellt s&#228;tt">Dropbox</a>&nbsp;&#8226;&nbsp;<a href="http://my.dot.tk/cgi-bin/amb/landing.dottk?nr=243497::7285606::1" target="blank" alt="Skapa eget dom&#228;n Gratis!!">TK</a>&nbsp;&#8226;&nbsp;<a href="http://www.weebly.com" alt="Skapa en Gratis hemmsida!!">Weebly</a>&nbsp;&#166;&nbsp;2016&nbsp;&#169;&nbsp;Mattias Måsbäck&nbsp;&#166;&nbsp;{<a href="https://www.teddyprojekt.se/" target="blank" alt="L&#228;nk till denna sida">www.teddyprojekt.se</a>}
+</div>
+<div style='display: none'>{title}</div>
+<div style='display: none'>{menu}</div>
+<div style='display: none'>{content}</div>
+<div style='display: none'>{footer}</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

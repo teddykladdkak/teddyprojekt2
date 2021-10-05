@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vätskelista</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="mobile-web-app-capable" />
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="manifest" href="manifest.json">
+
+  	<link rel="shortcut icon" href="ico/icon.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="ico/icon.ico" />
+	<link rel="icon" type="image/png" href="ico/icon196x196.png" />
+	<link rel="apple-touch-icon-precomposed" href="ico/icon180x180.png"/>
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="ico/icon76x76.png">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="ico/icon120x120.png">
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="ico/icon152x152.png">
+
+<style type="text/css">
+
+*{
+  margin:0px;
+}
+body{
+  width: 100%;
+  padding-top: 20px;
+}
+#progresswrapper{
+	position:fixed;
+	left:0px;
+	top:0px;
+	width: 100%;
+	height: 20px;
+}
+progress{
+	height: 20px;
+	width:100%; 
+}
+#progresswrapper{
+	background-color: #000;
+}
+img, table, tr, input[type=button]{
+  width:100%;
+}
+img:active{
+  opacity: 0.5;
+}
+.buttons img{
+	background-color: green;
+}
+#extrabutton img{
+	width:15%;
+	background-color: green;
+}
+td{
+  width:50%
+}
+#countwrapper{
+  text-align:right;
+   font-size: 50px;
+}
+#count span:first-child{
+  background-color:black;
+  color:green;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+
+}
+input[type=text], input[type=tel] {
+  -webkit-appearance: none; -moz-appearance: none;
+  margin: 0;
+  width: 50%; height: 40px;
+  line-height: 40px; font-size: 17px;
+  border: 1px solid #bbb;
+}
+</style>
+<script>
+		// Check if a new cache is available on page load.
+		window.addEventListener('load', function(e) {
+
+		  window.applicationCache.addEventListener('updateready', function(e) {
+		    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+		      // Browser downloaded a new app cache.
+		      if (confirm('Ny uppdatering finns av denna sidan! Vill du ladda den?')) {
+		        window.location.reload();
+		      }
+		    } else {
+		      // Manifest didn't changed. Nothing new to server.
+		    }
+		  }, false);
+
+		}, false);
+var config = {
+		   hourreset : 7
+		};
+function pad (str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+};
+function addml(element, todo){
+  var number = element.getAttribute('alt');
+  var redanregelement = document.getElementById('count').getElementsByTagName('span')[0];
+  var redanreg = redanregelement.innerText
+  if (todo == '-') {
+		var adding = parseInt(redanreg) - parseInt(number);
+	}else{
+		var adding = parseInt(redanreg) + parseInt(number);
+	}
+  
+  var addingtofour = pad(adding, 4)
+  var nyregnummer = document.createTextNode(addingtofour);
+  redanregelement.replaceChild(nyregnummer, redanregelement.firstChild);
+  localStorage.setItem('count', addingtofour);
+  var vtskresult = document.getElementById('vtskresult').value;
+  var maxdryck = document.getElementById('maxdryckinfo').value;
+  if (maxdryck) {
+  	var percentkvar = parseInt(100 - ((adding / maxdryck) * 100));
+	document.getElementById('progressmaxdryck').value = percentkvar;
+  }else{
+    document.getElementById('progressdaily').value = '100';
+  };
+  if (vtskresult) {
+    var percent = parseInt((adding / vtskresult) * 100);
+    document.getElementById('progressdaily').value = percent;    
+  }else{
+    document.getElementById('progressdaily').value = '0';
+  };
+  var buttonelements = document.getElementsByClassName('buttons')[0];
+	var buttonelementsimages = buttonelements.getElementsByTagName('img');
+  for (var i = buttonelementsimages.length - 1; i >= 0; i--) {
+		buttonelementsimages[i].style.backgroundColor = 'green';
+		buttonelementsimages[i].setAttribute('onclick', 'addml(this, "+")');
+	}
+	element.setAttribute('style', 'opacity: 0.5');
+	setTimeout(function(){ element.setAttribute('style', ''); }, 500);
+};
+function portraitorlandscape(){
+  var w = window.innerWidth;
+  var h = window.innerHeight;
+  if(w > h){
+    var redanregelement = document.getElementById('portrait').setAttribute('style', 'display:none;');
+    var redanregelement = document.getElementById('landscape').setAttribute('style', 'display:;');
+  }else{
+    var redanregelement = document.getElementById('landscape').setAttribute('style', 'display:none;');
+    var redanregelement = document.getElementById('portrait').setAttribute('style', 'display:;');
+  }
+};
+function countvtsk(){
+  var kg = document.getElementById('vtskkg').value;
+  if(!kg){
+    document.getElementById('vtskresult').value = '';
+    localStorage.removeItem('vtskkg');
+    localStorage.removeItem('vtskresult');
+  }else{
+    var vtskbehov = parseInt(kg) * 30;
+    if(parseInt(kg) < 40){
+    	var perspiratio = 0;
+    }else if(40 <= parseInt(kg)){
+    	var perspiratio = parseInt(kg) * 10;
+    };
+    var vtskopersp = parseInt(vtskbehov) + parseInt(perspiratio);
+    document.getElementById('vtskresult').value = vtskopersp;
+    var adding = document.getElementById('count').getElementsByTagName('span')[0].innerText;
+    var percent = parseInt((parseInt(adding) / vtskopersp) * 100);
+    document.getElementById('progressdaily').value = percent;
+    localStorage.setItem('vtskkg', parseInt(kg));
+    localStorage.setItem('vtskresult', vtskopersp);
+  };
+};
+function addcolon(element){
+	console.log(element.value.length)
+  if(element.value.length === 2){
+    element.value = element.value + ',';
+  };
+};
+function removecolon(element){
+	var lastChar = element.value.substr(element.value.length - 1);
+	if (lastChar == ",") {
+		element.value = element.value.slice(0, -1);
+	};
+};
+function maxdryck(element){
+	if(element.value.length >= 1){
+		var adding = document.getElementById('count').getElementsByTagName('span')[0].innerText;
+		var percentkvar = parseInt(100 - ((adding / element.value) * 100));
+		document.getElementById('progressmaxdryck').value = percentkvar;
+		document.getElementById('progressmaxdryck').setAttribute('style', 'display:;');
+		document.getElementById('progressdaily').setAttribute('style', 'display:none;');
+		localStorage.setItem('maxdryckinfo', element.value);
+	}else if(element.value.length === 0){
+		document.getElementById('progressdaily').setAttribute('style', 'display:;');
+		document.getElementById('progressmaxdryck').setAttribute('style', 'display:none;');
+		document.getElementById('progressmaxdryck').value = '100';
+		localStorage.removeItem('maxdryckinfo');
+	};
+};
+function tabort(){
+	var todo = confirm('S\u00E4ker p\u00E3 att du vill ta bort all information?');
+	if(todo){
+		localStorage.clear();
+		location.reload();
+	};
+};
+function loadlocalstorage(){
+	var vtskkg = localStorage.getItem('vtskkg');
+	if(vtskkg){document.getElementById('vtskkg').value = vtskkg;};
+	var vtskresult = localStorage.getItem('vtskresult');
+	if(vtskresult){document.getElementById('vtskresult').value = vtskresult;};
+	var maxdryckinfo = localStorage.getItem('maxdryckinfo');
+	if(maxdryckinfo){
+		document.getElementById('maxdryckinfo').value = maxdryckinfo;
+		var maxdryckelement = document.getElementById('maxdryckinfo');
+		maxdryck(maxdryckelement);};
+	var count = localStorage.getItem('count');
+	if(count){
+		var countelement = document.createElement("span");
+			countelement.setAttribute('alt', count);
+		addml(countelement, '+');
+	};
+	var history = localStorage.getItem('history');
+	if(history){
+		var historyelement = document.getElementById('history');
+			var head = document.createElement('h2');
+				var headtext = document.createTextNode('Historia');
+				head.appendChild(headtext);
+			historyelement.appendChild(head);
+		var historycut = history.split('#');
+		for (var i = historycut.length - 1; i >= 0; i--) {
+			var p = document.createElement('p');
+				var ptext = document.createTextNode(historycut[i]);
+				p.appendChild(ptext);
+			historyelement.appendChild(p);
+		};
+		
+		historyelement.setAttribute('style', 'display:;');
+	};
+};
+function tabortknappar(){
+	var buttonelements = document.getElementsByClassName('buttons')[0];
+	var buttonelementsimages = buttonelements.getElementsByTagName('img');
+	for (var i = buttonelementsimages.length - 1; i >= 0; i--) {
+		buttonelementsimages[i].style.backgroundColor = 'red';
+		buttonelementsimages[i].setAttribute('onclick', 'addml(this, "-")');
+	};
+};
+function special(){
+	var ml = prompt('Skriv önskat värde (ml) nedanför');
+	console.log(ml)
+	if (isNaN(ml)){
+ 	   alert("Får enbart vara nummer.");
+	    return false;
+  	};
+	if (ml != null) {
+		var countelement = document.createElement("span");
+			countelement.setAttribute('alt', parseInt(ml));
+	    addml(countelement, '+');
+	};
+};
+function checknewday(){
+	var d = new Date();
+	var year = d.getFullYear();
+	var month = d.getMonth() + 1;
+	var day = d.getDate();
+	var hour = d.getHours();
+	if(day <= 9){var day = '0' + day;};
+	if(month <= 9){var month = '0' + month;};
+	var datetonumber = year + '' + month + '' + day;
+	var olddatetonumber = localStorage.getItem('olddatetonumber');
+	if(olddatetonumber){
+		if(datetonumber > olddatetonumber){
+			if(hour >= config.hourreset){
+				var oldcount = localStorage.getItem('count');
+				if(oldcount){
+					var oldd = olddatetonumber.split('')
+					var newhistory = oldd[0] + oldd[1] + oldd[2] + oldd[3] + '-' + oldd[4] + oldd[5] + '-' + oldd[6] + oldd[7] + ': ' + parseInt(oldcount) + ' ml#';
+					var oldhistory = localStorage.getItem('history');
+					localStorage.removeItem('count');
+					if(oldhistory){
+						var historytosave = oldhistory + newhistory;
+					}else{
+						var historytosave = newhistory;
+					}
+					localStorage.setItem('history', historytosave);
+					localStorage.setItem('olddatetonumber', datetonumber);
+				};
+			};
+		};
+	}else{
+		localStorage.setItem('olddatetonumber', datetonumber);
+	};
+};
+function removeinfo(element){
+	element.value = '';
+};
+</script>
+</head>
+<body onload="checknewday();portraitorlandscape();loadlocalstorage()" onresize="portraitorlandscape()">
+<div id="progresswrapper"><progress value="0" max="100" id="progressdaily"></progress><progress value="100" max="100" id="progressmaxdryck" style="display:none;"></progress></div>
+<span id="portrait">
+<span class="head">
+<img src="head.png" alt="Vätskelista">
+</span>
+<table class="buttons">
+  <tr><td><img src="glas1.png" onclick="addml(this, '+')" alt="75"></td><td><img src="glas2.png" onclick="addml(this, '+')" alt="150"></td></tr>
+  <tr><td><img src="mugg1.png" onclick="addml(this, '+')" alt="50"></td><td><img src="mugg2.png" onclick="addml(this, '+')" alt="100"></td></tr>
+  <tr><td><img src="pipmugg1.png" onclick="addml(this, '+')" alt="250"></td><td><img src="pipmugg2.png" onclick="addml(this, '+')" alt="500"></td></tr>
+</table>
+<div id="countwrapper">
+<span id="extrabutton"><img src="special.png" onclick="special();"><img src="minus.png" id="minus" onclick="tabortknappar();" style="background-color: red;"></span>
+<span id="count"><span>0000</span><span>(ml)</span></span>
+</div>
+</span>
+<span id="landscape">
+  <h2>Dagligt vätskebehov</h2>
+  <span id="patinfo">
+  	<input type="tel" id="vtskkg" maxlength="3" onmousedown="removeinfo(this);" onchange="countvtsk()" onkeyup="countvtsk()"/><label>Kg</label>
+	<input type="tel" placeholder="Värde visas här" id="vtskresult" readonly/><label>ml/dag</label>
+  </span>
+  <p>Vätskebalansuträkning: kg * 30 ml | Perspiratio insensibilis (om över 40 kg): kg * 10 ml<br/>(kg * 30) + (kg * 10)</p>
+
+  <br/><h2>Maxdryck</h2>
+  <span id="maxdryck">
+    <input type="tel" id="maxdryckinfo" onmousedown="removeinfo(this);" onkeyup="maxdryck(this)"/><label>ml/dag</label><br/>
+  </span><br/>
+  <span id="history" style="display: none;">
+  </span><br/>
+  <input type="button" onclick="tabort();" value="Rensa information"/>
+</span>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<html>
+	<head>
+		<title>S&aring;rremiss (avd 349A)</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<style type="text/css">
+				.mark{background-color: red;color: white;}
+				#resultat{position: absolute;top:-9999px;left:-9999px;}
+				input[type=checkbox], input[type=radio] {-ms-transform: scale(2);-moz-transform: scale(2);-webkit-transform: scale(2);-o-transform: scale(2);padding: 10px;margin: 10px;}
+				@media screen and (-webkit-min-device-pixel-ratio:0) {select {height:30px;line-height:30px;background:#f4f4f4;}}
+				select::-moz-focus-inner {border: 0;padding: 0;}
+				@-moz-document url-prefix() {select {padding: 15px 0!important;}}
+				@media screen\0 {select {height:30px;line-height:30px;}}
+				select {width:400px;}
+				input[type=text], input[type=number], input[type=date] {width:100%;max-width: 400px;height: 40px;}
+				input[type=button] {width:400px;height:40px;}
+			</style>
+			<script type="text/javascript">
+				function litenbokstav(value){
+					return value.charAt(0).toLowerCase() + value.slice(1);
+				};
+				function showadddays(todo){
+					var wrapper = document.getElementById('wrapperannat');
+					if(todo == 'visa'){
+						wrapper.setAttribute('style', 'display:;');
+					}else if(todo == 'dolj'){
+						wrapper.setAttribute('style', 'display:none;');
+					}else{console.log('N\u00E5got gick fel i "showadddays()"');};
+				};
+				function showsarinfo(todo){
+					var wrapper = document.getElementById('wrappersarutseende');
+					if(todo == 'ja'){
+						wrapper.setAttribute('style', 'display:;');
+					}else if(todo == 'nej'){
+						wrapper.setAttribute('style', 'display:none;');
+					}else{console.log('N\u00E5got gick fel i "showsarinfo()"');};
+				};
+				function styledate(date){
+					var day = date.getDate();
+					var month = date.getMonth() + 1;return day + '/' + month;
+				};
+				function nextdate(date, days){
+					var result = new Date(date);
+					var milliseconds = Date.parse(date);
+					var daysinmilliseconds = 86400000 * parseInt(days);
+						result.setTime(milliseconds + daysinmilliseconds);
+					if(result.getDay() === 0){
+						result.setTime(milliseconds + daysinmilliseconds + 86400000)
+					}else if(result.getDay() === 6){
+						result.setTime(milliseconds + daysinmilliseconds + (86400000 * 2))
+					};
+					return styledate(result);
+				};
+				function checkselected(name){
+					var element = document.getElementsByName(name);
+					for (i = 0; i < element.length; i++) {
+						if (element[i].checked) {
+							var value = element[i].value;
+						};
+					};
+					return value;
+				};
+				function start(){
+					var kopieinfo = document.getElementById('kopieinfo');
+						kopieinfo.setAttribute('style', 'display:none;');
+					window.clearTimeout(showinfo);
+					var resultwrapper = document.getElementById('resultwrapper');
+						var resultat = document.getElementById('resultat');
+						var nywrapper = document.createElement("textarea");
+							nywrapper.setAttribute('id', 'resultat');
+						resultwrapper.replaceChild(nywrapper,resultat);
+					var opdatelement = document.getElementById('date');
+					var opdat = opdatelement.value;
+					if(!opdat){
+						alert('Datum \u00E4r inte valt!');opdatelement.focus();opdatelement.setAttribute('class', 'mark');return false;
+					}else{
+						opdatelement.setAttribute('class', '')
+					};
+					var lok = document.getElementById('lok').value;
+					var ing = document.getElementById('ing').value;
+					var pal = document.getElementById('pal').value;
+					var sarkontr = checkselected('sarkontroll');
+					var mottag = checkselected('mottagare');
+					var suttyp = checkselected('stygn');
+					var suttid = checkselected('avvecklas');
+					if (suttid == '=') {
+						var suttid = document.getElementById('annat').value;
+					}else{
+						var suttannat = '';
+					};
+					var sutant = document.getElementById('sutant').value;
+					var oml = checkselected('saromlagt');
+					if (oml == 'ja') {
+						var saruts = document.getElementById('saruts').value;
+					}else{
+						var saruts = '';
+					};
+					if(mottag == 'vc'){
+						var mottagtext = 'best\u00E4lla tid p\u00E5 din v\u00E5rdcentral';
+					}else if(mottag == 'hsv'){
+						var mottagtext = 'best\u00E4mma tid med Hemsjukv\u00E5rden';
+					}else{console.log('Fel i tolkning av mottagare.')};
+					var fardigtext = 'Patient var god att direkt vid hemg\u00E5ng ' + mottagtext + ' ';
+					if(sarkontr == 'ja'){
+						var fardigtext = fardigtext + 'datumen ' + nextdate(opdat, 5) + ' & ' + nextdate(opdat, suttid) + '.\n\n';
+						var ordination = 'Tacksam för s\u00E5roml\u00E4ggning och s\u00E5rkontroll 5 dagar postoperativt den ' + nextdate(opdat, 5) + '.\n';
+					}else if(sarkontr == 'nej'){
+						var fardigtext = fardigtext + 'den ' + nextdate(opdat, suttid) + '.\n\n';var ordination = '';
+					}else{console.log('N\u00E5got gick fel med sarkontr.')};
+					var fardigtext = fardigtext + 'OPERATIONSDATUM: ' + opdat + '\n';
+					var fardigtext = fardigtext + 'INGREPP: ' + ing + '\n';
+					var fardigtext = fardigtext + 'LOKALISATION AV S\u00C5R: ' + lok + '\n';
+					var fardigtext = fardigtext + 'ANTAL SUTURERADE S\u00C5R: ' + sutant + ' st\n';
+					var fardigtext = fardigtext + 'PATIENTANSVARIG L\u00C4KARE: ' + pal + '\n';
+					var fardigtext = fardigtext + '\nORDINATION:\n' + ordination + 'Tacksam för ' + suttyp + ' samt s\u00E5roml\u00E4ggning och s\u00E5rkontroll ' + suttid + ' dagar postoperativt den ' + nextdate(opdat, suttid) + '.\nTacksam för vidare uppföljning till s\u00E5rl\u00E4kning.\n\n';
+					var fardigtext = fardigtext + 'BEHANDLING:\nTv\u00E4tta med Descutan. Steristrippa. T\u00E4ck s\u00E5r med Tegaderm Pad (eller liknande).\n\n';
+					var fardigtext = fardigtext + 'S\u00C5R STATUS VID UTSKRIVNING:\n';
+					if (oml == 'ja') {
+						if(saruts.length === 0){
+							var fardigtext = fardigtext + 'S\u00E5r omlagt postoperativt.';
+						}else{
+							var fardigtext = fardigtext + 'S\u00E5r omlagt postoperativt, ' + litenbokstav(saruts) + '.';
+						};
+					}else{
+						var fardigtext = fardigtext + 'S\u00E5r \u00E4r inte omlagt postoperativt. Förband sluter t\u00E4tt.';
+					};
+					var resultat = document.getElementById('resultat');
+						var resultattext = document.createTextNode(fardigtext);
+						resultat.setAttribute('onclick', 'this.focus();this.select();document.execCommand("copy");');
+						resultat.appendChild(resultattext);
+						resultat.focus();
+						resultat.select();
+					document.execCommand("copy");
+					kopieinfo.setAttribute('style', 'display:;');
+					setTimeout(showinfo, 2000);
+					window.scrollTo(0,document.body.scrollHeight);
+				};
+				function showinfo(){
+					var kopieinfo = document.getElementById('kopieinfo');
+						kopieinfo.setAttribute('style', 'display:none;');
+				};
+				function newpat(){
+					window.scrollTo(0, 0)
+					location.reload();
+				};
+			</script>
+		</head>
+	<body>
+		<h1>S&aring;rremiss (avd 349A)</h1>
+		<p>Operationsdatum:<br/><input id="date" type="date"/></p>
+		<p>Lokalisation:<br/><input id="lok" list="lokalisation" type="text"/></p>
+		<p>Ingrepp:<br/><input id="ing" list="ingrepp" type="text"/></p>
+		<p>Patientansvarig l&auml;kare:<br/><input id="pal" list="lakare" type="text"/></p>
+		<p>Ska s&aring;rkontroll göras 5 dagar postoperativt?<br/><input type="radio" value="ja" name="sarkontroll">Ja <input type="radio" value="nej" name="sarkontroll" checked="checked">Nej</p>
+		<p>Remiss ska till:<br/><input type="radio" value="vc" name="mottagare" checked="checked">VC <input type="radio" value="hsv" name="mottagare">HSV</p>
+		<p>Typ av sutur:<br/><input type="radio" value="agrafftagning" name="stygn">Agraff<br/><input type="radio" value="suturtagning" name="stygn">Sutur<br/><input type="radio" value="observation och eventuellt borttagande av kvarvarande intracutana knutar," name="stygn">Resorberbar sutur<br/><input type="radio" value="sutur-/agrafftagning" name="stygn" checked="checked">?</p>
+		<p>Suturer skall avvecklas:<br/><input type="radio" value="10" name="avvecklas" onclick="showadddays('dolj')" checked="checked">10 dagar<br/><input type="radio" value="14" name="avvecklas" onclick="showadddays('dolj')">14 dagar (rectum amputation)<br/><input type="radio" value="=" name="avvecklas" onclick="showadddays('visa')">Annat..<span id="wrapperannat" style="display:none;"><input type="number" id="annat" value="1" size="3"/>(dagar)</span></p>
+		<p>Antal suturerade s&aring;r:<br/><input type="number" id="sutant" value="1" size="2"/></p>
+		<p>&Auml;r s&aring;r omlagt postoperativt?<br/><input type="radio" onclick="showsarinfo('ja')" value="ja" name="saromlagt">Ja <input type="radio" value="nej" onclick="showsarinfo('nej')" name="saromlagt" checked="checked">Nej<span id="wrappersarutseende" style="display:none;"><br/>S&aring;rutseende:<br/><input type="text" id="saruts" list="sarutseende"/></span></p>
+		<input type="button" onclick="start()" value="Kopiera text"/>
+		<div id="resultwrapper">
+			<textarea id="resultat"></textarea>
+		</div>
+		<p id="kopieinfo" style="display:none;">(Text &auml;r kopierad!)</p>
+		<br/><input type="button" onclick="newpat()" value="Ny patient"/>
+		<datalist id="sarutseende">
+			<option value="Infektionsfritt och retningsfritt"></option>
+			<option value="Rodnat"></option>
+		</datalist>
+		<datalist id="ingrepp">
+			<option value="Högersidig hemikolektomi"></option>
+			<option value="V&auml;nstersidig hemikolektomi"></option>
+			<option value="Hög fr&auml;mre resektion"></option>
+			<option value="L&aring;g fr&auml;mre resektion"></option>
+			<option value="Rektumextirpation"></option>
+			<option value="Rektumamputation"></option>
+			<option value="Nedl&auml;ggning av stomi"></option>
+			<option value="Total kolektomi"></option>
+		</datalist>
+		<datalist id="lokalisation">
+			<option value="Medellinjesnitt"></option>
+			<option value="Port n&aring;l"></option>
+			<option value="Rectum"></option>
+			<option value="Tobakspunkt sutur"></option>
+		</datalist>
+		<datalist id="lakare">
+			<option value="Bjarne Melv&aring;s"></option>
+			<option value="Erik R&aring;dbo"></option>
+			<option value="Helena Ohlson"></option>
+			<option value="Jennifer Park"></option>
+			<option value="Johan Tranberg"></option>
+		</datalist>
+	</body>
+</html>

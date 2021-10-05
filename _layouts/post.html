@@ -1,0 +1,17 @@
+{% include header.html %}
+<div id="wrapper">
+    <div id="header">
+        <span class="h1">TeDDyProjekt</span>
+        <span class="h2"></span>
+    </div>
+    <div id="content">
+            <div id="bloggcontent">
+                <div class="tablecontainer">
+                    <span class="h3">{{ page.title }}</span>
+                    <p class="date">({{ page.date | date_to_string }})</p>
+                    {{ content }}
+                </div>
+            </div>
+    </div>
+</div>
+{% include footer.html %}

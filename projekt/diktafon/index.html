@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/icon.ico" type="image/icon">
+    <link rel="icon" href="img/icon.ico" type="image/icon">
+    <title>Diktafon</title>
+    <script src="js/modernizr.js" type="text/javascript"></script>
+<style>
+      html, body {
+  margin: 0;
+  background: #FFF;
+  overflow:hidden;
+}
+
+body {
+  padding: 0px;
+}
+
+#info {
+  font-size: 20px;
+}
+
+#div_start {
+
+}
+
+#headline {
+  text-decoration: none;
+}
+
+#results {
+	position: fixed;
+    bottom: -99999999999px;
+    right: -9999999999px;
+}
+
+#start_button {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+}
+
+.interim {
+  color: gray;
+}
+
+.final {
+  color: black;
+  padding-right: 3px;
+}
+
+.button {
+  display: none;
+}
+
+.marquee {
+  margin: 0px auto;
+}
+
+#buttons {
+
+}
+
+#copy {
+  margin-top: 20px;
+  display: none;
+}
+
+#copy > div {
+  display: none;
+  margin: 0 70px;
+}
+.record {
+  -webkit-animation: saturn 1s infinite;
+}
+@-webkit-keyframes saturn {
+  0%   { background-color: #f00; }
+   100% { background-color: #FFF; }
+}
+#div_start img {
+	width:100%;
+}
+    </style>
+
+    
+        <script src="js/prefixfree.min.js"></script>
+
+    
+  </head>
+
+  <body>
+
+        <div class="browser-landing" id="main">
+      <div class="compact marquee-stacked" id="marquee">
+        <div class="marquee-copy">
+        </div>
+      </div>
+      <div class="compact marquee">
+        <div id="info">
+          <p id="info_start"></p>
+          <p id="info_speak_now" style="display:none"></p>
+          <p id="info_no_speech" style="display:none">
+            No speech was detected. You may need to adjust your <a href=
+            "//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
+            settings</a>.
+          </p>
+          <p id="info_no_microphone" style="display:none">
+            No microphone was found. Ensure that a microphone is installed and that
+            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+            microphone settings</a> are configured correctly.
+          </p>
+          <p id="info_allow" style="display:none"></p>
+          <p id="info_denied" style="display:none">
+            Permission to use microphone was denied.
+          </p>
+          <p id="info_blocked" style="display:none">
+            Permission to use microphone is blocked. To change, go to
+            chrome://settings/contentExceptions#media-stream
+          </p>
+          <p id="info_upgrade" style="display:none">
+            Web Speech API is not supported by this browser. Upgrade to <a href=
+            "//www.google.com/chrome">Chrome</a> version 25 or later.
+          </p>
+        </div>
+        <div id="div_start">
+          <button id="start_button" onclick="startButton(event);document.getElementById('final_span').focus();document.getElementById('final_span').select();document.execCommand('copy');"><img alt="Start" id="start_img"
+          src="img/mic.png"></button>
+        </div>
+		<div class="compact marquee" id="div_language">
+          <select id="select_language" onchange="updateCountry()">
+            </select>&nbsp;&nbsp; <select id="select_dialect">
+            </select>
+        </div>
+        <div id="results">
+          <textarea class="final" id="final_span"></textarea> <textarea class="interim" id=
+          "interim_span"></textarea>
+        </div>
+        <div id="copy">
+          <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
+          <div id="copy_info">
+            <p>
+              Press Control-C to copy text.
+            </p>
+            <p>
+              (Command-C on Mac.)
+            </p>
+          </div><button class="button" id="email_button" onclick="emailButton()">Create
+          Email</button>
+          <div id="email_info">
+            <p>
+              Text sent to default email application.
+            </p>
+            <p>
+              (See chrome://settings/handlers to change.)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src='js/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>

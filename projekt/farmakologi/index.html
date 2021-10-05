@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Farma Quiz</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="mobile-web-app-capable" />
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<script src="allinfo.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function onload(){
+			var wrapper = document.getElementById('meny');
+			for (i = 0; i < allinfo.length; i++) { 
+				var button = document.createElement('input');
+					button.setAttribute('type', 'button');
+					button.setAttribute('onclick', 'buildquestions(' + i + ');');
+					button.setAttribute('value', allinfo[i].namn);
+				wrapper.appendChild(button);
+			};
+		};
+		function buildquestions(areanum){
+			var meny = document.getElementById('meny');
+				meny.setAttribute('style', 'display: none;')
+			var container = document.getElementById('contentContainer');
+				var table = document.createElement('table');
+					var tr = document.createElement('tr');
+						var visasvar = document.createElement('td');
+							var button = document.createElement('input');
+								button.setAttribute('type', 'button');
+								button.setAttribute('value', 'Visa svar');
+								button.setAttribute('onclick', 'visasvar(this);');
+								button.setAttribute('id', 'visasvar');
+							visasvar.appendChild(button);
+						tr.appendChild(visasvar);
+						var tdnastaknapp = document.createElement('td');
+							var nastaknapp = document.createElement('input');
+								nastaknapp.setAttribute('type', 'button');
+								nastaknapp.setAttribute('value', 'Nästa fråga');
+								nastaknapp.setAttribute('id', 'nastaknapp');
+							tdnastaknapp.appendChild(nastaknapp);
+						tr.appendChild(tdnastaknapp);
+					table.appendChild(tr);
+				container.appendChild(table);
+				var wrapper = document.createElement('div');
+					wrapper.setAttribute('id', 'infowrapper');
+					var question = document.createElement('span');
+						question.setAttribute('id', 'question');
+					wrapper.appendChild(question);
+					var answer = document.createElement('span');
+						answer.setAttribute('id', 'answer');
+					wrapper.appendChild(answer);
+				container.appendChild(wrapper);
+			writequestion(areanum, 0);
+		};
+		function writequestion(areanum, number){
+			var svarinput = document.getElementById('visasvar');
+				svarinput.value = 'Visa svar';
+			if(allinfo[areanum].innehall.length == number){
+				location.reload();
+			};
+			var progress = document.getElementById('countprogress');
+				while (progress.hasChildNodes()) {progress.removeChild(progress.firstChild);};
+				var progresstext = document.createTextNode('[' + (number + 1) + '/' + allinfo[areanum].innehall.length + ']');
+				progress.appendChild(progresstext);
+			var question = document.getElementById('question');
+				while (question.hasChildNodes()) {question.removeChild(question.firstChild);};
+				var questiontext = document.createTextNode(allinfo[areanum].innehall[number].question);
+				question.appendChild(questiontext);
+				question.removeAttribute('style');
+			var answer = document.getElementById('answer');
+				answer.setAttribute('style', 'display: none;');
+				while (answer.hasChildNodes()) {answer.removeChild(answer.firstChild);};
+				var svartext = document.createTextNode(allinfo[areanum].innehall[number].svar);
+				answer.appendChild(svartext);
+			var nastaknapp = document.getElementById('nastaknapp');
+			if((number + 1) == allinfo[areanum].innehall.length){
+				nastaknapp.setAttribute('value', 'Tillbaka till Menyn');
+			};
+				nastaknapp.setAttribute('onclick', 'writequestion(' + areanum + ', ' + (number + 1) + ');');
+		};
+		function visasvar(element){
+			var question = document.getElementById('question');
+			var answer = document.getElementById('answer');
+			if(!answer.getAttribute('style')){
+				question.removeAttribute('style');
+				answer.setAttribute('style', 'display: none;');
+				element.value = 'Visa svar igen';
+			}else{
+				answer.removeAttribute('style');
+				question.setAttribute('style', 'display: none;');
+				element.value = 'Visa fråga igen';
+			};
+		};
+		function reload(){
+			location.reload();
+		};
+	</script>
+	<style type="text/css">
+		#meny input{
+			width: 100%;
+			display:block;
+		}
+		#meny{
+			margin-top: 40px;
+		}
+		input {
+			zoom:2;
+			margin-bottom:10px;
+		}
+		#contentContainer table{
+			width: 100%;
+			margin-top: 40px;
+		}
+		#contentContainer table td{
+			width: 50%;
+		}
+		#contentContainer table td:nth-child(2){
+			text-align: right;
+		}
+		#topbar{
+			font-size: 40px;
+			text-align: center;
+			background-color: green;
+			color: #FFF;
+		}
+		body{
+			background-color: #CCC;
+			margin: 0px;
+			padding: 0px;
+		}
+		#infowrapper{
+			margin: 40px;
+			border: solid 3px #000;
+			padding: 40px;
+			border-radius: 25px;
+			background-color: #FFF;
+			font-size: 35px;
+			-moz-hyphens:auto;
+			-ms-hyphens:auto;
+			-webkit-hyphens:auto;
+			hyphens:auto;
+			word-wrap:break-word;
+		}
+	</style>
+	<link rel="apple-touch-icon-precomposed" href="homescreen.png"/>
+	<link href="startup.png" rel="apple-touch-startup-image" />
+</head>
+<body onload="onload();">
+<div id="topbar" onclick="reload();">
+	Farma <span id="countprogress">Quiz</span>
+</div>
+<div class="list" id="meny" style="display:;"></div> 
+<div id="contentContainer"></div>
+</div>
+</body>
+</html>

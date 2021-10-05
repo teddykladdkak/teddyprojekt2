@@ -1,0 +1,21 @@
+CACHE MANIFEST
+
+# Offline cache v1
+# html files
+index.html
+
+# css files
+webkit5_add2home.css
+webkit5_style.css
+
+# js files
+script.js
+webkit5_add2home.js
+webkit5_functions.js
+
+# images
+background.png
+webkit5_roadcounter_homescreen.png
+webkit5_roadcounter_startup.png
+
+######################################################################################################################################################################################################

@@ -1,0 +1,42 @@
+{
+  "name": "Pillerräknare",
+  "short_name": "Piller",
+  "icons": [
+    {
+      "src": "ico/piller_homescreen.ico",
+      "sizes": "256x256"
+    },
+    {
+      "src": "ico/piller_homescreen76x76.png",
+      "sizes": "76x76",
+      "type": "image/png"
+    },
+    {
+      "src": "ico/piller_homescreen120x120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "ico/piller_homescreen152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "ico/piller_homescreen180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "ico/piller_homescreen196x196.png",
+      "sizes": "196x196",
+      "type": "image/png"
+    },
+    {
+      "src": "ico/piller_homescreen512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  /*"start_url": "vtsk.html",*/
+  "display": "standalone"
+}

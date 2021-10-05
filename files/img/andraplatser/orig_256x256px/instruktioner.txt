@@ -1,0 +1,6 @@
+1. Canvas size --> 280x280px
+2. Markera allt
+3. Klistra in I layer mask
+4. Deselect
+5. Svarta bild
+6. Minska till 128x128px

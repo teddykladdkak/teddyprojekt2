@@ -1,0 +1,9 @@
+---
+layout: post
+title: "STRAX DAGS FÖR VITALIS!"
+date: 2018-04-23 08:00:00 +0200
+categories: utveckling
+---
+Otroligt fullsmockad vecka/veckor som varit och dagens aktiviteter var heller inget undantag, dagen gick ut på att jag under början av förmiddagen hade möte med personliga ärenden. Därefter tog jag spårvagnen ut till Högsbo sjukhus. Om jag ska vara ärlig så har jag aldrig besökt detta sjukhus i Göteborg ännu, enbart gått i området. Fick träffa en av rehab avdelningarna som har en hunger för att implementera IT i vården. De var som många andra väldigt intresserade av Digital Whiteboard projektet, tyvärr fick jag säga till dem som jag säger till alla andra, att det projektet är avslutat med goda resultat som nu tas den riktiga vägen via objektorganisationen. Däremot kunde diskussionen vändas till vad kan man göra med det man har? Egentligen så var DW-projektets främsta succé att den involverade alla i vårdteamet, vilket skapade en överblick för alla som var inkopplade eller skulle bli inkopplade till specifik patient. Alla separata vårdkategorier hade såklart olika input och andel på tavlan. Dessa mötena, när jag kan komma ut till vårdavdelningarna och bara inspirera tills hjärnor sprängs, är nog det jag trivs med allra bäst. När man går från mötet och vet att de antingen under eller efter mötet skriver ner en lista på saker som ska genomföras/förändras.
+
+Nu såklart passade jag på att justera min projektsida "lite" inför morgondagen, då den trotts allt är mitt ansikte utåt och vipps var klockan över tolv. Blir nog en lång och spännande dag imorgon. Förresten kommer jag försöka få till lite Tweets imorgon också, blev inspirerad av folket på JsUnConf att återuppta denna plattform (Länk finns i "Andra platser").

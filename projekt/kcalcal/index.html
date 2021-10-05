@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>KcalCal</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="mobile-web-app-capable" />
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<script type="text/javascript">
+		var config = {
+			//rum: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '3:2', '4:1', '5:1', '6:1', '6:2', '6:3', '7:1', '7:2', '8:1', '8:2', '8:3', 'PlanIn:1', 'PlanIn:2', 'Extra:1', 'Extra:2', 'Extra:3', 'Extra:4'],
+			rum: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '3:2', '4:1', '5:1', '6:1', '6:2', '6:3', '7:1', '7:2', '8:1', '8:2', '8:3'],
+			maltid : [{
+				rubrik: 'A-kost',
+				knappar: [{
+					text: 'Varmrätt lunch',
+					enhet: 'port',
+					kcal: 445
+				},{
+					text: 'Dessert',
+					enhet: 'port',
+					kcal: 100
+				},{
+					text: 'Varmrätt middag',
+					enhet: 'port',
+					kcal: 460
+				}]
+		   	},{
+		   		rubrik: 'SNR-kost',
+		   		knappar: [{
+					text: 'Varmrätt lunch',
+					enhet: 'port',
+					kcal: 540
+				},{
+					text: 'Dessert',
+					enhet: 'port',
+					kcal: 65
+				},{
+					text: 'Varmrätt middag',
+					enhet: 'port',
+					kcal: 540
+				}]
+		   	},{
+		   		rubrik: 'E-kost',
+		   		knappar: [{
+					text: 'Varmrätt lunch',
+					enhet: 'port',
+					kcal: 345
+				},{
+					text: 'Dessert lunch',
+					enhet: 'port',
+					kcal: 135
+				},{
+					text: 'Varmrätt middag',
+					enhet: 'port',
+					kcal: 390
+				},{
+					text: 'Dessert kväll',
+					enhet: 'port',
+					kcal: 140
+				}]
+		   	},{
+		   		rubrik: 'Flytande kost',
+		   		knappar: [{
+					text: 'Varm soppa lunch',
+					enhet: 'port',
+					kcal: 320
+				},{
+					text: 'Varm soppa middag',
+					enhet: 'port',
+					kcal: 310
+				},{
+					text: 'Kall yoghurtsoppa lunch',
+					enhet: 'port',
+					kcal: 290
+				},{
+					text: 'Kall soppa middag',
+					enhet: 'port',
+					kcal: 180
+				}]
+		   	}]
+		};
+		function start(){
+			for(i=0;i<config.rum.length;i++){
+				var patientlista = document.getElementById('patientlista');
+					var buttonelement = document.createElement('div');
+						buttonelement.setAttribute('class', 'buttonelement');
+						var buttonelementnummer = document.createElement('span');
+							buttonelementnummer.setAttribute('onclick', 'oppnareg("' + config.rum[i].replace(':', '-') + '")');
+							var buttonelementnummertext = document.createTextNode(config.rum[i]);
+							buttonelementnummer.appendChild(buttonelementnummertext);
+						buttonelement.appendChild(buttonelementnummer);
+						var buttonelementutrak = document.createElement('span');
+							buttonelementutrak.setAttribute('onclick', 'oppnareg("' + config.rum[i].replace(':', '-') + '")');
+							buttonelementutrak.setAttribute('id', config.rum[i].replace(':', '-') + 'count');
+							if(localStorage.getItem(config.rum[i].replace(':', '-') + 'count')){
+								var whatnumber = localStorage.getItem(config.rum[i].replace(':', '-') + 'count');
+							}else{
+								var whatnumber = 0;
+							};
+							var buttonelementutraktext = document.createTextNode(whatnumber);
+							buttonelementutrak.appendChild(buttonelementutraktext);
+						buttonelement.appendChild(buttonelementutrak);
+						var buttonelementmenu = document.createElement('span');
+							buttonelementmenu.setAttribute('onclick', 'showtable(this, "' + config.rum[i].replace(':', '-') + '")');
+							var buttonelementmenutext = document.createTextNode(String.fromCharCode(9776));
+							buttonelementmenu.appendChild(buttonelementmenutext);
+						buttonelement.appendChild(buttonelementmenu);
+						var buttonelementtable = document.createElement('table');
+							buttonelementtable.setAttribute('class', 'hidden');
+							var buttonelementtablethead = document.createElement('thead');
+								var buttonelementtabletbodytr = document.createElement('tr');
+									var buttonelementtabletbodytrtid = document.createElement('td');
+										var buttonelementtabletbodytrtidtext = document.createTextNode('Tid');
+										buttonelementtabletbodytrtid.appendChild(buttonelementtabletbodytrtidtext);
+									buttonelementtabletbodytr.appendChild(buttonelementtabletbodytrtid);
+									var buttonelementtabletbodytrvad = document.createElement('td');
+										var buttonelementtabletbodytrvadtext = document.createTextNode('Vad');
+										buttonelementtabletbodytrvad.appendChild(buttonelementtabletbodytrvadtext);
+									buttonelementtabletbodytr.appendChild(buttonelementtabletbodytrvad);
+									var buttonelementtabletbodytrkcal = document.createElement('td');
+										var buttonelementtabletbodytrkcaltext = document.createTextNode('Kcal');
+										buttonelementtabletbodytrkcal.appendChild(buttonelementtabletbodytrkcaltext);
+									buttonelementtabletbodytr.appendChild(buttonelementtabletbodytrkcal);
+								buttonelementtablethead.appendChild(buttonelementtabletbodytr);
+							buttonelementtable.appendChild(buttonelementtablethead);
+							var buttonelementtabletbody = document.createElement('tbody');
+							if(localStorage.getItem(config.rum[i].replace(':', '-') + 'table')){
+								var tableelements = localStorage.getItem(config.rum[i].replace(':', '-') + 'table').split('||');
+								for(f=0;f<(tableelements.length-1);f++){
+									var separatinfo = tableelements[f].split('|');
+
+									var tr = document.createElement('tr');
+										tr.setAttribute('data', separatinfo[2])
+										var trtid = document.createElement('td');
+											var trtidtext = document.createTextNode(separatinfo[0]);
+											trtid.appendChild(trtidtext);
+										tr.appendChild(trtid);
+										var trvad = document.createElement('td');
+											var trvadtext = document.createTextNode(separatinfo[1]);
+											trvad.appendChild(trvadtext);
+										tr.appendChild(trvad);
+										var trkcal = document.createElement('td');
+											var trkcaltext = document.createTextNode(separatinfo[2]);
+											trkcal.appendChild(trkcaltext);
+										tr.appendChild(trkcal);
+										var trtabort = document.createElement('td');
+											trtabort.setAttribute('onclick', 'tabortdetta(this, "' + config.rum[i].replace(':', '-') + '");')
+											var trtaborttext = document.createTextNode('X');
+											trtabort.appendChild(trtaborttext);
+										tr.appendChild(trtabort);
+									buttonelementtabletbody.appendChild(tr);
+								};
+							};
+							buttonelementtable.appendChild(buttonelementtabletbody);
+						buttonelement.appendChild(buttonelementtable);
+					patientlista.appendChild(buttonelement);
+				var patientregistrera = document.getElementById('patientregistrera');
+				var registrerawrapper = document.createElement('div');
+						registrerawrapper.setAttribute('id', config.rum[i].replace(':', '-'));
+						registrerawrapper.setAttribute('style', 'display: none;');
+				for(a=0;a<config.maltid.length;a++){
+					var rubrik = document.createElement('h2');
+						var rubriktext = document.createTextNode(config.maltid[a].rubrik);
+						rubrik.appendChild(rubriktext);
+					registrerawrapper.appendChild(rubrik);
+					for(b=0;b<config.maltid[a].knappar.length;b++){
+							var registrera = document.createElement('div');
+								registrera.setAttribute('onclick', 'registrera(this, "' + config.rum[i].replace(':', '-') + '", "' + config.maltid[a].knappar[b].text + '", "' + config.maltid[a].knappar[b].enhet + '", "' + config.maltid[a].knappar[b].kcal +'")');
+								registrera.setAttribute('class', 'buttonelement');
+								var registreratextwrapper = document.createElement('div');
+									var registreratext = document.createTextNode(config.maltid[a].knappar[b].text);
+									registreratextwrapper.appendChild(registreratext);
+								registrera.appendChild(registreratextwrapper);
+								var registrerarange = document.createElement('input');
+									registrerarange.setAttribute('type', 'range');
+									registrerarange.setAttribute('name', 'port');
+									registrerarange.setAttribute('min', '0');
+									registrerarange.setAttribute('max', '4');
+									registrerarange.setAttribute('value', '4');
+									registrerarange.setAttribute('onchange', 'uppdateport(this);');
+								registrera.appendChild(registrerarange);
+								var port = document.createElement('span');
+									port.setAttribute('class', 'port');
+									var porttext = document.createTextNode('1 port');
+									port.appendChild(porttext);
+								registrera.appendChild(port);
+							registrerawrapper.appendChild(registrera);
+					};
+				};
+				patientregistrera.appendChild(registrerawrapper);
+			};
+		};
+		function getport(element){
+			if(element.value == 0){var port = '0';}else if(element.value == 1){var port = '0,25';}else if(element.value == 2){var port = '0,5';}else if(element.value == 3){var port = '0,75';}else if(element.value == 4){var port = '1';};
+			return port;
+		}
+		function uppdateport(element){
+			var wrapper = element.parentNode.getElementsByClassName('port')[0];
+			var port = getport(element);
+			wrapper.removeChild(wrapper.childNodes[0]);
+			var porttext = document.createTextNode(port + ' port');
+			wrapper.appendChild(porttext);
+			element.parentNode.setAttribute('data', 'dontpush');
+		};
+		function oppnareg(number){
+			var wrapper = document.getElementById(number);
+				wrapper.setAttribute('style', 'display: ;');
+			var patientlista = document.getElementById('patientlista');
+				patientlista.setAttribute('style', 'display: none;');
+		}
+		function registrera(element, number, text, enhet, kcal){
+			if(!element.getAttribute('data')){
+				var history = document.getElementById(number.replace(':', '-') + 'count');
+					var getportions = element.getElementsByTagName('input')[0];
+					var percent = getport(getportions).replace(',', '.');
+					var count = Math.round(parseInt(history.textContent) + (parseInt(kcal) * percent));
+					history.removeChild(history.childNodes[0]);
+					var nytext = document.createTextNode(count);
+					history.appendChild(nytext);
+					var tbody = history.parentNode.getElementsByTagName('table')[0].getElementsByTagName('tbody')[0];
+						var tr = document.createElement('tr');
+							tr.setAttribute('data', Math.round(parseInt(kcal) * percent))
+							var trtid = document.createElement('td');
+								var trtidtext = document.createTextNode(getTime());
+								trtid.appendChild(trtidtext);
+							tr.appendChild(trtid);
+							var trvad = document.createElement('td');
+								var trvadtext = document.createTextNode(text);
+								trvad.appendChild(trvadtext);
+							tr.appendChild(trvad);
+							var trkcal = document.createElement('td');
+								var trkcaltext = document.createTextNode(Math.round(parseInt(kcal) * percent));
+								trkcal.appendChild(trkcaltext);
+							tr.appendChild(trkcal);
+							var trtabort = document.createElement('td');
+								trtabort.setAttribute('onclick', 'tabortdetta(this, "' + number + '");')
+								var trtaborttext = document.createTextNode('X');
+								trtabort.appendChild(trtaborttext);
+							tr.appendChild(trtabort);
+						tbody.appendChild(tr);
+				element.removeAttribute('data');
+				tillbaka();
+			}else{
+				element.removeAttribute('data');
+			};
+		};
+		function tillbaka(){
+			var allelementstohide = document.getElementById('patientregistrera').childNodes;
+			for(i=0;i<allelementstohide.length;i++){
+				allelementstohide[i].setAttribute('style', 'display: none;');
+			};
+			var patientlista = document.getElementById('patientlista');
+				patientlista.setAttribute('style', 'display: ;');
+			var body = document.body;
+				body.scrollTop = 0;
+			var html = document.documentElement;
+				html.scrollTop = 0;
+			spara();
+		};
+		function getTime(){
+			var d = new Date();
+			var h = d.getHours();
+			var h = d.getHours();
+			var m = d.getMinutes();
+			if(h <= 9){var h = '0' + h};
+			if(m <= 9){var m = '0' + m};
+			return h + ':' + m;
+		};
+		function showtable(element, number){
+			if(!checkelementsintable(number) == 0){
+				var tabletoshow = element.parentNode.getElementsByTagName('table')[0];
+				if(tabletoshow.getAttribute('class') == 'hidden'){var todo = ''}else{var todo = 'hidden'};
+				var patientlista = document.getElementById('patientlista');
+				var buttonelements = patientlista.getElementsByClassName('buttonelement');
+				for(i=0;i<buttonelements.length;i++){
+					var thetable = buttonelements[i].getElementsByTagName('table')[0];
+						thetable.setAttribute('class', 'hidden');
+				};
+				tabletoshow.setAttribute('class', todo);
+			};
+		};
+		function tabortdetta(element, number){
+			var atttabort = element.parentNode;
+			var history = document.getElementById(number.replace(':', '-') + 'count');
+			var count = document.createTextNode(parseInt(history.textContent) - parseInt(atttabort.getAttribute('data')));
+			history.replaceChild(count ,history.childNodes[0]);
+			atttabort.parentNode.removeChild(atttabort);
+			if(checkelementsintable(number) == 0){history.parentNode.getElementsByTagName('table')[0].setAttribute('class', 'hidden');};
+			spara();
+		};
+		function checkelementsintable(number){
+			var history = document.getElementById(number.replace(':', '-') + 'count');
+			return history.parentNode.getElementsByTagName('table')[0].getElementsByTagName('tbody')[0].getElementsByTagName('tr').length;
+		};
+		function avsluta(){
+			var todo = confirm('S\u00E4ker p\u00E3 att du vill ta bort all information?');
+			if(todo){
+				localStorage.clear();
+				location.reload();
+			};
+		};
+		function spara(){
+			for(i=0;i<config.rum.length;i++){
+				var count = document.getElementById(config.rum[i].replace(':', '-') + 'count');
+				localStorage.setItem(config.rum[i].replace(':', '-') + 'count', count.textContent);
+				var tableelements = count.parentNode.getElementsByTagName('tbody')[0].childNodes;
+				var tosave = '';
+				for(a=0;a<tableelements.length;a++){
+					var tid = tableelements[a].childNodes[0].textContent;
+					var namn = tableelements[a].childNodes[1].textContent;
+					var kcal = tableelements[a].childNodes[2].textContent;
+					var tosave = tosave + tid + '|' + namn + '|' + kcal + '||';
+				};
+				localStorage.setItem(config.rum[i].replace(':', '-') + 'table', tosave);
+			};
+		};
+		</script>
+		<style type="text/css">
+		.hidden{
+			display: none;
+		}
+		#footer{text-align: center;font-size: 10px !important;color: #000000;margin-top:10px;}
+		#footer a{text-decoration: none;color: #000000;}
+		#footer a:hover{color: #FFA500;text-decoration: overline underline;}
+		h1{
+			text-align: center;
+		}
+		.buttonelement{
+			font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+			text-decoration: none;
+			text-align: center;
+			padding: 10px;
+			font-size: 18px;
+			text-transform: uppercase;
+			border: 0px none;
+			background-color:#000;
+			color:#FFF;
+			cursor:pointer;
+			white-space: nowrap;
+			margin: 15px auto;
+		}
+		.buttonelement table{
+			width:100%;
+			margin-top:10px;
+		}
+		.buttonelement table tbody tr td:nth-child(2){
+			text-align: left;
+		}
+		/*
+		.buttonelement table tr td:nth-child(1){
+			text-align: left;
+		}*/
+		#patientlista .buttonelement span{
+			 display: table-cell;
+			 width:100%;
+			 text-align: left;
+		}
+		#patientlista .buttonelement span:nth-child(2), #patientregistrera .buttonelement span:nth-child(3){
+			background-color:#FFF;
+			color:#000;
+			padding: 0px 10px;
+			margin: 0px 10px;
+		}
+		#patientlista .buttonelement span:nth-child(3){
+			font-weight:bold;
+			padding-left:10px;
+		}
+		#patientlista .buttonelement table {
+			border:0px;
+			border-collapse: collapse;
+			width:100%;
+		}
+		#patientlista .buttonelement td {
+	    border: 1px solid black;
+			background-color:#FFF;
+			color:#000;
+		}
+		#patientlista .buttonelement td:nth-child(4){
+			text-align:center;
+			color:red;
+			font-weight:bold;
+			cursor:pointer;
+		}
+		input[type=range]{
+			width:60%;
+		}
+		input[type=range]::-webkit-slider-thumb {
+		  -webkit-appearance: none;
+		  width: 30px; height: 30px;
+		  background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
+		  border: 1px solid #bbb;
+		  -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
+		}
+		.avsluta {
+		    padding: 5px;
+		    background-color: #F00;
+		    color: #FFF;
+		    font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+		    text-decoration: none;
+		    text-align: center;
+		    font-size: 18px;
+		    text-transform: uppercase;
+		    border: 0px none;
+		    outline: 0px none;
+		    cursor: pointer;
+		    display: inline;
+		    position: absolute;
+		    right: 0px;
+		    top: 0px;
+		}
+	</style>
+</head>
+<body onload="start()">
+	<span class="avsluta" onclick="avsluta();">Rensa info</span>
+	<h1 onclick="tillbaka();">Kcal Cal</h1>
+	<div id="patientlista"></div>
+	<div id="patientregistrera"></div>
+	<div id="footer"><a href="https://www.dropbox.com/" target="blank" alt="Lagra filer och redigera p&#229; ett enkellt s&#228;tt">Dropbox</a>&nbsp;&#8226;&nbsp;<a href="http://my.dot.tk/cgi-bin/amb/landing.dottk?nr=243497::7285606::1" target="blank" alt="Skapa eget dom&#228;n Gratis!!">TK</a>&nbsp;&#8226;&nbsp;<a href="http://www.weebly.com" alt="Skapa en Gratis hemmsida!!">Weebly</a>&nbsp;&#166;&nbsp;2016&nbsp;&#169;&nbsp;Mattias Måsbäck&nbsp;&#166;&nbsp;{<a href="https://www.teddyprojekt.se/" target="blank" alt="L&#228;nk till denna sida">www.teddyprojekt.se</a>}
+	</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lillebu - Bra att veta</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="res/style.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+	<script src="https://knreise.github.io/L.TileLayer.Kartverket/L.TileLayer.Kartverket.js"></script>
+	<script type="application/javascript" src="res/script.js"></script>
+	<style type="text/css">
+		html, body, #wrapper, #mapid {
+			width: 100%;
+			height: 100%;
+			min-width: 100%;
+			min-height: 100%;
+			padding: 0px;
+		}
+	</style>
+</head>
+<body onload="addmap();">
+	<div id="menywrapper">
+		<div id="meny">
+			<a href="index.html">Start</a>
+			<a href="goodtoknow.html">Bra att veta</a>
+			<a href="kal.html">Kalender</a>
+			<a href="listor.html">Listor</a>
+			<a href="hytteboken.html">Hytteboken/Historia</a>
+			<a href="kontakt.html">Kontakt</a>
+			<a href="regler.html">Relger</a>
+			<a href="checkaut.html">Checka ut</a>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="mapid"></div>
+	</div>
+</body>
+</html>

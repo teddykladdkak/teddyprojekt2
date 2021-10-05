@@ -1,0 +1,172 @@
+<!--
+X Fixa så att om användare redan existerar i localStorage letas rätt tr fram och id läggs till detta element för att snabbt senare kunna uppdatera siffran.
+# Fixa designen.
+
+
+Alternativ:
+	Användare skickar + eller - till server med användarnamn (om minus motståndar användarnamn).
+	Knappen fryses på sidan. (Och ändrar färg)
+	Server tar mot förfrågan.
+	Letar upp användare.
+	Plussar alt minusar.
+	Skickar ut till alla användare.
+		Användarnamn och ny siffra.
+	Användarna uppdaterar den raden.
+	Knappen lyser upp igen. Och kan nu åter klickas på.
+
+Om användare i listan klickas på lyser raden röd. Och process ovan görs. När ändring kommit tillbaka och är gjord på servern, tas röda bakgrunden bort.
+
+Tanken är att man ska klicka på en knapp. För varje klick plussas ens siffra med 1. Ju mer man klickat, desto högre upp kommer man i listan. Alternativt minusas allas nummer var 30:e minut med minus 30 (alltså 1 poäng per minut) och om under 0, tas namn bort. Användare har också möjlighet att minusa andra men förlorar då samtidigt poäng, går inte att göra om användaren redan har 0 poäng.
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Härren på teppan</title>
+	<script type="text/javascript">
+		var exempeldatabas = [{
+			username: 'Olle',
+			count: '4329'
+		},{
+			username: 'Ylva',
+			count: '6523'
+		},{
+			username: 'Kajsa',
+			count: '142'
+		},{
+			username: 'Mikke',
+			count: '4'
+		},{
+			username: 'Naseru',
+			count: '425'
+		},{
+			username: 'Milla',
+			count: '432'
+		},{
+			username: 'Krite',
+			count: '42124'
+		},{
+			username: 'Bott',
+			count: '1231241235'
+		},{
+			username: 'Benjamin32',
+			count: '142'
+		},{
+			username: 'Bobby',
+			count: '435'
+		}];
+		function serversendallcontent(){
+			loadallcontent(exempeldatabas);
+		};
+		function connect(){
+			serversendallcontent();
+			if(!localStorage.getItem('herrenpateppan_username')){
+				var username = prompt("Please enter your name", "Harry Potter");
+				if (username != null) {
+				    localStorage.setItem('herrenpateppan_username' , username);
+				}else{
+					return false;
+				};
+			}else{
+				var username = localStorage.getItem('herrenpateppan_username');
+			};
+			var insert = document.getElementById('insert');
+			var alllines = insert.getElementsByTagName('tr');
+			var registrerad = false;
+			for (var i = alllines.length - 1; i >= 0; i--) {
+				if(alllines[i].getAttribute('data-user') == username.toLowerCase()){
+					var registrerad = i;
+				};
+			};
+			if(registrerad){
+				alllines[registrerad].setAttribute('id', 'insertline');
+			}else{
+				var row = nyrad(username, '0');
+					row.setAttribute('id', 'insertline');
+				insert.appendChild(row);
+			};
+			var namewrapper = document.getElementById('name');
+				var nametext = document.createTextNode(username);
+				namewrapper.appendChild(nametext);
+		};
+		function nyrad(username, nummer){
+			var row = document.createElement('tr');
+				row.setAttribute('onclick', 'removeval(this);');
+				row.setAttribute('data-user', username.toLowerCase());
+				var namecol = document.createElement('td');
+					var namecoltext = document.createTextNode(username);
+					namecol.appendChild(namecoltext);
+				row.appendChild(namecol);
+				var numbercol = document.createElement('td');
+					var numbercoltext = document.createTextNode(nummer);
+					numbercol.appendChild(numbercoltext);
+				row.appendChild(numbercol);
+			return row;
+		};
+		function loadallcontent(info){
+			var table = document.getElementById('insert');
+			for (var i = info.length - 1; i >= 0; i--) {
+				table.appendChild(nyrad(info[i].username, info[i].count));
+			};
+			sortTable('thelist', 1);
+		};
+		function sortTable(table_id, sortColumn){
+		    var tableData = document.getElementById(table_id).getElementsByTagName('tbody').item(0);
+		    var rowData = tableData.getElementsByTagName('tr');            
+		    for(var i = 0; i < rowData.length - 1; i++){
+		        for(var j = 0; j < rowData.length - (i + 1); j++){
+		            if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) < Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
+		                tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+		            };
+		        };
+		    };
+		};
+		function addval(){
+			var line = document.getElementById('insertline').getElementsByTagName('td');
+			var numberelement = line[line.length - 1];
+			var number = parseInt(numberelement.innerText);
+			console.log(number);
+			var nyttnummer = number + 1;
+			while (numberelement.hasChildNodes()) {numberelement.removeChild(numberelement.firstChild);};
+				var nyttnummertext = document.createTextNode(nyttnummer);
+				numberelement.appendChild(nyttnummertext);
+			sortTable('thelist', 1);
+		};
+		function removeval(element){
+			if(element.getAttribute('id') == 'insertline'){
+				return false;
+			}else{
+				var userline = document.getElementById('insertline');
+				var username = userline.getAttribute('data-user');
+				var usercol = userline.getElementsByTagName('td');
+				var usernumberelement = usercol[usercol.length -1];
+				var usernumber = parseInt(usernumberelement.innerText);
+				var nyusernummer = usernumber - 1;
+				if(nyusernummer < 0){}else{
+					while (usernumberelement.hasChildNodes()) {usernumberelement.removeChild(usernumberelement.firstChild);};
+					var usernyttnummer = document.createTextNode(nyusernummer);
+					usernumberelement.appendChild(usernyttnummer);
+
+					var targetuser = element.getAttribute('data-user');
+					var targetcol = element.getElementsByTagName('td');
+					var targetnumberelement = targetcol[targetcol.length -1];
+					var targetnumber = parseInt(targetnumberelement.innerText);
+						while (targetnumberelement.hasChildNodes()) {targetnumberelement.removeChild(targetnumberelement.firstChild);};
+						var targetnyttnummer = document.createTextNode(targetnumber - 1);
+						targetnumberelement.appendChild(targetnyttnummer);
+					sortTable('thelist', 1);
+				};
+			};
+		};
+	</script>
+</head>
+<body onload="connect();">
+<table id="thelist">
+	<tbody id="insert">
+		
+	</tbody>
+</table>
+<div id="name"></div>
+<div id="button" onclick="addval();">Click</div>
+</body>
+</html>

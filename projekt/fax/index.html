@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fax..</title>
+	<style type="text/css">
+		body, html, #skapa {
+			margin: 0px;
+			padding: 0px;
+		}
+		html, body, #skrivut {
+			min-height: 100%!important;
+		}
+		body {
+			font-family: Arial,Helvetica,sans-serif;
+			background-color: #035988;
+			background-image: url(bg.svg);
+		    background-repeat: no-repeat;
+		    background-attachment: fixed;
+		    background-position: top;
+		    background-size: 150%;
+		}
+		#wrapper {
+			max-width: 750px;
+			width: 100%;
+			margin: 0px auto;
+			background-color: white;
+			padding: 5px;
+		}
+		.wrapper {
+			display: none;
+		}
+		#skapa table, #startup table, #skrivut table {
+			width: 100%;
+		}
+		#skapa td, #startup td, #skrivut td {
+			width: 50%;
+		}
+		#skapa table tr td:nth-child(1), #startup table tr td:nth-child(1){
+			text-align: right;
+		}
+		.skrivuthead {
+			display: inline-block;
+			padding: 0px;
+			font-weight: bold;
+			font-size: 10px;
+		}
+		.skrivuthead span.blue:nth-child(1){
+			background-image: url(bg.svg);
+		    background-repeat: no-repeat;
+		    background-position: 0% 20%;
+			background-size: 300%;
+		}
+		.skrivuthead span.blue {
+			padding: 5px 10px 5px 20px;
+			background-color: #035988;
+			color: white;
+		}
+		.skrivuthead span.blue:nth-child(3){
+			background-color: #5681a2;
+		}
+		.skrivuthead span.white {
+			padding: 0px 10px;
+			background-color: white;
+			color: #035988;
+		}
+		#skrivut h1 {
+			margin-top: 150px;
+			margin-bottom: 50px;
+			text-align: center;
+		}
+		#skrivut table.contenttable {
+			border-collapse: collapse;
+		}
+		#skrivut table.contenttable tr {
+			border: 2px solid black;
+		}
+		#skrivut table.contenttable tr td {
+			padding: 5px 30px;
+		}
+		#skrivut table.contenttable tr:nth-child(odd) td {
+			font-weight: bold;
+		}
+		#skrivut table.contenttable tr:nth-child(even) td {
+			padding: 30px;
+		}
+		.footer {
+			font-size: 10px;
+			position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		}
+		.footer .footerline {
+			text-align: right;
+			display: table;
+		}
+		.footer .footerline .footerlinetr {
+			display: table-row;
+		}
+		.footer .footerline .footerlinetr .footerlinetd {
+			display: table-cell;
+		}
+		.footer .footerline .footerlinetr .footerlinetd:nth-child(1){
+			width: 100%;
+			border-bottom: 1px solid black;
+		}
+		.footer .footertable .footertabletr .footertabletd {
+			width: 50%;
+		}
+		.footer .footertable .footertabletr .footertabletd:nth-child(2) {
+			text-align: right;
+		}
+		.footer .footertable .footertabletr .footertabletd img {
+			width: 60%;
+		}
+		#databas table.border {
+			border-collapse: collapse;
+		}
+		#databas table.border td {
+			border: 1px solid black;
+			vertical-align: middle;
+			padding: 5px;
+		}
+		#skrivut {
+			width: 595px;
+			height: 842px;
+			margin: 0px auto;
+			border: 3px solid black;
+		}
+		#skrivut h1 {
+			font-size: 1.7em;
+		}
+		#skrivut h3 {
+			font-size: 0.87em;
+		}
+		#skrivut {
+			position: relative;
+			padding: 10px;
+			font-size: 0.7em;
+		}
+		.menubox {
+			border: 1px solid black;
+			padding: 10px;
+			display: inline-block;
+		}
+		.border, .menubox {
+			margin: 10px 0px;
+		}
+		.buttontop {
+			margin-bottom: 10px;
+		}
+		.menubox input {
+			margin: 5px;
+		}
+		.menubox table td:nth-child(odd) {
+			text-align: right;
+		}
+		@media print {
+			body {
+				background-color: white;
+				background-image: none;
+			}
+			#wrapper {
+				padding: 0px;
+			}
+			#skapa, #startup, #databas {
+				display: none!important;
+			}
+			.skrivuthead {
+				font-size: 13px;
+			}
+			.footer {
+				font-size: 13px;
+			}
+			#skrivut {
+				position: static;
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: 0px solid white;
+				margin: 0px;
+				padding: 0px;
+				font-size: 1em;
+			}
+			#skrivut h1 {
+				font-size: 2em;
+			}
+			#skrivut h3 {
+				font-size: 1.17em;
+			}
+		}
+	</style>
+	<script type="text/javascript">
+		var toadd = [
+			{id: 'mottagnamn', important: 'true', spara: 'true', beskriv: 'Mottagare:'},
+			{id: 'mottagfax', important: 'true', spara: 'true', beskriv: 'Faxnummer:'},
+			{id: 'mottagtel', important: 'false', spara: 'true', beskriv: 'Telefonnummer:'},
+			{id: 'antalsidor', important: 'true', spara: 'false'},
+			{id: 'meddelande', important: 'false', spara: 'false'}
+		];
+		var yourinfo = ['namn', 'titel', 'omrnamn', 'avdnamn', 'avdfax', 'avdtel'];
+		var editbuttons = [{
+			"value": "Ändra mina uppgifter",
+			"onclick": "redigeraMinaUppgifter();"
+		},{
+			"value": "Rensa ALL information",
+			"onclick": "localStorage.clear();location.reload();"
+		},{
+			"value": "Spara Databas av Mottagare",
+			"onclick": "sparaDatabas();"
+		},{
+			"value": "Ladda Databas av Mottagare",
+			"onclick": "startLaddaDatabas();"
+		}]
+		function load(){
+			var allsaved = 'true';
+			for (var i = yourinfo.length - 1; i >= 0; i--) {
+				if(!localStorage.getItem(yourinfo[i])){
+					var allsaved = 'false';
+					break;
+				};
+			};
+			if(allsaved == 'false'){
+				show(['startup'], 'namn');
+			}else{
+				show(['skapa', 'skrivut'], 'mottagnamn');
+				skrivut('true');
+			};
+			adddatalist();
+		};
+		function adddatalist(){
+			if(!localStorage.getItem('mottagare')){}else{
+				var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+				var wrapper = document.getElementById('mottagare');
+					removechilds(wrapper);
+				for (var i = mottagare.length - 1; i >= 0; i--) {
+					var option = document.createElement('option');
+						option.setAttribute('value', mottagare[i].mottagnamn);
+					wrapper.appendChild(option);
+				};
+			};
+		}
+		function spara(){
+			for (var i = yourinfo.length - 1; i >= 0; i--) {
+				if(!document.getElementById(yourinfo[i]).value || document.getElementById(yourinfo[i]).value == ''){
+					return false;
+				};
+			};
+			for (var i = yourinfo.length - 1; i >= 0; i--) {
+				localStorage.setItem(yourinfo[i], document.getElementById(yourinfo[i]).value);
+			};
+			show(['skapa', 'skrivut'], 'mottagnamn');
+			removeinfofrominput();
+			skrivut('true');
+		};
+		function addzero(number){if(number <= 9){return "0" + number;}else{return number;};};
+		function getDate(dateannan, timeannan, milisecsave){
+			if(!dateannan && !timeannan && !milisecsave){
+				var date = new Date();
+			}else if(!milisecsave){
+				var annatdatum = dateannan.split('-');
+				var annattid = timeannan.split(':');
+				var date = new Date(annatdatum[0], annatdatum[1] - 1, annatdatum[2], annattid[0], annattid[1]);
+			}else{
+				var date = new Date(parseInt(milisecsave));
+			};
+			var y = date.getFullYear();
+			var m = date.getMonth() + 1;
+			var d = date.getDate();
+			var h = date.getHours();
+			var mm = date.getMinutes();
+			var milisec = date.getTime();
+			var datum = y + '-' + addzero(m) + '-' + addzero(d);
+			var manad = y + '-' + addzero(m);
+			var tid = addzero(h) + ':' + addzero(mm);
+			return {"datum": datum, "tid": tid, "milisec": milisec, "manad": manad};
+		};
+		function checknum(element){
+			if(!localStorage.getItem('mottagare')){}else{
+				var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+				var result = [];
+				for (var i = mottagare.length - 1; i >= 0; i--) {
+					if(mottagare[i].mottagnamn.includes(element.value)){
+						result.push(mottagare[i]);
+					};
+					if(mottagare[i].mottagnamn == element.value){
+						result = [mottagare[i]];
+						break;
+					};
+				};
+				if(result.length == 1){
+					document.getElementById('mottagfax').value = result[0].mottagfax;
+					document.getElementById('mottagtel').value = result[0].mottagtel;
+				}else{
+					document.getElementById('mottagfax').value = '';
+					document.getElementById('mottagtel').value = '';
+				};
+			};
+		};
+		function removechilds(parent){
+			if(parent.hasChildNodes()){
+				while (parent.hasChildNodes()) {
+					parent.removeChild(parent.firstChild);
+				};
+			};
+		};
+		function skapanyelem(){
+			var nyelem = {};
+			var nyelemspara = {};
+			for (var i = toadd.length - 1; i >= 0; i--) {
+				nyelem[toadd[i].id] = document.getElementById(toadd[i].id).value;
+				if(toadd[i].spara == 'true'){
+					nyelemspara[toadd[i].id] = document.getElementById(toadd[i].id).value;
+				};
+			};
+			nyelem.datum = getDate().datum;
+			nyelemspara.datum = getDate().datum;
+			return {"allt": nyelem, "spara": nyelemspara};
+		};
+		function removeinfofrominput(){
+			var wrapper = document.getElementById('skrivut');
+			removechilds(wrapper);
+			for (var i = toadd.length - 1; i >= 0; i--) {
+				if(document.getElementById(toadd[i].id).getAttribute('id') == 'antalsidor'){
+					document.getElementById(toadd[i].id).value = 2;
+				}else{
+					document.getElementById(toadd[i].id).value = '';
+				};
+			};
+		};
+		function nymottagare(preview){
+			for (var i = toadd.length - 1; i >= 0; i--) {
+				if(toadd[i].important == 'true'){
+					if(!document.getElementById(toadd[i].id).value || document.getElementById(toadd[i].id).value == ''){
+						return false;
+					};
+				};
+			};
+			if(!localStorage.getItem('mottagare')){
+				var mottagare = [];
+			}else{
+				var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+			};
+			var nyelem = skapanyelem();
+			var ny = 'true';
+			for (var i = mottagare.length - 1; i >= 0; i--) {
+				if(mottagare[i].mottagnamn == nyelem.allt.mottagnamn){
+					if(mottagare[i].mottagfax == nyelem.allt.mottagfax){}else{
+						mottagare[i].mottagfax = nyelem.allt.mottagfax;
+						mottagare[i].datum = getDate().datum;
+					};
+					if(mottagare[i].mottagtel == nyelem.allt.mottagtel){}else{
+						mottagare[i].mottagtel = nyelem.allt.mottagtel;
+						mottagare[i].datum = getDate().datum;
+					};
+					ny = 'false';
+				};
+			};
+			if(ny == 'true'){
+				mottagare.push(nyelem.spara);
+			};
+			localStorage.setItem('mottagare', JSON.stringify(mottagare));
+			return nyelem.allt;
+		};
+		function skrivut(preview){
+			if(preview == 'false'){
+				var nyelem = nymottagare(preview);
+			}else{
+				var nyelem = skapanyelem().allt;
+			}
+			if(nyelem){
+				startaskrivut(nyelem, preview);
+			};
+		};
+		function startaskrivut(nyelem, preview){
+			var wrapper = document.getElementById('skrivut');
+			removechilds(wrapper);
+				var head = document.createElement('div');
+					head.setAttribute('class', 'skrivuthead');
+					var headsjukhus = document.createElement('span');
+						headsjukhus.setAttribute('class', 'blue');
+						var headtext = document.createTextNode('Sahlgrenska Universitetssjukhuset');
+						headsjukhus.appendChild(headtext);
+					head.appendChild(headsjukhus);
+					var headomr = document.createElement('span');
+						headomr.setAttribute('class', 'white');
+						var headomrtext = document.createTextNode(localStorage.getItem('omrnamn').toUpperCase());
+						headomr.appendChild(headomrtext);
+					head.appendChild(headomr);
+					var headend = document.createElement('span');
+						headend.setAttribute('class', 'blue headend');
+					head.appendChild(headend);
+				wrapper.appendChild(head);
+				var rubrik = document.createElement('h1');
+					var rubirktext = document.createTextNode('TELEFAX');
+					rubrik.appendChild(rubirktext);
+				wrapper.appendChild(rubrik);
+				var underhead = document.createElement('h3');
+					var underheadtext = document.createTextNode('Svars-nr:');
+					underhead.appendChild(underheadtext);
+				wrapper.appendChild(underhead);
+				var intable = [
+					[
+						"Från:",
+						"Datum:"
+					],[
+						[
+							localStorage.getItem('avdnamn'),
+							localStorage.getItem('namn') + ' (' + localStorage.getItem('titel') + ')',
+							"Faxnummer: " + localStorage.getItem('avdfax'),
+							"Telefonnummer: " + localStorage.getItem('avdtel')
+						],
+						getDate().datum
+					],[
+						"Till:",
+						"Antal sidor (inkl denna):"
+					],[
+						[
+							nyelem.mottagnamn,
+							"Faxnummer: " + nyelem.mottagfax,
+							"Telefonnummer: " + nyelem.mottagtel,
+						],
+						nyelem.antalsidor
+					],[
+						"Meddelande:"
+					],[
+						nyelem.meddelande
+					]
+				]
+				var table = document.createElement('table');
+					table.setAttribute('class', 'contenttable')
+				for (var i = 0; i < intable.length; i++){
+					var tr = document.createElement('tr');
+					for (var a = 0; a < intable[i].length; a++){
+						var td = document.createElement('td');
+						if(intable[i].length == 1){
+							td.setAttribute('colspan', '2');
+						};
+						if(Array.isArray(intable[i][a])){
+							for (var b = 0; b < intable[i][a].length; b++){
+								var tdtext = document.createTextNode(intable[i][a][b]);
+								td.appendChild(tdtext);
+								td.appendChild(document.createElement('br'));
+							}
+						}else{
+							var tdtext = document.createTextNode(intable[i][a]);
+							td.appendChild(tdtext);
+						};
+						tr.appendChild(td);
+					};
+					table.appendChild(tr);
+				};
+				wrapper.appendChild(table);
+				var footer = document.createElement('div');
+					footer.setAttribute('class', 'footer');
+					var lineelem = document.createElement('div');
+						lineelem.setAttribute('class', 'footerline');
+						var lineelemtr = document.createElement('div');
+							lineelemtr.setAttribute('class', 'footerlinetr');
+							var lineelemspace = document.createElement('div');
+								lineelemspace.setAttribute('class', 'footerlinetd');
+							lineelemtr.appendChild(lineelemspace);
+							var lineelemtextwrp = document.createElement('div');
+								lineelemtextwrp.setAttribute('class', 'footerlinetd');
+								var lineelemtext = document.createTextNode('www.sahlgrenska.se');
+								lineelemtextwrp.appendChild(lineelemtext);
+							lineelemtr.appendChild(lineelemtextwrp);
+						lineelem.appendChild(lineelemtr);
+					footer.appendChild(lineelem);
+					var footertable = document.createElement('table');
+						footertable.setAttribute('class', 'footertable');
+						var footertabletr = document.createElement('tr');
+							footertabletr.setAttribute('class', 'footertabletr');
+							var footertabletrimgwrp = document.createElement('td');
+								footertabletrimgwrp.setAttribute('class', 'footertabletd');
+								var footertabletrimg = document.createElement('img');
+									footertabletrimg.setAttribute('src', 'vgr.png');
+								footertabletrimgwrp.appendChild(footertabletrimg);
+							footertabletr.appendChild(footertabletrimgwrp);
+							var footertabletrtextwrp = document.createElement('td');
+								footertabletrtextwrp.setAttribute('class', 'footertabletd');
+								footertabletrtextwrp.appendChild(document.createTextNode('Sahlgrenska Universitetssjukhuset'));
+								footertabletrtextwrp.appendChild(document.createElement('br'));
+								footertabletrtextwrp.appendChild(document.createTextNode('VO ' + localStorage.getItem('omrnamn').toLowerCase()));
+							footertabletr.appendChild(footertabletrtextwrp);
+						footertable.appendChild(footertabletr);
+					footer.appendChild(footertable);
+				wrapper.appendChild(footer);
+				if(preview == 'false'){
+					window.print();
+					document.getElementById('mottagnamn').focus();
+					removeinfofrominput();
+					adddatalist();
+					skrivut('true');
+				};
+		};
+		function showdatabas(){
+			show(['databas']);
+			var wrapper = document.getElementById('databas');
+			removechilds(wrapper);
+				var tillbaka = document.createElement('input');
+					tillbaka.setAttribute('type', 'button');
+					tillbaka.setAttribute('class', 'buttontop');
+					tillbaka.setAttribute('value', 'Tillbaka till utskrift');
+					tillbaka.setAttribute('onclick', 'show([\'skapa\', \'skrivut\'], \'mottagnamn\');removeinfofrominput();skrivut(\'true\');');
+				wrapper.appendChild(tillbaka);
+			if(!localStorage.getItem('mottagare')){
+				var mottagare = [];
+			}else{
+				var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+			};
+			var rubriker = [
+				{rubrik: 'Namn:', id: 'mottagnamn', edit: 'true'},
+				{rubrik: 'Faxnummer:', id: 'mottagfax', edit: 'true'},
+				{rubrik: 'Telefonnummer:', id: 'mottagtel', edit: 'true'},
+				{rubrik: 'Senast ändrad', id: 'datum', edit: 'false'}
+			];
+			var table = document.createElement('table');
+				table.setAttribute('class', 'border');
+				var thead = document.createElement('thead');
+					var rubrikertr = document.createElement('tr');
+					for (var i = 0; i < rubriker.length; i++){
+						var rubrikertd = document.createElement('td');
+							var rubriktext = document.createTextNode(rubriker[i].rubrik);
+							rubrikertd.appendChild(rubriktext);
+						rubrikertr.appendChild(rubrikertd);
+					};
+					thead.appendChild(rubrikertr);
+				table.appendChild(thead);
+				var tbody = document.createElement('tbody');
+				for (var i = 0; i < mottagare.length; i++){
+					var tr = document.createElement('tr');
+						tr.setAttribute('data-order', i);
+					for (var a = 0; a < rubriker.length; a++){
+						var td = document.createElement('td');
+							if(rubriker[a].edit == 'true'){
+								td.setAttribute('onclick', 'edit(this);');
+							};
+							td.setAttribute('data-id', rubriker[a].id);
+							var tdtext = document.createTextNode(mottagare[i][rubriker[a].id]);
+							td.appendChild(tdtext);
+						tr.appendChild(td);
+					};
+						var tdremove = document.createElement('td');
+							var input = document.createElement('input');
+								input.setAttribute('type', 'button');
+								input.setAttribute('value', 'Ta bort');
+								input.setAttribute('onclick', 'tabort(this);');
+							tdremove.appendChild(input);
+						tr.appendChild(tdremove);
+					tbody.appendChild(tr);
+				//	mottagare[i]
+				};
+				table.appendChild(tbody);
+			wrapper.appendChild(table);
+			var addnew = document.createElement('div');
+				addnew.setAttribute('id', 'minauppgifter');
+				addnew.setAttribute('class', 'menubox');
+				var addnewrubrik = document.createElement('h3');
+					var addnewrubriktext = document.createTextNode('Lägg till ny mottagare:');
+					addnewrubrik.appendChild(addnewrubriktext);
+				addnew.appendChild(addnewrubrik);
+				var newtable = document.createElement('table');
+				for (var i = 0; i < toadd.length; i++){
+					if(toadd[i].spara == 'true'){
+						var row = document.createElement('tr');
+							var info = document.createElement('td');
+								var infotext = document.createTextNode(toadd[i].beskriv);
+								info.appendChild(infotext);
+							row.appendChild(info);
+							var text = document.createElement('td');
+								var input = document.createElement('input');
+									input.setAttribute('type', 'text');
+									input.setAttribute('id', 'minauppgifter' + toadd[i].id);
+								text.appendChild(input);
+							row.appendChild(text);
+						newtable.appendChild(row);
+					};
+				};
+					var addnewrow = document.createElement('tr');
+						addnewrow.appendChild(document.createElement('td'));
+						var addnewbuttonwrp = document.createElement('td');
+							var addnewbutton = document.createElement('input');
+								addnewbutton.setAttribute('type', 'button');
+								addnewbutton.setAttribute('value', 'Lägg till ny');
+								addnewbutton.setAttribute('onclick', 'laggTillNyMottagare();');
+							addnewbuttonwrp.appendChild(addnewbutton);
+						addnewrow.appendChild(addnewbuttonwrp);
+					newtable.appendChild(addnewrow);
+				addnew.appendChild(newtable);
+			wrapper.appendChild(addnew);
+			wrapper.appendChild(document.createElement('br'));
+			var editwrp = document.createElement('div');
+				editwrp.setAttribute('class', 'menubox');
+				for (var i = 0; i < editbuttons.length; i++){
+					var minauppgifter = document.createElement('input');
+						minauppgifter.setAttribute('type', 'button');
+						minauppgifter.setAttribute('value', editbuttons[i].value);
+						minauppgifter.setAttribute('onclick', editbuttons[i].onclick);
+					editwrp.appendChild(minauppgifter);
+				}
+			wrapper.appendChild(editwrp);
+		};
+		function laggTillNyMottagare(){
+			var nymottagare = {};
+			for (var i = 0; i < toadd.length; i++){
+				if(toadd[i].spara == 'true'){
+					if(document.getElementById('minauppgifter' + toadd[i].id).value == ''){
+						return false;
+					};
+				};
+			};
+			for (var i = 0; i < toadd.length; i++){
+				if(toadd[i].spara == 'true'){
+					nymottagare[toadd[i].id] = document.getElementById('minauppgifter' + toadd[i].id).value;
+				};
+			};
+			nymottagare.datum = getDate().datum;
+			if(!localStorage.getItem('mottagare')){
+				var mottagare = [];
+			}else{
+				var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+			};
+				mottagare.push(nymottagare);
+			localStorage.setItem('mottagare', JSON.stringify(mottagare));
+			showdatabas();
+			adddatalist();
+		};
+		function edit(element){
+			element.removeAttribute('onclick');
+			var text = element.innerText;
+			removechilds(element);
+			var input = document.createElement('input');
+				input.setAttribute('type', 'text');
+				input.setAttribute('value', text);
+				input.setAttribute('onblur', 'save(this);');
+			element.appendChild(input);
+			input.focus();
+		};
+		function save(element){
+			var tdparent = element.parentElement;
+				tdparent.setAttribute('onclick', 'edit(this);');
+			var nytext = element.value;
+			removechilds(tdparent);
+			var nytextelem = document.createTextNode(nytext);
+			tdparent.appendChild(nytextelem)
+			var num = parseInt(tdparent.parentElement.getAttribute('data-order'));
+			var alltd = tdparent.parentElement.getElementsByTagName('td');
+			var elemtosave = {};
+			for (var i = 0; i < alltd.length; i++){
+				if(!alltd[i].getAttribute('data-id')){}else{
+					if(alltd[i].getAttribute('data-id') == 'datum'){
+						elemtosave[alltd[i].getAttribute('data-id')] = getDate().datum;
+					}else{
+						elemtosave[alltd[i].getAttribute('data-id')] = alltd[i].innerText;
+					};
+				};
+			};
+			var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+				mottagare[num] = elemtosave;
+			localStorage.setItem('mottagare', JSON.stringify(mottagare));
+			showdatabas();
+			adddatalist();
+		};
+		function tabort(element){
+			var num = parseInt(element.parentElement.parentElement.getAttribute('data-order'));
+			console.log(num);
+			var mottagare = JSON.parse(localStorage.getItem('mottagare'));
+				mottagare.splice(num, 1);
+			localStorage.setItem('mottagare', JSON.stringify(mottagare));
+			adddatalist();
+			showdatabas();
+		};
+		function redigeraMinaUppgifter(){
+			for (var i = yourinfo.length - 1; i >= 0; i--) {
+				if(!localStorage.getItem(yourinfo[i])){}else{
+					document.getElementById(yourinfo[i]).value = localStorage.getItem(yourinfo[i]);
+				};
+			};
+			show(['startup'], 'namn');
+		};
+		function show(id, focusid){
+			var allwrappers = document.getElementsByClassName('wrapper');
+			for (var i = allwrappers.length - 1; i >= 0; i--) {
+				allwrappers[i].removeAttribute('style');
+			};
+			if(!focusid){}else{
+				document.getElementById(focusid).focus();
+			};
+			for (var i = id.length - 1; i >= 0; i--) {
+				document.getElementById(id[i]).setAttribute('style', 'display: block;');
+			};
+		};
+		function sparaDatabas() {
+			var mottagare = localStorage.getItem('mottagare');
+			var filename = getDate().datum + ' Databas Mottagare (' + localStorage.getItem('namn') + ').txt';
+		    var pom = document.createElement('a');
+		    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(mottagare));
+		    pom.setAttribute('download', filename);
+		    if (document.createEvent) {
+				var event = document.createEvent('MouseEvents');
+					event.initEvent('click', true, true);
+				pom.dispatchEvent(event);
+		    }else {
+				pom.click();
+			};
+		};
+		function startLaddaDatabas(){
+			var wrapper = document.getElementsByTagName('body')[0];
+				var inputelement = document.createElement('input');
+					inputelement.setAttribute('type', 'file');
+					inputelement.setAttribute('id', 'loadlogg');
+					inputelement.setAttribute('style', 'visibility: hidden;');
+				wrapper.appendChild(inputelement);
+				var theinput = document.getElementById('loadlogg');
+					theinput.addEventListener('change', laddaDatabas, false);
+					theinput.click();
+		};
+		function laddaDatabas(evt) {
+		    var f = evt.target.files[0]; 
+			if (f) {
+				var r = new FileReader();
+					r.onload = function(e) { 
+						var contents = e.target.result;
+						var type = f.type;
+						if(type == 'text/plain'){}else{
+							alert('Säker på att rätt loggfil har valts? Kan inte ladda loggfil.');
+							return;
+						};
+						var mottagare = JSON.parse(contents);
+						localStorage.setItem('mottagare', JSON.stringify(mottagare));
+						adddatalist();
+						showdatabas();
+					}
+					r.readAsText(f);
+			} else { 
+				alert('Kunde inte ladda loggfilen.');
+			};
+			var theinput = document.getElementById('loadlogg');
+				theinput.parentNode.removeChild(theinput);
+		};
+	</script>
+</head>
+<body onload="load();">
+	<div><img src="vgr.png" style="display: none;"/></div>
+	<div><img src="bg.svg" style="display: none;"/></div>
+	<div id="wrapper">
+		<div id="startup" class="wrapper">
+			<h1>Välkommen! till projektet faxblad</h1>
+			<p>Denna ämnar förenkla processen att skapa försättsblad till fax.</p>
+			<p>Viktigt: All information hanteras och lagras lokalt på din dator, ifall du bytar dator behöver du göra om denna process igen.</p>
+			<p>Innan du kan börja behöver jag veta lite om dig.</p>
+			<table>
+				<tr>
+					<td>
+						<p>Ditt namn:<br/>(Ex. "Test Testsson")</p>
+					</td>
+					<td>
+						<input type="text" id="namn">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>Din titel:<br/>(Ex. "Sjuksköterska")</p>
+					</td>
+					<td>
+						<input type="text" id="titel">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>Verksamhets område:<br/>(Ex. "geriatrik, lungmedicin och allergologi")</p>
+					</td>
+					<td>
+						<input type="text" id="omrnamn">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>Avdelnings namn:<br/>(Ex. Avdelning 604)</p>
+					</td>
+					<td>
+						<input type="text" id="avdnamn">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>Avdelningens faxnummer:</p>
+					</td>
+					<td>
+						<input type="text" id="avdfax">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>Avdelningens telefonnummer:</p>
+					</td>
+					<td>
+						<input type="text" id="avdtel">
+					</td>
+				</tr>
+				<tr>
+					<td> </td>
+					<td>
+						<input type="button" value="Spara" onclick="spara();">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="skapa" class="wrapper">
+			<input type="button" value="Redigera mottagare" class="buttontop" onclick="showdatabas();">
+			<table>
+				<tr>
+					<td>
+						Mottagare:
+					</td>
+					<td>
+						<input type="text" id="mottagnamn" list="mottagare" onkeyup="checknum(this);skrivut('true');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Faxnummer:
+					</td>
+					<td>
+						<input type="text" id="mottagfax" onkeyup="skrivut('true');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Telefonnummer:
+					</td>
+					<td>
+						<input type="text" id="mottagtel" onkeyup="skrivut('true');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Antal sidor (inkl denna)
+					</td>
+					<td>
+						<input type="number" id="antalsidor" value="2" onkeyup="skrivut('true');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Meddelande:
+					</td>
+					<td>
+						<textarea id="meddelande" onkeyup="skrivut('true');"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td> </td>
+					<td>
+						<input type="button" value="Skriv ut" onclick="skrivut('false');">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="skrivut" class="wrapper"></div>
+		<div id="databas" class="wrapper"></div>
+		<datalist id="mottagare">
+
+		</datalist>
+	</div>
+</body>
+</html>

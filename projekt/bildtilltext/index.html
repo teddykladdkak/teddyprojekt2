@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" href="icon.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="icon.ico" />
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+		}
+		img, textarea {
+			max-width: 500px;
+			width: 100%;
+		}
+		img {
+			max-height: 500px;
+		}
+		#text {
+			height: 100%;
+			max-height: 500px;
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value="Ny Bild" onclick="location.reload();"><input type="file" id="raidimage"class="nooffline" onchange="makesmallimg(this.files[0]);imgtotext(this.files[0]);"><input type="button" value="Tala" onclick="talk(this, 'swe');" data-spr="swe" class="talaknapp"><input type="button" value="Speak" onclick="talk(this, 'eng');" data-spr="eng" class="talaknapp"><input type="button" value="Städa" onclick="stada();"><br/>
+	<img src="" id="preview"><br/>
+	<div id="text" contenteditable="true"></div>
+	<script src="script/megapix-image.js"></script>
+	<script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+	<script src="https://code.responsivevoice.org/responsivevoice.js?key=CvjoHbg1"></script>
+	<script type="text/javascript">
+		var config = {
+			sprak: 'eng'
+		};
+		function makesmallimg(file){
+			if(!file){notimg();return false;}else if(file.type == 'image/png' || file.type == 'image/jpeg'){}else{notimg();return false;};
+			var mpImg = new MegaPixImage(file);
+			var resImg = document.getElementById('preview');
+			mpImg.render(resImg, { maxWidth: 500, maxHeight: 500, quality: 0.5 });
+		};
+		function imgtotext(file){
+			if(!file){notimg();return false;}else if(file.type == 'image/png' || file.type == 'image/jpeg'){}else{notimg();return false;};
+			var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function () {
+					console.log(reader.result);
+					Tesseract.recognize(file, {
+						lang: config.sprak
+					}).catch(err => console.error(err)).then(function(result){
+						console.log(result.text);
+						document.getElementById('text').innerText = result.text;
+					})
+				};
+				reader.onerror = function (error) {
+					console.log('Error: ', error);
+				};
+		};
+		function talk(element, sprak){
+			responsiveVoice.cancel();
+			finichtalk();
+			var text = document.getElementById('text').innerText;
+			element.setAttribute('onclick', 'stoptalk(this);');
+			element.setAttribute('value', 'Sluta tala');
+			if(sprak == 'swe'){
+				responsiveVoice.speak(text.replace(/\n/g, ' '), 'Swedish Female', {onend: finichtalk});
+			}else{
+				responsiveVoice.speak(text.replace(/\n/g, ' '), 'UK English Female', {onend: finichtalk});
+			};
+		};
+		function stoptalk(element, todo){
+			element.setAttribute('onclick', 'talk(this, \'' + element.getAttribute('data-spr') + '\');');
+			if(element.getAttribute('data-spr') == 'swe'){
+				element.setAttribute('value', 'Tala');
+			}else{
+				element.setAttribute('value', 'Speak');
+			}
+			if(todo == 'true'){}else{
+				responsiveVoice.cancel();
+			};
+		};
+		function finichtalk(){
+			var allaknappar = document.getElementsByClassName('talaknapp');
+			for (var i = allaknappar.length - 1; i >= 0; i--) {
+				stoptalk(allaknappar[i], 'true');
+			};
+		};
+		function stada(){
+			document.getElementById('text').innerHTML = document.getElementById('text').innerHTML.replace(/-<br>/g, '').replace(/<br><br>/g, '\n\n').replace(/<br>/g, ' ');
+		};
+	</script>
+</body>
+</html>

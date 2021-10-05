@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Patient Dagbok</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+	<style type="text/css">
+		body{
+			background-color: black;
+		}
+		table{
+			background-color: white;
+		}
+		input {
+			zoom: 3;
+			display: block;
+			width: 100%;
+		}
+		#borders, #borders tr {
+			width: 100%;
+			margin: 0px;
+			padding: 0px;
+		}
+		#borders, #borders tr td {
+			width: 50%;
+			margin: 0px;
+			padding: 0px;
+		}
+		table, tr{
+			min-width: 100%;
+		}
+		tr:first-child td, th{
+			border-bottom: 3px solid #000;
+			text-align: center;
+		}
+		tr td:first-child{
+			border-right: 3px solid #000;
+		}
+		td{
+			min-width: 50%;
+			vertical-align: top;
+		}
+		h1, h2{
+			margin: 0px;
+			padding: 0px;
+			display: inline-block;
+		}
+		#datumhead{
+			display: block;
+			text-align: center;
+			background-color: white;
+			margin: 20px 10px;
+			padding: 10px;
+		}
+		#info, #bedomning {
+			background-color: white;
+			padding: 5px;
+		}
+		#infowrapper, #bedomningwrapper{
+			margin: 20px 10px;
+		}
+		#patient {
+			background-color: black;
+		}
+		.inputwrapper{
+			width: 95%;
+		}
+		.valuewrapper{
+			text-align: center;
+			font-size: 50px;
+		}
+		#info img, #info video{
+			width: 30%;
+			display: block;
+		}
+		#info img:hover, #info video:hover{
+			opacity: 0.7;
+		}
+
+		/* The Modal (background) */
+			.modal {
+			    display: none; /* Hidden by default */
+			    position: fixed; /* Stay in place */
+			    z-index: 1; /* Sit on top */
+			    padding-top: 100px; /* Location of the box */
+			    left: 0;
+			    top: 0;
+			    width: 100%; /* Full width */
+			    height: 100%; /* Full height */
+			    overflow: auto; /* Enable scroll if needed */
+			    background-color: rgb(0,0,0); /* Fallback color */
+			    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+			}
+
+			/* Modal Content (Image) */
+			.modal-content {
+			    margin: auto;
+			    display: block;
+			    width: 80%;
+			    max-width: 900px;
+			}
+
+			/* Caption of Modal Image (Image Text) - Same Width as the Image */
+			#caption {
+			    margin: auto;
+			    display: block;
+			    width: 80%;
+			    max-width: 700px;
+			    text-align: center;
+			    color: #ccc;
+			    padding: 10px 0;
+			    height: 150px;
+			}
+
+			/* Add Animation - Zoom in the Modal */
+			.modal-content, #caption { 
+			    animation-name: zoom;
+			    animation-duration: 0.6s;
+			}
+			.modal-content img {
+				width: 100%;
+			}
+			@keyframes zoom {
+			    from {transform:scale(0)} 
+			    to {transform:scale(1)}
+			}
+
+			/* The Close Button */
+			.close {
+			    position: absolute;
+			    top: 15px;
+			    right: 35px;
+			    color: #f1f1f1;
+			    font-size: 40px;
+			    font-weight: bold;
+			    transition: 0.3s;
+			}
+
+			.close:hover,
+			.close:focus {
+			    color: #bbb;
+			    text-decoration: none;
+			    cursor: pointer;
+			}
+
+			/* 100% Image Width on Smaller Screens */
+			@media only screen and (max-width: 700px){
+			    .modal-content {
+			        width: 100%;
+			    }
+			}
+	</style>
+	<script type="application/javascript" src="mall.js"></script>
+	<script type="text/javascript">
+
+		//Sätter igång loopen
+		function startreadmall(){
+			//for (var i = mall.length - 1; i >= 0; i--) {
+			newwrapper('start', false);
+			for (var i = 0; i < mall.length; i++){
+				bulidbuttons(mall[i], 'start');
+			};
+		};
+		function bulidbuttons(data, wrapperid){
+			if(!data.forts){}else{
+				if(data.forts.length == 0){
+					addbutton(data.namn, wrapperid, '', '');
+				}else{
+					if(!data.forts[0].typ){
+						var funk = 'show';
+						var nextid = makeid(data.namn);
+						newwrapper(nextid, true);
+						for (var i = 0; i < data.forts.length; i++){
+							bulidbuttons(data.forts[i], nextid);
+						};
+					}else{
+						var funk = 'pasteinfo';
+						var nextid = arraytotext(data.forts);
+					};
+					addbutton(data.namn, wrapperid, nextid, funk);
+				};
+			};
+		};
+		function brake(element){element.appendChild(document.createElement('br'));};
+		function pasteinfo(array, element){
+			var info = document.getElementById('info');
+				brake(info);
+				var splitarray = array.split('||||||||');
+				for (var i = 0; i < splitarray.length; i++){
+						var tillobjekt = splitarray[i].split('||||');
+						if(tillobjekt[0] == 'text'){
+							var grundtext = document.createTextNode(tillobjekt[1]);
+							info.appendChild(grundtext);
+						}else if(tillobjekt[0] == 'lank'){
+							var link = document.createElement('a');
+								link.setAttribute('href', '#');
+								//link.setAttribute('onclick', 'openInNewTab("' + tillobjekt[2] + '")');
+								link.setAttribute('onclick', "larger(this)");
+								link.setAttribute('data-type', tillobjekt[0]);
+								link.setAttribute('data-source', tillobjekt[2]);
+								link.setAttribute('target', '_blank');
+								var linktext = document.createTextNode(' ' + tillobjekt[1]);
+								link.appendChild(linktext);
+							info.appendChild(link);
+						}else if(tillobjekt[0] == 'bild'){
+							var img = document.createElement('img');
+								img.setAttribute('src', tillobjekt[2]);
+								img.setAttribute('alt', tillobjekt[1]);
+								img.setAttribute('data-type', tillobjekt[0]);
+								img.setAttribute('onclick', "larger(this)");
+							info.appendChild(img);
+						}else if(tillobjekt[0] == 'video'){
+							var video = document.createElement('video');
+								video.setAttribute('id', 'video');
+								video.setAttribute('alt', tillobjekt[1]);
+								video.setAttribute('onclick', "larger(this)");
+								video.setAttribute('data-type', tillobjekt[0]);
+								video.setAttribute('data-source', tillobjekt[2]);
+								var source = document.createElement('source');
+									source.setAttribute('src', tillobjekt[2]);
+									source.setAttribute('type', "video/mp4");
+								video.appendChild(source);
+							info.appendChild(video);
+						}else if(tillobjekt[0] == 'pdf'){
+							var img = document.createElement('img');
+								img.setAttribute('src', 'icons/pdf.png');
+								img.setAttribute('alt', tillobjekt[1]);
+								img.setAttribute('data-type', tillobjekt[0]);
+								img.setAttribute('data-source', tillobjekt[2]);
+								img.setAttribute('onclick', "larger(this)");
+							info.appendChild(img);
+						}else if(tillobjekt[0] == 'youtube'){
+							var img = document.createElement('img');
+								img.setAttribute('src', 'https://i.ytimg.com/vi/' + tillobjekt[2] + '/hqdefault.jpg');
+								img.setAttribute('alt', tillobjekt[1]);
+								img.setAttribute('data-type', tillobjekt[0]);
+								img.setAttribute('data-source', tillobjekt[2]);
+								img.setAttribute('onclick', "larger(this)");
+							info.appendChild(img);
+						}else{
+							console.log(tillobjekt[0] + ' som typ av info stödjs inte!');
+						};
+				};
+				brake(info);
+			showfirstelem();
+		};
+		function openInNewTab(url) {var win = window.open(url, '_blank');win.focus();};
+		function showfirstelem(){
+			var wrapper = document.getElementById('buttons');
+			var alldivs = wrapper.getElementsByTagName('div');
+			for (var i = alldivs.length - 1; i >= 0; i--) {
+				alldivs[i].setAttribute('style', 'display: none;');
+			};
+			alldivs[0].removeAttribute('style');
+		};
+		function larger(element){
+			var type = element.getAttribute('data-type');
+			var modal = document.getElementById('myModal');
+			var modalImg = document.getElementById("img01");
+				removechilds(modalImg);
+				if(type == 'bild'){
+					var img = document.createElement('img');
+						img.setAttribute('src', element.src);
+					modalImg.appendChild(img);
+				}else if(type == 'youtube'){
+					var source = element.getAttribute('data-source');
+					var iframe = document.createElement('iframe');
+						iframe.setAttribute('width', '100%');
+						iframe.setAttribute('height', '315px');
+						iframe.setAttribute('src', 'https://www.youtube.com/embed/' + source + '?rel=0');
+						iframe.setAttribute('frameborder', '0');
+						iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+					modalImg.appendChild(iframe);
+				}else if(type == 'video'){
+					var source = element.getAttribute('data-source');
+					var video = document.createElement('video');
+						video.setAttribute('width', '100%');
+						video.setAttribute('controls', '');
+						video.setAttribute('data-video', '0');
+						var sourceelem = document.createElement('source');
+							sourceelem.setAttribute('src', source);
+							sourceelem.setAttribute('type', 'video/mp4');
+						video.appendChild(sourceelem);
+						video.appendChild(document.createTextNode('Tyvärr kan inte video laddas.'));
+					modalImg.appendChild(video);
+				}else if(type == 'pdf' || type == 'lank'){
+					var source = element.getAttribute('data-source');
+					var iframe = document.createElement('iframe');
+						iframe.setAttribute('width', '100%');
+						iframe.setAttribute('height', '315px');
+						iframe.setAttribute('src', source);
+						iframe.setAttribute('frameborder', '0');
+						iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+					modalImg.appendChild(iframe);
+				}else{
+					console.log(type + ' som typ av info stödjs inte att visas i större förhandsgranskning!');
+				};
+			var captionText = document.getElementById("caption");
+				modal.style.display = "block";
+				captionText.innerHTML = element.getAttribute('alt');
+		};
+		function hidelarger(){
+			var modalImg = document.getElementById("img01");
+				removechilds(modalImg);
+			var modal = document.getElementById('myModal');
+				modal.style.display = "none";
+		};
+		function arraytotext(array){
+			var text = [];
+			for (var i = 0; i < array.length; i++){
+				text.push(array[i].typ + '||||' + array[i].text + '||||' + array[i].href);
+			};
+			return text.join('||||||||');
+		};
+		function addbutton(buttontext, wrapperid, nextid, action){
+			if(!wrapperid){var wrapperid = 'buttons'};
+			if(action == 'show'){var filler = '...';}else{var filler = '';};
+			var wrapper = document.getElementById(wrapperid);
+				var input = document.createElement('input');
+					input.setAttribute('value', buttontext + filler);
+					input.setAttribute('type', 'button');
+				if(!action){
+					input.setAttribute('disabled', 'disabled');
+				}else{
+					input.setAttribute('onclick', action + '("' + nextid + '", this)')
+				};
+				wrapper.appendChild(input);
+		};
+		function newwrapper(id, hide){
+			//Lägg till funktion som läser av sidan ifall id redan existerar? Använda return för att visa vilket id som valdes?
+			var wrapper = document.getElementById('buttons');
+				var start = document.createElement('div');
+					start.setAttribute('id', id);
+					if(!hide){}else{
+						start.setAttribute('style', 'display: none;');
+					};
+				wrapper.appendChild(start);
+		};
+		function makeid(namn){return namn.replace(/\s/g,'').replace( /\W/g , '').toLowerCase();};
+		function show(id, element){
+			element.parentElement.setAttribute('style', 'display: none;');
+			document.getElementById(id).removeAttribute('style');
+		};
+		function removechilds(parent){while (parent.hasChildNodes()) {parent.removeChild(parent.firstChild);};};
+		function addzero(number){if(number <= 9){return "0" + number;}else{return number;};};
+		function getDate(dateannan, timeannan, milisecsave){
+			if(!dateannan && !timeannan && !milisecsave){
+				var date = new Date();
+			}else if(!milisecsave){
+				var annatdatum = dateannan.split('-');
+				var annattid = timeannan.split(':');
+				var date = new Date(annatdatum[0], annatdatum[1] - 1, annatdatum[2], annattid[0], annattid[1]);
+			}else{
+				var date = new Date(parseInt(milisecsave));
+			};
+			var y = date.getFullYear();
+			var m = date.getMonth() + 1;
+			var d = date.getDate();
+			var h = date.getHours();
+			var mm = date.getMinutes();
+			var milisec = date.getTime();
+			var datum = y + '-' + addzero(m) + '-' + addzero(d);
+			var tid = addzero(h) + ':' + addzero(mm);
+			return {"datum": datum, "tid": tid, "milisec": milisec};
+		};
+		function load(){
+			var datumhead = document.getElementById('datumhead');
+				removechilds(datumhead);
+				var datumtext = document.createTextNode(getDate().datum);
+				datumhead.appendChild(datumtext);
+			scale('Hur mår du idag?', '1', '3', '5', 'moodscale');
+			startreadmall();
+		};
+		function scale(text, min, val, max, onchange){
+			var wrapper = document.getElementById('bedomning');
+				var p = document.createElement('p');
+					var ptext = document.createTextNode(text);
+					p.appendChild(ptext);
+				wrapper.appendChild(p);
+				var valuewrapper = document.createElement('div');
+					valuewrapper.setAttribute('class', 'valuewrapper');
+				wrapper.appendChild(valuewrapper);
+				var inputwrapper = document.createElement('div');
+					inputwrapper.setAttribute('class', 'inputwrapper');
+					var input = document.createElement('input');
+						input.setAttribute('type', 'range');
+						input.setAttribute('min', min);
+						input.setAttribute('max', max);
+						input.setAttribute('value', val);
+						input.setAttribute('onchange', onchange + '(this)');
+					inputwrapper.appendChild(input);
+				wrapper.appendChild(inputwrapper);
+			window[onchange](input);
+		};
+		function moodscale(element){
+			var wrapper = element.parentElement.parentElement.getElementsByClassName('valuewrapper')[0];
+			removechilds(wrapper);
+			if(element.value == 1){
+				var ico = ['fa-thumbs-o-down', 'fa-frown-o'];
+			}else if(element.value == 2){
+				var ico = ['fa-frown-o'];
+			}else if(element.value == 3){
+				var ico = ['fa-meh-o'];
+			}else if(element.value == 4){
+				var ico = ['fa-smile-o'];
+			}else if(element.value == 5){
+				var ico = ['fa-thumbs-o-up', 'fa-smile-o'];
+			};
+			for (var i = ico.length - 1; i >= 0; i--) {
+				var icon = document.createElement('i');
+					icon.setAttribute('class', 'fa ' + ico[i]);
+					icon.setAttribute('aria-hidden', 'true');
+				wrapper.appendChild(icon);
+			};
+		};
+	</script>
+</head>
+<body onload="load();">
+	<div id="myModal" class="modal">
+		<span class="close" onclick="hidelarger();">&times;</span>
+		<div class="modal-content" id="img01"></div>
+		<div id="caption"></div>
+	</div>
+	<table id="borders">
+		<thead>
+			<tr>
+				<th colspan="2"><a href="redigera.html"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></a><h1>Patient Dagbok</h1></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td onclick="showfirstelem();">
+					<h2><i class="fa fa-user-md" aria-hidden="true"></i> Vårdpersonal</h2>
+				</td>
+				<td>
+					<h2><i class="fa fa-user-o" aria-hidden="true"></i> Patient</h2>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="buttons"></div>
+				</td>
+				<td id="patient">
+					<h2 id="datumhead"></h2>
+					<div id="bedomningwrapper">
+						<div id="bedomning"></div>
+					</div>
+					<div id="infowrapper">
+						<div id="info" contenteditable="true"></div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

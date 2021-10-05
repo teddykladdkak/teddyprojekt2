@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Anatomi Quiz</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="mobile-web-app-capable" />
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="manifest" href="manifest.json">
+
+	<link rel="shortcut icon" href="icon/icon.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="icon/icon.ico" />
+	<link rel="icon" type="image/png" href="icon/icon196x196.png" />
+	<link rel="apple-touch-icon-precomposed" href="icon/icon180x180.png"/>
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="icon/icon76x76.png">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="icon/icon120x120.png">
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="icon/icon152x152.png">
+
+	<script type="application/javascript" src="hjarnan.js"></script>
+	<script type="application/javascript" src="muskler.js"></script>
+	<script type="application/javascript" src="sinnesorgan.js"></script>
+	<script type="application/javascript" src="skelettet.js"></script>
+	<script type="text/javascript">
+		var amnen = [{
+			kod:'muskler',
+			sv:'Muskler'
+		},{
+			kod:'hjarnan',
+			sv:'Hjärnan'
+		},{
+			kod:'sinnesorgan',
+			sv:'Sinnesorgan'
+		},{
+			kod:'skelettet',
+			sv:'Skelettet'
+		}];
+		var numberarray = [];
+		function onload(){
+			var menywrapper = document.getElementById('meny');
+			for (var i = amnen.length - 1; i >= 0; i--) {
+				var button = document.createElement('input');
+					button.setAttribute('type', 'button');
+					button.setAttribute('value', amnen[i].sv);
+					button.setAttribute('onclick', 'startquiz("' + amnen[i].kod + '");');
+				menywrapper.appendChild(button);
+			};
+		};
+		function shuffle(arr) {
+		    var shuffled = arr.slice(0), i = arr.length, temp, index;
+		    while (i--) {
+		        index = Math.floor(i * Math.random());
+		        temp = shuffled[index];
+		        shuffled[index] = shuffled[i];
+		        shuffled[i] = temp;
+		    }
+		    return shuffled;
+		}
+		function startquiz(area){
+			var menywrapper = document.getElementById('meny').style.display = 'none';
+			var allinfo = window[area];
+			var i = allinfo.length, arr = [];while (i--) arr[i] = i;// Create the array
+			arr = shuffle(arr);// Shuffle it
+			window['numberarray'] = arr;
+			right(0, area);
+		};
+		function right(num, area){
+			if(num == 0){}else{
+				var rattwrapper = document.getElementById('ratt');
+				rattwrapper.textContent = parseInt(rattwrapper.textContent) + 1;
+			};
+			var number = parseInt(num);
+			var image = document.getElementById('image');
+			while (image.hasChildNodes()) {image.removeChild(image.firstChild);};
+			var buttons = document.getElementById('buttons');
+			while (buttons.hasChildNodes()) {buttons.removeChild(buttons.firstChild);};
+			var buttons = document.getElementById('buttons');
+			var fuskbuttons = document.getElementById('fuskbuttons');
+			while (fuskbuttons.hasChildNodes()) {fuskbuttons.removeChild(fuskbuttons.firstChild);};
+			var arr = window['numberarray'];
+			var allinfo = window[area];
+			if(allinfo.length == number){
+				var informaiton = document.getElementById('logger');
+					informaiton.style.display = 'none';
+				var slutwrapper = document.getElementById('slut');
+					var resultwrapper = document.createElement('h1');
+						var resultwrappertext = document.createTextNode(informaiton.textContent);
+						resultwrapper.appendChild(resultwrappertext);
+					slutwrapper.appendChild(resultwrapper);
+					var buttonslut = document.createElement('input');
+						buttonslut.setAttribute('type', 'button');
+						buttonslut.setAttribute('value', 'Tillbaka till menyn');
+						buttonslut.setAttribute('onclick', 'location.reload();');
+					slutwrapper.appendChild(buttonslut);
+				return false;
+			};
+			var nyimage = document.createElement('img');
+				nyimage.setAttribute('src', area + '/' + allinfo[arr[number]].id + '.png');
+			image.appendChild(nyimage);
+			var wikipedia = document.createElement('input');
+				wikipedia.setAttribute('type', 'button');
+				wikipedia.setAttribute('value', 'Wikipedia');
+				wikipedia.setAttribute('onclick', 'window.open("' + allinfo[arr[number]].wikipedia + '", "_blank");');
+			fuskbuttons.appendChild(wikipedia);
+			var svenska = document.createElement('input');
+				svenska.setAttribute('type', 'button');
+				svenska.setAttribute('value', 'Sv/Förklaring/Eng');
+				svenska.setAttribute('onclick', 'showtext("' + allinfo[arr[number]].svenska + '", this)');
+			fuskbuttons.appendChild(svenska);
+			var button = document.createElement('input');
+				button.setAttribute('type', 'button');
+				button.setAttribute('value', allinfo[arr[number]].latin);
+				button.setAttribute('onclick', 'right("' + ( number + 1 ) + '", "' + area + '")');
+			buttons.appendChild(button);
+			var i = allinfo.length, nyarray = [];while (i--) nyarray[i] = i;
+			nyarray.splice(arr[number], 1);
+			nyarray = shuffle(nyarray);
+			for (var i = 3 - 1; i >= 0; i--) {
+				var restbutton = document.createElement('input');
+					restbutton.setAttribute('type', 'button');
+					restbutton.setAttribute('value', allinfo[nyarray[i]].latin);
+					restbutton.setAttribute('onclick', 'wrong(this)');
+				var todo = Math.floor((Math.random() * 2) + 1);
+				if(todo == 1){
+					buttons.insertBefore(restbutton, buttons.childNodes[0]);
+				}else if(todo == 2){
+					buttons.insertBefore(restbutton, buttons.childNodes[buttons.childNodes.length]);
+				}else{
+					console.log('Något gick fel');
+				};
+			};
+		};
+		function showtext(information, element){
+			console.log(information);
+			console.log(element);
+			alert(information);
+		}
+		function wrong(element){
+			var felwrapper = document.getElementById('fel');
+			felwrapper.textContent = parseInt(felwrapper.textContent) + 1;
+			element.setAttribute('disabled','disabled');
+		};
+	</script>
+	<style type="text/css">
+		#buttons input, #meny input, #slut input{
+			width: 100%;
+			display:block;
+		}
+		input {
+			zoom:2;
+			margin-bottom:10px;
+		}
+		#fuskbuttons{
+			padding-top: 70px;
+		}
+		#fuskbuttons input{
+			margin-right:5px;
+			margin-left:5px;
+		}
+		body {
+			margin:0px;
+			padding:0px;
+			text-align: center;
+		}
+		img{
+		    max-height: 289px;
+		    max-width: 289px;
+		    display: block;
+		    margin: auto auto;
+		}
+		#image{
+			height: 289px;
+		}
+	</style>
+</head>
+<body onload="onload()">
+<div id="logger">Rätt: <span id="ratt">0</span> | Fel: <span id="fel">0</span></div>
+<div id="meny"></div>
+<div id="image"></div>
+<div id="buttons"></div>
+<div id="fuskbuttons"></div>
+<div id="slut"></div>
+</body>
+</html>

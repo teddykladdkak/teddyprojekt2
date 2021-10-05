@@ -1,0 +1,23 @@
+.show{display: inline!important;}
+.obs{background-color: red;color: white;}
+textarea.obligatorisk, input[type=text].obligatorisk, select.obligatorisk, input[type=date].obligatorisk{border: 2px solid red;}
+input[type=checkbox].obligatorisk{outline: 2px solid red;}
+select[name=omrade]{height:30px;}
+.hide {display: none ;}
+body {font-size:15px;background: #000;padding:0px;margin:0px;}
+body, input, select, textarea{font-family: Arial, Verdana, Sans-serif;}
+.nyheter, .appinformation{color:#FFF;padding-left:10px;}
+div.farg{padding-left: 10px;padding-right: 10px;white-space: nowrap;padding-bottom: 5px;padding-top: 5px}
+td:nth-child(2){width:100%;}
+input[name=start], textarea[name=ovrigplanering], select[name=omrade], textarea[name=vardhistoria], .undersok, #result textarea, #resultallt textarea {width: 100%;}
+input[name=start]{height:50px;}
+h1{font-size:15px;padding-left: 10px;}
+.link {color:blue;cursor:pointer;}
+.farg:nth-child(odd) {background: #DDD;}
+#result, #resultallt, .farg:nth-child(even) {background: #FFF;}
+.information{background: #F1FF76;color: #000;border-style: solid;border-width: 5px;border-color: #F00;}
+/*.farg:nth-child(6) {background: #FFF284;};*/
+.zoom {font-size:15px;zoom:1.5;transform:scale(1.5);-ms-transform:scale(1.5);-webkit-transform:scale(1.5);-o-transform:scale(1.5);-moz-transform:scale(1.5);transform-origin:0 0;-ms-transform-origin:0 0;-webkit-transform-origin:0 0;-o-transform-origin:0 0;-moz-transform-origin:0 0;-webkit-transform-origin:0 0;margin-right:20px;margin-bottom:10px;}
+#footer{color:#FFFFFF;text-align: center;-webkit-transition: all 0.3s ease-in-out;-moz-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;font-size: 10px;}
+#footer a{color:#FFFFFF;text-decoration: none;}
+#footer a:hover{color:#E87600;text-decoration: overline underline;}

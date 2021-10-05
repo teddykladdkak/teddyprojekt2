@@ -1,0 +1,357 @@
+<html><head>
+	<title>Slutanteckning (v 7.2)</title>
+
+<!--
+* Stav och meningkontroll
+-->
+
+<!--
+INSTRUKTIONER
+- För att lägga till en följdfråga:
+  - Checkbox: Behöver class="show" och ett specifikt namn="...".
+  - Span elementet som är dolt som innehåller fråga behöver ovan elements namn i class="...".
+ - För att element skall döljas som inte använder sig av följdfrågan kan hidetoelement(element); användas.
+- Element med classsen "obligatoriskt" blir obligatoriska, bra att lägga till "data" med meddelande om vad de ska innehålla.
+- Element med class tex "omavd16" eller "omavd349a", med "om" före avdelning, visas de enbart när den patientgruppen är vald.
+  - <span class="omrygg hide"></span>
+-->
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="shortcut icon" href="files/slutanteckningikon.ico" type="image/icon">
+	<link rel="icon" href="files/slutanteckningikon.ico" type="image/icon">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="files/style.css">
+	<script type="application/javascript" src="files/script.js"></script>
+</head>
+<body onload="onpagestart()"><table><tr><td><div class="" id="wrapper">
+<input type="button" name="bigger" value="+"/> <input type="button" name="question" value="&#160;&#160;?&#160;&#160;"/> <input type="button" name="nyheter" value="Nyheter"/> <input type="button" name="appinformation" value="Information"/> <input type="button" name="nypatient" onclick="location.reload();" value="Ny patient"/>
+<div class="nyheter">
+<h2>v 7.1</h2><ul><li>Största uppdateringen hittils!</li><li>Skrivit om koden från grunden.</li><li>Laggt till stöd för flera avdelningar.</li><li>Stav och meningskontroll.</li><li>Tagit bort överflödigt material.</li><li>Täppt till flertalet buggar.</li><li>All kod är nu "vanilla" javascript, vilket betyder att det inte längre är beroende av jQuery.</li></ul>
+<h2>v 6.2</h2><ul><li>Arbetat med funktionen att få in all text i samma ruta. För att melior tillåter enbart 29 rader i ett textfönster, samt efter 70 ord i en rad, räknas det per automatik som ny rad.<ul><li>Om mer än 70 tecken i en rad, räknas det som ny rad.</li><li>Vidare, om 29 rader skapas en ny ruta.</li></ul><li>Gjort de röda kanterna helröda, då vissa inta va så tydliga.</li><li>Snyggare växling mellan meny objekt.</li><li>"Ny patient" funktion, var god kolla information om denna funktion.</li><li>Rensat upp funktioner som lagt nya rader i onödan.</ul>
+<h2>v 6.0</h2><ul><li>Obligatoriska fält är nu mer synliga. Fält mer synliga när information inte finns.</li><li>Kodförklaringar skrivna, för att se vad som gör vad.</li></ul>
+<h2>v 5.8</h2><ul><li>Informerar mottagande avdelning när ryggsår, enligt pm ska läggas om. När ryggpatient flyttas till annan avdelning.</li><li>Om ingrepp börjar med "EMBO...", visas val under information vid hemgång, om patienten har träffat emboliseringsläkare innan hemgång.</li><li>Om ingrepp börjar med "disk..." eller "dek..." och om återbesök väljs, lägs det automatiskt till att patienten skall till sjukgymnasten.</li><li>Valet uppföljning av dränage via VC, visas nu enbart om dränage är kvar vid utskrivning.</li><li>Gjort val av patient typ tydligare.</li></ul>
+<h2>v 4.6</h2><ul><li>Skapat detta, alltså nyheter, vad som är nytt.</li><li>Information finns där det grundläggande info om vad detta är och hur det kan användas.</li><li>Nu behöver man inte högerklicka för att starta program. (hittar om och var Chrome är installerad)</li><li>Rensat kod.</li><li>Gjort allt smalare, så det inte tar så mycket plats på skärmen.</li><li>Döljer mer val om inte är aktuella.</li><li>Rättat till punkter som kommer med alt som inte finns.</li><li>Lämnat mer horisontalt rum, mellan de olika "områdena"</li></ul>
+</div>
+<div class="appinformation"><h2>Vad är detta</h2>Detta "program" är byggt för att hjälpa sjuksköterskan att skriva slutanteckning.<br/><br/>Istället för att sjuksköterskan ska hitta frågor, ställs frågorna och vid behov följdfrågor. Utifrån parametrar som fylls i, genereras dokumentationstext och vid behov remisstext. Genererad text kan sedan enkelt kopieras över till Melior.<h2>Sekretess</h2>Detta program skickar och sparar inte information, uppdateras sidan eller stängs den ner är informationen förlorad. Ingen patientinformation behöver fyllas i.<h2>Tecken- och funktion förklaring</h2>Rutor som har röd kant måste fyllas i, annars genereras inte dokumentationstexten.<br/><br/>Frågor med checkruta har ett påstående efter sig. Stämmer påstående skall ruta kryssas. Stämmer inte påstående skall ruta inte kryssas. Detta för att minska klicken och enbart när patienten utgår från normal vårdplan.<br/>Alla checkrutor genererar inte dokumentationstext då de inte kryssas i. Detta för att de då inte är nödvändigt, undvika överdokumentation.<br/><br/>Om knappen med ett "?" överst på sidan klickas på, kommer det fram "[?]" efter frågor. Om de klickas på kommer en ruta fram som berättar var informationen kan hittas. Dolt från början då alla inte behöver denna information.<br/><br/>Om knappen med ett "+" överst på sidan klickas på, förstoras texten. För dem med dålig syn.<br/><br/>När knappen "Ny patient" klickas på, tas all data som förts in bort. Detta för att snabbare kunna starta på en ny slutanteckning, eller ta bort information. (Går även att stänga sidan, det har samma effekt)<br/><br/>När knappen "skapa" klickas på, genereras dokumentationstexten.<br/><br/>Om någon obligatorisk information fattas, kommer varningsruta fram som förklarar vad som fattas. När ok knappen klickas på markeras ruta där informationen fattas.<br/><br/>När dokumentationstexten genererats, läggs texten i textfönster. När du klickar i respektive, markeras texten och kopieras automatiskt.<h2>Remiss</h2>Skapas enbart om typ av patient, om operation samt läkare valts. Ifall remiss inte skapas kommer ruta fram som informerar att remiss inte kan skapas på grund av för lite information. Då får du antingen skriva egen remiss eller fylla i fält som saknar information.</div><br/><br/>
+<div class="farg">
+Avdelning<br/>
+<select name="omrade" class="obligatorisk" data="Patientgrupp är inte vald.">
+	<option value='annat'>Välj avdelning</option>
+</select><br/>
+Vårdhistoria (tidigare operationer och diagnoser) <span class="link" data="Melior i Ankomstsamtal">[?]</span><br/>
+<textarea name="vardhistoria"></textarea><br/>
+Inskrivnings orsak <input type="text" list="orsak" name="orsak" class="obligatorisk" data="Inskrivningsorsak är inte ifyllt!"> <span class="link" data="Melior i Ankomstsamtal">[?]</span>
+</div><div class="farg">
+Har patienten opererats? <input type="checkbox" class="show" name="op">Ja
+	<span class="op"><br/>
+		Datum för operation <input type="date" id="dat3" class="obligatorisk" data="Datum för operation måste väljas!"><br/>
+		Ingrepp <input type="text" list="ingrepp" name="ingrepp" class="obligatorisk" data="Du måste skriva vad det är för ingrepp"> <span class="link" data="Melior i Operationsberättselse eller i narkoskurva">[?]</span><br/>
+		Operatör <input type="text" list="lakare" name="lakare"> <span class="link" data="Dikterare för operationsberättelse i Melior, eller i narkoskurva, eller Operätt">[?]</span><br/>
+		<select name="sutur">
+			<option value="sutur-/agrafftagning">Typ av sutur</option>
+			<option value="suturtagning">Sutur</option>
+			<option value="agrafftagning">Agraff</option>
+			<option value="observation och eventuellt borttagande av kvarvarande intracutana knutar,">Instracutan sutur</option>
+		</select> <span class="link" data="Operationsberättelse i Melior">[?]</span><br/>
+		Blod förlorat perop <input type="text" class="number obligatorisk" data='Förlorat blod perop måste väljas. Om spår skriv en "0".' name="peropblod" maxlength="5" size="5"> ml <span class="link" data="Operationomvårdnad i Melior, eller Operätt, eller narkoskurva">[?]</span><br/>
+		Cellsaver <input type="text" class="number" name="cellsaver" maxlength="5" size="5"> ml <span class="link" data="Operationomvårdnad i Melior, eller Operätt, eller narkoskurva">[?]</span><br/>
+		Drän <input type="checkbox" class="show" name="dran">Ja <span class="link" data="Infarter/utfarter i Melior">[?]</span>
+			<span class="dran"><br/>
+			  - Sattes <input type="date" id="dat10"><br/>
+				- Avvecklades <input type="date" id="dat11"><br/>
+				- Sammanlagt i dränförlust <input type="text" class="number obligatorisk" data='Mängd förlorat i dränage måste väljas. Om spår skriv en "0".' name="dranforlust" maxlength="5" size="5"> ml <span class="link" data="Mätvärden i Melior">[?]</span>
+			</span><br/>
+		Antibiotikaprofylax <input type="checkbox" name="antibiot">Ja <span class="link" data="Läkemedelslista i Melior">[?]</span><br/>
+		Trombosprofylax <input type="checkbox" name="trombos">Ja <span class="link" data="Läkemedelslista i Melior">[?]</span><br/>
+		Erytrocyter <input type="checkbox" name="eretrocyt">Ja <span class="link" data="Transfussionsmedicin i Melior">[?]</span><br/>
+		Hb   <input type="text" class="number" name="hb" maxlength="3" size="3">g/l & datum <input type="date" id="dat4"> <span class="link" data="Labbest">[?]</span>
+	</span>
+</div><div class="farg">
+Övriga undersökningar & ingrepp<br/>
+<textarea class="undersok"></textarea>
+</div><div class="farg">
+Cirkulatoriskt stabil? <input type="checkbox" name="cirk">Nej<br/>
+Respiratoriskt stabil? <input type="checkbox" name="o2">Nej<br/>
+CVK? <input type="checkbox" name="cvk">Ja <span class="link" data="Infarter/utfarter i Melior">[?]</span><br/>
+Portacath? <input type="checkbox" name="portacath">Ja <span class="link" data="Infarter/utfarter i Melior">[?]</span>
+</div><div class="farg">
+Orienterad x3? <input type="checkbox" name="kunskap">Nej
+</div><div class="farg">
+Spontan miktion? <input type="checkbox" name="spontanmiktion">Nej<br/>
+KAD? <input type="checkbox" class="show" name="kad">Ja <span class="link" data="Infarter/utfarter i Melior">[?]</span>
+	<span class="kad"><br/>
+		- Satt <input type="date" id="dat5" class="obligatorisk" data="Datum då KAD är satt måste väljas!"><br/>
+		- Dragen <input type="date" id="dat6">
+	</span><br/>
+Tappad <input type="checkbox" class="show" name="tappad">Ja <span class="link" data="Omvårdnadsrapport i Melior (Sök efter tappa)">[?]</span>
+	<span class="tappad"><br/>
+		- Antal gånger <input type="text" class="number obligatorisk" data="Om nu patient tappats under vårdtiden, skall antal gånger registreras i VKR och då lika bra att nämna i Slutanteckning! (OBS om patient i vanliga fall RIK sig är detta ej aktuellt)" name="antaltappad" maxlength="2" size="2">
+	</span><br/>
+Har bladderscan tagits? <input type="checkbox" class="show" name="bladder">Ja <span class="link" data="Mätvärden i Melior">[?]</span>
+	<span class="bladder"><br/>
+		- Datum: <input type="date" id="dat7" class="obligatorisk" data="Datum för när senast bladder gjord måste väljas."><br/>
+		- Mängd resurin: <input type="text" class="number obligatorisk" data='Mängd resurin måste skrivas, även om det visade "0 ml"' name="resurin" maxlength="4" size="4"> ml
+	</span><br/>
+UVI? <input type="checkbox" class="show" name="uvi">Ja <span class="link" data="Läkemedelslista i Melior och/eller Labbest">[?]</span>
+	<span class="uvi"><br/>
+		- Positiv sticka <input type="checkbox" class="show" name="uvisticka">Ja<br/>
+		- Odling tagen <input type="checkbox" class="show" name="uviodling">Ja <br/>
+		- Påbörjad behandling <input type="checkbox" class="show" name="uvibehandling">Ja 
+	</span><br/>
+Haft defekation? <input type="checkbox" name="defekation">Ja <span class="link" data="Omvårdnadsrapport i Melior">[?]</span>
+<span class="omavd349a"><br/>
+	Har patient stomi? <input type="checkbox" class="show" name="stomi">Ja
+		<span class="stomi"><br/>
+			- Stomisort <input type="text" name="stomisort" list="stomi">
+		</span>
+</span>
+</div><div class="farg">
+Äter patient? <input type="checkbox" name="mat">Nej<br/>
+Dricker patient? <input type="checkbox" name="vatska">Nej<br/>
+Illamående? <input type="checkbox" class="show" name="illamaende">Ja <span class="link" data="Läkemedelslista i Melior">[?]</span>
+<span class="illamaende"><br/>
+- Har illamående behandlats? <input type="checkbox" class="show" name="illamaendebeh">Ja<br/>
+	<span class="illamaendebeh">
+		- Bra eller dålig antiemetika effekt: <input type="radio" name="illamaendebehfunk" checked="checked" value="bra">Bra <input type="radio" name="illamaendebehfunk" value="dålig">Dålig<br/>
+	</span>
+	- Är illamående kvar vid utskrivning? <input type="checkbox" name="illamaendehem">Ja
+	</span><br/>
+</div><div class="farg">
+<span class="op">
+Har operationssår lagts om? <input type="checkbox" class="show" name="sar">Ja <span class="link" data="Plan sårbehandling i Melior">[?]</span>
+	<span class="sar"><br/>
+		- Datum <input type="date" id="dat8"><br/>
+		- Hur såg det ut? <input type="text" list="sarstatus" name="sarstatus">
+		<span class="omavd16">
+			<br/>
+			- Sårkontroll 1 vecka gjord? <input type="checkbox" name="sarkontroll1">Ja<br/>
+			- Sårkontroll 2 vecka gjord? <input type="checkbox" name="sarkontroll2">Ja
+		</span>
+</span><br/>
+</span>
+Hel hudkostym? (Ej räknat op-sår) <input type="checkbox" class="show" name="hud">Nej <span class="link" data="Plan sårbehandling i Melior">[?]</span><br/>
+	<span class="hud">
+		Trycksår under vårdtid? <input type="checkbox" class="show" name="tryck">Ja <span class="link" data="Plan trycksår i Melior">[?]</span>
+		<span class="tryck">
+			<br/>- Vid ankomst? <input type="checkbox" name="tryckankomst">Ja<br/>
+			- Plats <input type="text" list="kropp" name="tryckplats" class="obligatorisk" data="Du måste skriva var trycksår finns!"><br/>
+			- Kategori <input type="text" class="number" name="tryckkategori" maxlength="1" size="1"><br/>
+			- Storlek <input type="text" class="number" name="tryckl" maxlength="4" size="4"> x <input type="text" class="number" name="tryckh" maxlength="4" size="4">mm<br/>
+			- Djup <input type="text" class="number" name="tryckd" maxlength="4" size="4">mm<br/>
+			- Illaluktande? <input type="radio" name="illalukt" value="nej" checked="checked">Nej <input type="radio" name="illalukt" value="ja">Ja
+		</span><br/>
+		Annat typ av sår? <input type="checkbox" class="show" name="hudsar">Ja 
+		<span class="hudsar">
+			<br/>- Sårtyp? <input type="text" list="sar" name="hudsarvad" class="obligatorisk" data="Om nu patient har sår någonstans måste du beskriva vad det är för typ av sår. (Opsår räknas ej här)"><br/>
+			- Plats? <input type="text" list="kropp" name="hudsarplats" class="obligatorisk" data="Om nu patient har sår någonstans måste du beskriva var den finns någonstans. (Opsår räknas ej här)">
+		</span><br/>
+	</span>
+<span class="op">
+	Hudreaktion av förband? <input type="checkbox" name="forbandreaktion">Ja<br/>
+	Blåsbildning pga förband? <input type="checkbox" name="blasbildning">Ja<br/>
+	Misstänkt sårinfektion? <input type="checkbox" class="show" name="sarinf">Ja <span class="link" data="Plan sårbehandling i Melior, Labbest">[?]</span>
+	<span class="sarinf"><br/>
+		- Har patient behandlats för sårinfektion under vårdtid? <input type="checkbox" name="sarinfbeh">Ja <span class="link" data="Läkemedelslista i Melior">[?]</span>
+	</span>
+</span>
+</div><div class="farg">
+Fri mobilisering? <input type="checkbox" class="show" name="mob">Nej <span class="link" data="Operationsberättelse i Melior">[?]</span>
+	<span class="mob"><br/>
+		- Restriktioner <textarea rows="1" id="mobrestriktioner" class="obligatorisk" data="Om det nu finns restriktioner i mobiliseringen måste detta skrivas!"></textarea>
+	</span><br/>
+Hjälpmedel <input type="checkbox" class="show" name="hjalp">Ja <span class="link" data="Omvårdnadsrapport/operationsberättelse/plan fallrisk i Melior">[?]</span>
+	<span class="hjalp"><br/>
+		- Vilka? <input type="text" list="hjalpmedel" name="hjalpinfo" class="obligatorisk" data="Om patient nu har hjälpmedel måste detta skrivas!">
+	</span><br/>
+Fall under vårdtid? <input type="checkbox" name="fall">Ja <span class="link" data="Fallhändelserapport i Melior">[?]</span>
+</div><div class="farg">
+God nattsömn? <input type="checkbox" class="show" name="somn">Nej <span class="link" data="Läkemedelslista i Melior">[?]</span>
+	<span class="somn"><br/>
+		- Fått sömntablett enligt GO? <input type="checkbox" name="somngo">Ja
+	</span><br/>
+</div><div class="farg">
+Är tablettbehandling av smärta stabil? <input type="radio" name="smarta" value="ja" checked="checked">Ja <input type="radio" value="relativt" name="smarta">Relativt <input type="radio" value="nej" name="smarta">Nej <span class="link" data="Läkemedelslista i Melior">[?]</span><br/>
+	<span class="smart">
+		- Lösningar på smärtproblematik <input type="text" name="smartalos"><br/>
+	</span>
+Lokalisation av smärta <input type="text" list="kropp" name="smartalok"><br/>
+Har patient haft pump under vårdtid? <input type="checkbox" class="show" name="pump">Ja<br/>
+	<span class="pump">
+		- EDA  <input type="checkbox" class="show obligatorisk" name="eda"> Ja
+			<span class="eda">
+				- Bra eller dålig effekt: <input type="radio" name="edafunk" checked="checked" value="bra">Bra <input type="radio" name="edafunk" value="dålig">Dålig
+			</span><br/>
+		- PCA <input type="checkbox" class="show obligatorisk" name="pca"> Ja
+			<span class="pca">
+				- Bra eller dålig effekt: <input type="radio" name="pcafunk" checked="checked" value="bra">Bra <input type="radio" name="pcafunk" value="dålig">Dålig
+			</span><br/>
+	</span>
+Domnad postoperativt? <input type="checkbox" class="show" name="domn">Ja 
+	<span class="domn"><br/>
+		- Lokalisation <input type="text" list="kropp" name="domnlok" class="obligatorisk" data="Om domningar postoperativt måste detta beskrivas!">
+	</span><br/>
+</div><div class="farg">
+Oro/ångest under vårdtid? <input type="checkbox" class="show" name="oro">Ja <span class="link" data="Läkemedelslista i Melior">[?]</span>
+	<span class="oro"><br/>
+		- Blivit behandlad? <input type="checkbox" name="orobeh">Ja
+	</span><br/>
+</div><div class="farg">
+Närstående på besök? <input type="checkbox" name="narstaende">Ja<br/>
+Kopplad till kurator? <input type="checkbox" name="kurator">Ja
+</div><div class="farg">
+Är återbesök bestämt? <input type="checkbox" class="show" name="besok">Ja <span class="link" data="Läkaranteckning eller om det nämnts vid rond/hemgång av läkare">[?]</span>
+	<span class="besok"><br/>
+		- Antal veckor <input type="text" class="number obligatorisk" data="Om du vet antal veckor till återbesök, skriv de. Annars bocka av." name="besokveckor" maxlength="3" size="3">
+	</span><br/>
+	Skall patients sår följas upp via VC/HSV? <input type="checkbox" class="show" name="vc">Ja
+	<span class="vc"><br/>
+		Suturer skall avvecklas:<br>
+		<input type="radio" value="10" name="avvecklas" onclick="showadddays('dolj')" checked="checked">10 dagar<br>
+		<input type="radio" value="14" name="avvecklas" onclick="showadddays('dolj')">14 dagar<br>
+		<input type="radio" value="=" name="avvecklas" onclick="showadddays('visa')">Annat..<span id="wrapperannat" style="display:none;"><input type="number" id="annat" value="1" size="3">(dagar)</span>
+	</span>
+<span class="dranVC"><br/>
+Ska drän avvecklas via VC? <input type="checkbox" class="show" name="drankvar">Ja <span class="link" data="Ordination från läkare där tid och hur mycket som får komma i dränage måste finnas">[?]</span>
+	<span class="drankvar"><br/>
+		- När skall den avvecklas? <input type="date" id="dat9" name="drankvartid" class="obligatorisk" data="Antal veckor drän måste sitta måste väljas. Vet du inte tid, bocka av rutan."><br/>
+		- Om dygnsmängd är mindre än <input type="text" class="number" name="drankvarmindre"> ml/dygn
+	</span></span><br/>
+Övrig planering?<br/><textarea rows="1" name="ovrigplanering"></textarea>
+</div><div class="farg">
+Närstående kontaktad? <input type="checkbox" class="show" name="nar">Ja 
+	<span class="nar"><br/>
+		- <select id="nar"><option value="">Av vem?</option><option value="av undertecknad.">Undertecknad</option><option value="av patient själv.">Patient</option><option value="med vid flytt/utskrivning.">Med vid flytt</option></select>
+	</span><br/>
+</div><div class="farg">
+Information undervisning <input type="checkbox" class="show" name="info">Ja<br/>
+	<span class="info">
+		- Information vid hemgång folder? <input type="checkbox" name="infofolder">Ja<br/>
+		- VC-remiss? <input type="checkbox" name="infovc">Ja<br/>
+		- Sjukintyg? <input type="checkbox" name="infosjukintyg">Ja<br/>
+		- Sjukreseintyg? <input type="checkbox" name="inforeseintyg">Ja<br/>
+		- RTG-bilder? <input type="checkbox" name="infortg">Ja<br/>
+		- Info om fragmin? <input type="checkbox" name="infofragmin">Ja<br/>
+		- Fysioterapeut info (Sgy) <input type="checkbox" name="fysioterapeut">Ja <span class="link" data="Har patient fått träffa fusioterapeut innan hemgång?">[?]</span>
+		<span class="dranVC dran"><br/>
+			- Dränage info <input type="checkbox" name="draninformation">Ja <span class="link" data="Avdelning 16 intrasida i listan Utskrivningsmaterial">[?]</span>
+		</span>
+		<span class="embo"><br/>
+			- Träffat Emboliseringsläkare innan hemgång? <input type="checkbox" name="embo">Ja
+		</span><br/>
+		- Övrig information <textarea rows="1" name="infoovrig"></textarea>
+	</span>
+</div><div class="farg">
+Har patient fått med sig läkemdel? <input type="checkbox" class="show" name="lkm">Ja 
+	<span class="lkm"><br/>
+		- Typ och Antal <textarea rows="3" name=lkminfo class="obligatorisk" data="Om patient fått med sig läkemedel vid utskrivning måste detta klargöras, vad och hur många."></textarea>
+	</span>
+</div><div class="farg">
+Transport beställd <input type="checkbox" class="show" name="trnsp">Ja
+	<span class="trnsp"><br/>
+		- <select id="trnsptyp"><option value="Transport">Typ av transport</option><option value="Liggande transport">Liggande</option><option value="Sittande sjukresa">Sittande</option></select>
+	</span>
+</div><div class="farg">
+Skall patient till annat sjukhus/avdelning? <input type="checkbox" class="show" name="flytt">Ja<br/>
+	<span class="flytt">
+		- Rapporterat till sjuksköterska? <input type="checkbox" class="show" name="ssk">Ja<br/>
+		<span class="ssk">
+			- Namn på sjuksköterska <input type="text" name="ssknamn"><br/>
+			- Nummer till sjuksköterska? <input type="text" name="ssktel"><br/>
+		</span>
+		- Sjukhus <input type="text" list="sjukhus" name="ssksjukhus"><br/>
+		- Avdelning <input type="text" class="number" name="sskavd" maxlength="4" size="4"><br/>
+	</span>
+</div><div class="farg">
+Medskickade hjälpmedel? <input type="checkbox" class="show" name="hjalpmed">Ja 
+	<span class="hjalpmed"><br/>
+		- Vilka? <input type="text" list="hjalpmedel" name="hjalpmedinfo">
+	</span>
+</div><div class="farg">
+	<input type="button" name="start" value="Skapa"/>
+</div>
+	<div id="result"></div>
+	<div id="resultallt"></div>
+</div></td><td></td></tr></table>
+<div id="footer">Free with: <a href="https://www.dropbox.com/" target="blank" alt="Lagra filer och redigera på ett enkellt sätt">Dropbox</a>&nbsp;•&nbsp;<a href="http://my.dot.tk/cgi-bin/amb/landing.dottk?nr=243497::7285606::1" target="blank" alt="Skapa eget domän Gratis!!">TK</a>&nbsp;•&nbsp;<a href="http://www.weebly.com" alt="Skapa en Gratis hemmsida!!">Weebly</a>&nbsp;¦&nbsp;©&nbsp;Mattias Måsbäck&nbsp;¦&nbsp;{<a href="https://www.teddyprojekt.se/" target="blank" alt="Länk till denna sida">www.teddyprojekt.se</a>}
+</div>
+<datalist id="orsak">
+	
+</datalist>
+<datalist id="ingrepp">
+	
+</datalist>
+<datalist id="lakare">
+	
+</datalist>
+<datalist id="sar">
+	<option value="Skrubbsår"></option>
+	<option value="Traumasår"></option>
+	<option value="Diabetessår"></option>
+</datalist>
+<datalist id="sarstatus">
+	<option value="Infektions- och retningsfritt"></option>
+	<option value="Rodnad"></option>
+	<option value="Var god se Plan operationssår"></option>
+</datalist>
+<datalist id="hjalpmedel">
+	<option value="3-punkt korsett"></option>
+	<option value="C62-krage"></option>
+	<option value="CTO"></option>
+	<option value="Gåbord"></option>
+	<option value="Kryckor"></option>
+	<option value="Mjuk halskrage"></option>
+	<option value="Rullator"></option>
+	<option value="Rullstol"></option>
+</datalist>
+<datalist id="kropp">
+	<option value="Huvud"></option>
+	<option value="Nacke"></option>
+	<option value="Höger axel"></option>
+	<option value="Vänster axel"></option>
+	<option value="Höger arm"></option>
+	<option value="Vänster arm"></option>
+	<option value="Rygg"></option>
+	<option value="Thorax"></option>
+	<option value="Bröstrygg"></option>
+	<option value="Ländrygg"></option>
+	<option value="Buk"></option>
+	<option value="Medellinjesnitt"></option>
+	<option value="Underliv"></option>
+	<option value="Sacrum"></option>
+	<option value="Rectum"></option>
+	<option value="Höger skinka"></option>
+	<option value="Vänster skinka"></option>
+	<option value="Höger höft"></option>
+	<option value="Vänster höft"></option>
+	<option value="Höger ben"></option>
+	<option value="Vänster ben"></option>
+	<option value="Höger fot"></option>
+	<option value="Vänster fot"></option>
+	<option value="Port n&aring;l"></option>
+	<option value="Tobakspunkt sutur"></option>
+</datalist>
+<datalist id="sjukhus">
+	<option value="Halmstad"></option>
+	<option value="Karlstad"></option>
+	<option value="KSS (Skövde)"></option>
+	<option value="NU (Uddevalla)"></option>
+	<option value="NÄL (Trollhättan)"></option>
+	<option value="SU/S (Sahlgrenska sjukhuset)"></option>
+	<option value="SU/Ö (Östra sjukhuset)"></option>
+	<option value="SU/M (Mölndals sjukhus)"></option>
+	<option value="SÄS (Borås)"></option>
+	<option value="Varberg"></option>
+</datalist>
+<datalist id="stomi">
+	<option value="Bäckenreservoar"></option>
+	<option value="Ileostomi"></option>
+	<option value="Kocks reservoar"></option>
+	<option value="Kolostomi"></option>
+	<option value="Loopileostomi"></option>
+	<option value="Sigmoideostomi"></option>
+	<option value="Transversumstomi"></option>
+</datalist>
+<div style='display:none'>{title}</div>
+<div style='display:none'>{menu}</div>
+<div style='display:none'>{content}</div>
+<div style='display:none'>{footer}</div>
+</body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lillebu - Kalender</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="res/style.css">
+	<script type="application/javascript" src="res/script.js"></script>
+	<script type="text/javascript">
+		var test = [{
+			datum: ['2019-07-05', '2019-07-25'],
+			anv: 'Ylva Måsbäck m.fl.'
+		}];
+		function bookningar(){
+			for (var i = test.length - 1; i >= 0; i--) {
+				var start = test[i].datum[0].split('-').join('');
+				var stop = test[i].datum[1].split('-').join('');
+				var antalDagar = stop - start;
+				var startMillD = new Date(test[i].datum[0]);
+				var startMill = startMillD.getTime();
+				var allDates = [];
+				for (var a = antalDagar; a >= 0; a--) {
+					var nextD = new Date(startMill + (86400000 * a));
+					allDates.push(numtotext(dateString(nextD)));
+				};
+				addStyle('.' + allDates.join(', .') + ' { background-color: gray; }');
+			};
+		};
+		function addzero(number){if(number <= 9){return "0" + number;}else{return number;};};
+		function daysInMonth (month, year) { 
+			return new Date(year, month, 0).getDate(); 
+		};
+		function make(type, text){
+			var td = document.createElement(type);
+				var text = document.createTextNode(text);
+				td.appendChild(text);
+			return td;
+		};
+		function dateString(dateObj){
+			return dateObj.getFullYear() + '-' + addzero(dateObj.getMonth() + 1) + '-' + addzero(dateObj.getDate())
+		};
+		function markToday(){
+			var d = new Date();
+			var klass = numtotext(dateString(d));
+			addStyle('.' + klass + ' { font-weight: bold; }');
+		};
+		function addStyle(kod){
+			var head = document.getElementsByTagName('head')[0];
+				var style = document.createElement('style');
+					var text = document.createTextNode(kod);
+					style.appendChild(text);
+				head.appendChild(style);
+		}
+		function numtotext(text){
+			var te = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+			var toarr = text.split('');
+			var tore = [];
+			for (var i = toarr.length - 1; i >= 0; i--) {
+				tore.push(te[toarr[i]]);
+			};
+			return tore.join('');
+		};
+		function loadCal(IDwrapper, dateToday) {
+			var wrapper = document.getElementById(IDwrapper);
+			var date = new Date(dateToday); 
+				var month = date.getMonth() + 1; 
+				var year = date.getFullYear();
+			var dagEtt = new Date(year + '-' + addzero(month) + '-01');
+			var deaddays = parseInt(dagEtt.getDay() - 1);
+			var dagarManad = daysInMonth(month, year);
+			var table = document.createElement('table');
+				var trhead = document.createElement('tr');
+					var headtext = make('td', dateToday);
+						headtext.setAttribute('colspan', '7');
+						headtext.setAttribute('style', 'text-align: center;');
+					trhead.appendChild(headtext);
+				table.appendChild(trhead);
+				var tr = document.createElement('tr');
+				if(deaddays == -1){
+					var deaddays = 6;
+				}
+				for (var i = deaddays - 1; i >= 0; i--) {tr.appendChild(make('td', ''));};
+				for (var i = 0; i < dagarManad; i++){
+					var deaddays = deaddays + 1;
+					if(deaddays == 8){
+						var deaddays = 1;
+						table.appendChild(tr);
+						var tr = make('tr', '')
+					};
+					var datetd = make('td', addzero(i + 1));
+						datetd.setAttribute('class', numtotext(dateToday + '-' + addzero(i + 1)));
+					tr.appendChild(datetd);
+				}
+				for (var i = 6 - deaddays; i >= 0; i--) {tr.appendChild(make('td', ''));};
+				table.appendChild(tr);
+				wrapper.appendChild(table);
+		};
+		function load(){
+			loadCal('calwrapper', '2019-01');
+			loadCal('calwrapper', '2019-02');
+			loadCal('calwrapper', '2019-03');
+			loadCal('calwrapper', '2019-04');
+			loadCal('calwrapper', '2019-05');
+			loadCal('calwrapper', '2019-06');
+			loadCal('calwrapper', '2019-07');
+			loadCal('calwrapper', '2019-08');
+			loadCal('calwrapper', '2019-09');
+			loadCal('calwrapper', '2019-10');
+			loadCal('calwrapper', '2019-11');
+			loadCal('calwrapper', '2019-12');
+			markToday();
+			bookningar();
+		};
+	</script>
+	<style type="text/css">
+		#calwrapper table {
+			display: inline-block;
+			border-collapse: collapse;
+			margin: 10px;
+		}
+		#calwrapper table tr, #calwrapper table tr td {
+			border: solid 2px #000;
+			padding: 5px;
+		}
+	</style>
+</head>
+<body onload="load();">
+	<div id="menywrapper">
+		<div id="meny">
+			<a href="index.html">Start</a>
+			<a href="goodtoknow.html">Bra att veta</a>
+			<a href="kal.html">Kalender</a>
+			<a href="listor.html">Listor</a>
+			<a href="hytteboken.html">Hytteboken/Historia</a>
+			<a href="kontakt.html">Kontakt</a>
+			<a href="regler.html">Relger</a>
+			<a href="checkaut.html">Checka ut</a>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="calwrapper"></div>
+	</div>
+</body>
+</html>

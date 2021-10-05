@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lillebu - Bra att veta</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="res/style.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+	<script src="https://knreise.github.io/L.TileLayer.Kartverket/L.TileLayer.Kartverket.js"></script>
+	<script type="application/javascript" src="res/script.js"></script>
+	<script type="text/javascript">
+		function mapfullscreen() {
+			window.open('goodtoknow-map.html', '_self');
+		};
+	</script>
+	<style type="text/css">
+		.headicon {
+			text-align: center;
+			padding-top: 50px;
+		}
+		.headicon svg {
+			width: 70px;
+		}
+	</style>
+</head>
+<body onload="addmap();">
+	<div id="menywrapper">
+		<div id="meny">
+			<a href="index.html">Start</a>
+			<a href="goodtoknow.html">Bra att veta</a>
+			<a href="kal.html">Kalender</a>
+			<a href="listor.html">Listor</a>
+			<a href="hytteboken.html">Hytteboken/Historia</a>
+			<a href="kontakt.html">Kontakt</a>
+			<a href="regler.html">Relger</a>
+			<a href="checkaut.html">Checka ut</a>
+		</div>
+	</div>
+	<div id="wrapper">
+		<h1>Bra att veta</h1>
+		<h2>Koordinater</h2>
+		<input type="button" value="Fullskärm" onclick="mapfullscreen();">
+		<div id="mapid"></div>
+		<table id="koord">
+			<tr>
+				<td><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="parking" class="svg-inline--fa fa-parking fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM240 320h-48v48c0 8.8-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16h96c52.9 0 96 43.1 96 96s-43.1 96-96 96zm0-128h-48v64h48c17.6 0 32-14.4 32-32s-14.4-32-32-32z"></path></svg></td>
+				<td><p>Bautastenen Jönnbu parkering (<span class="link" onclick="window.open('http://maps.google.com/?q=59.477125,9.010378')">59.477125 N, 9.010378 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-signs" class="svg-inline--fa fa-map-signs fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M507.31 84.69L464 41.37c-6-6-14.14-9.37-22.63-9.37H288V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v16H56c-13.25 0-24 10.75-24 24v80c0 13.25 10.75 24 24 24h385.37c8.49 0 16.62-3.37 22.63-9.37l43.31-43.31c6.25-6.26 6.25-16.38 0-22.63zM224 496c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V384h-64v112zm232-272H288v-32h-64v32H70.63c-8.49 0-16.62 3.37-22.63 9.37L4.69 276.69c-6.25 6.25-6.25 16.38 0 22.63L48 342.63c6 6 14.14 9.37 22.63 9.37H456c13.25 0 24-10.75 24-24v-80c0-13.25-10.75-24-24-24z"></path></svg></td>
+				<td><p>Vägvisaren i Toppen av Klintokleiva (<span class="link" onclick="window.open('http://maps.google.com/?q=59.483932,9.002295')">59.483932 N 9.002295 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><p>Strax efter vägvisaren finns vitgula femkronerstora färgmärken till Lillebu.</p></td>
+			</tr>
+			<tr>
+				<td><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="route" class="svg-inline--fa fa-route fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg></td>
+				<td><p>Stället där man viker av från Rödmärkta leden till sommarstigen (<span class="link" onclick="window.open('http://maps.google.com/?q=59.484389,8.996121')">59.484389 N 8.996121 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="running" class="svg-inline--fa fa-running fa-w-13" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 416 512"><path fill="currentColor" d="M272 96c26.51 0 48-21.49 48-48S298.51 0 272 0s-48 21.49-48 48 21.49 48 48 48zM113.69 317.47l-14.8 34.52H32c-17.67 0-32 14.33-32 32s14.33 32 32 32h77.45c19.25 0 36.58-11.44 44.11-29.09l8.79-20.52-10.67-6.3c-17.32-10.23-30.06-25.37-37.99-42.61zM384 223.99h-44.03l-26.06-53.25c-12.5-25.55-35.45-44.23-61.78-50.94l-71.08-21.14c-28.3-6.8-57.77-.55-80.84 17.14l-39.67 30.41c-14.03 10.75-16.69 30.83-5.92 44.86s30.84 16.66 44.86 5.92l39.69-30.41c7.67-5.89 17.44-8 25.27-6.14l14.7 4.37-37.46 87.39c-12.62 29.48-1.31 64.01 26.3 80.31l84.98 50.17-27.47 87.73c-5.28 16.86 4.11 34.81 20.97 40.09 3.19 1 6.41 1.48 9.58 1.48 13.61 0 26.23-8.77 30.52-22.45l31.64-101.06c5.91-20.77-2.89-43.08-21.64-54.39l-61.24-36.14 31.31-78.28 20.27 41.43c8 16.34 24.92 26.89 43.11 26.89H384c17.67 0 32-14.33 32-32s-14.33-31.99-32-31.99z"></path></svg></td>
+				<td><p>Jankas hoppesten över Gråstulbäcken (<span class="link" onclick="window.open('http://maps.google.com/?q=59.485448,8.993446')">59.485448 N 8.993446 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" class="svg-inline--fa fa-home fa-w-18 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path></svg></td>
+				<td><p>Lillebu (<span class="link" onclick="window.open('http://maps.google.com/?q=59.487372,8.982329')">59.487372 N 8.982329 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><p>Från Lillebu är det märkt med vitgula femkronerstora färgmärken till Röd-rösade leden nere i Oxladalen (<span class="link" onclick="window.open('http://maps.google.com/?q=59.487018,8.975868')">59.487018 N 8.975868 O</span>)</p></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><p>Dessutom finns ORANGE tvärväg. Som går från sommar-stigen nästan rakt söderut till den rödmärkta leden från Vägvisaren i Krintokleiva till Vägvisaren vid Anebu.</p></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><p>Den börjar ca. 350 m från Lillebu (<span class="link" onclick="window.open('http://maps.google.com/?q=59.485901,8.986528')">59.485901 N 8.986528 O</span>) och kommer till skärningen mellan RÖDMÄRKT LED och Gråstulbäcken (<span class="link" onclick="window.open('http://maps.google.com/?q=59.483634,8.988181')">59.483634 N 8.988181 O</span>)</p></td>
+			</tr>
+		</table>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="road" class="svg-inline--fa fa-road fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M573.19 402.67l-139.79-320C428.43 71.29 417.6 64 405.68 64h-97.59l2.45 23.16c.5 4.72-3.21 8.84-7.96 8.84h-29.16c-4.75 0-8.46-4.12-7.96-8.84L267.91 64h-97.59c-11.93 0-22.76 7.29-27.73 18.67L2.8 402.67C-6.45 423.86 8.31 448 30.54 448h196.84l10.31-97.68c.86-8.14 7.72-14.32 15.91-14.32h68.8c8.19 0 15.05 6.18 15.91 14.32L348.62 448h196.84c22.23 0 36.99-24.14 27.73-45.33zM260.4 135.16a8 8 0 0 1 7.96-7.16h39.29c4.09 0 7.53 3.09 7.96 7.16l4.6 43.58c.75 7.09-4.81 13.26-11.93 13.26h-40.54c-7.13 0-12.68-6.17-11.93-13.26l4.59-43.58zM315.64 304h-55.29c-9.5 0-16.91-8.23-15.91-17.68l5.07-48c.86-8.14 7.72-14.32 15.91-14.32h45.15c8.19 0 15.05 6.18 15.91 14.32l5.07 48c1 9.45-6.41 17.68-15.91 17.68z"></path></svg>
+		</div>
+		<h2>Avstånd Lund-Jönnbu</h2>
+		<p>Via Strömstad Sandefjord 54 mil (43+11) + 2½ tim båtresa (ca 200 SEK "Bilfemman"). Går var tredje timme.</p>
+		<p>Via Moss-Horten 66 mil (53+13) + ½ båtresa (ca 150 NOK "Bilfemman"). Går för jämnan kl 06-23!</p>
+		<p>Via Oslofjordenstunneln 70 mil (via Dröbak, 60 NOK per bil).</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ruler" class="svg-inline--fa fa-ruler fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M635.7 167.2L556.1 31.7c-8.8-15-28.3-20.1-43.5-11.5l-69 39.1L503.3 161c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L416 75l-55.2 31.3 27.9 47.4c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L333.2 122 278 153.3 337.8 255c2.2 3.7.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9l-59.7-101.7-55.2 31.3 27.9 47.4c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9l-27.9-47.5-55.2 31.3 59.7 101.7c2.2 3.7.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L84.9 262.9l-69 39.1C.7 310.7-4.6 329.8 4.2 344.8l79.6 135.6c8.8 15 28.3 20.1 43.5 11.5L624.1 210c15.2-8.6 20.4-27.8 11.6-42.8z"></path></svg>
+		</div>
+		<h2>Avstånd Jönnbu Parkering - Lillebu</h2>
+		<p>2,6 km via Krintokleiva.</p>
+		<p>2,7 km via Anebudalen och vidare upp vid Gråstulbäcken.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tint" class="svg-inline--fa fa-tint fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M205.22 22.09c-7.94-28.78-49.44-30.12-58.44 0C100.01 179.85 0 222.72 0 333.91 0 432.35 78.72 512 176 512s176-79.65 176-178.09c0-111.75-99.79-153.34-146.78-311.82zM176 448c-61.75 0-112-50.25-112-112 0-8.84 7.16-16 16-16s16 7.16 16 16c0 44.11 35.89 80 80 80 8.84 0 16 7.16 16 16s-7.16 16-16 16z"></path></svg>
+		</div>
+		<h2>Vatten</h2>
+		<p>Om snön är djup kan man finna källan några decimeter sydväst om markeringspinnen. Om inte heller den syns kan källan hittas med krysspejling. Ena linjen från vinkeln i solhörnan mellan uthus och stuga till östligaste kanten av Anebutopparna. Andra linjen från uthusets nordöstra hörn till stupet på ostsidan av Bryggefjell. Källan finnes 20 meter från uthusets SO-sida.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash-alt" class="svg-inline--fa fa-trash-alt fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg>
+		</div>
+		<h2>Söppel/Sopor</h2>
+		<p>Använd inte myren till öster om hytten som avlopp för då hamnar skiten i dricksvattnet!</p>
+		<p>Glas och plåtburkar måste bäras ned.</p>
+		<p>Plast, papper och annat brännbart kan eldas upp.</p>
+		<p>Potatisskal, apelsinskal, kaffe-sump och annat som snabbt förmultnar kan läggas under stenar eller i klippskrevor.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="toilet" class="svg-inline--fa fa-toilet fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M368 48c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H16C7.2 0 0 7.2 0 16v16c0 8.8 7.2 16 16 16h16v156.7C11.8 214.8 0 226.9 0 240c0 67.2 34.6 126.2 86.8 160.5l-21.4 70.2C59.1 491.2 74.5 512 96 512h192c21.5 0 36.9-20.8 30.6-41.3l-21.4-70.2C349.4 366.2 384 307.2 384 240c0-13.1-11.8-25.2-32-35.3V48h16zM80 72c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H88c-4.4 0-8-3.6-8-8V72zm112 200c-77.1 0-139.6-14.3-139.6-32s62.5-32 139.6-32 139.6 14.3 139.6 32-62.5 32-139.6 32z"></path></svg>
+		</div>
+		<h2>Dass/Do</h2>
+		<p>Do-spannen/dasshinken/skit-tunnan tömmes i grop grävd i västra myren. Se till att det kommer ett lager av mossa överst så inte pappret flyger iväg.</p>
+		<p>Spannen ställs tillbaka (tom) i uthuset innan avfärd.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="battery-empty" class="svg-inline--fa fa-battery-empty fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48z"></path></svg>
+		</div>
+		<h2>Radio, Ficklampor, Rökvarnare m.m. batterier</h2>
+		<p>Ta ur batterierna vid avfärden. Lägg batterierna i en plastpåse för deras hållbarhets skull. Lägg sedan påsen i en plåt/porslin-skål ifall de skulle börja läcka syra. Sist ställes skålen på översta hyllan i skafferiet.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="guitar" class="svg-inline--fa fa-guitar fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M502.6 54.6L457.4 9.4c-12.5-12.5-32.8-12.5-45.3 0l-67.9 67.9c-12.5 12.5-12.5 32.8 0 45.3L290 176.7c-45.4-29-100.4-28.9-133.5 4.2-9.7 9.7-16.4 21.2-20.5 33.9-6.1 18.8-23.5 33.1-42.7 34.9-24 2.3-46.3 11.6-63.4 28.8C-16.3 324.6-8 407.6 48.2 463.8c56.2 56.2 139.2 64.4 185.3 18.3 17.2-17.1 26.5-39.4 28.8-63.5 1.8-19.1 16.1-36.6 34.9-42.7 12.7-4.1 24.2-10.8 33.9-20.5 33.1-33.1 33.1-88.1 4.2-133.5l54.2-54.2c12.5 12.5 32.8 12.5 45.3 0l67.9-67.9c12.4-12.4 12.4-32.7-.1-45.2zM208 352c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"></path></svg>
+		</div>
+		<h2>Gitarrer</h2>
+		<p>Där finns gitarr, akustisk bas och en baslåda.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="car-battery" class="svg-inline--fa fa-car-battery fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M480 128h-32V80c0-8.84-7.16-16-16-16h-96c-8.84 0-16 7.16-16 16v48H192V80c0-8.84-7.16-16-16-16H80c-8.84 0-16 7.16-16 16v48H32c-17.67 0-32 14.33-32 32v256c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32V160c0-17.67-14.33-32-32-32zM192 264c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16zm256 0c0 4.42-3.58 8-8 8h-40v40c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-40h-40c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h40v-40c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v40h40c4.42 0 8 3.58 8 8v16z"></path></svg>
+		</div>
+		<h2>El</h2>
+		<p>Main switch står på OFF när stugan är obebodd.</p>
+		<p>Och brukar vara på On, när di kommer (Tills du lämnar för gott!)</p>
+		<p>Ett 100 Ah bilbatteri. Det brukar vara fullt vid ankomst till stugan. En lampa drar 0,2-1,0 ampere (LED-lampor drar ganska lite).</p>
+		<p>Laddare finns för Micro-USB m.fl. Där finns en 150W 230-volts konverter.</p>
+		<p>Vid normal användning bör batteriet räcka i 50 timmar, vilket sommartid effektivt täcker alla rimliga behov, medans det vintertid kan behöva ransoneras beroende på hur mycket solpanelen kan ladda under dagtid (mindre vid domma och tjockt snöfall).</p>
+		<p>Säkringen sitter i panelinstrumentet, reserv finns uppe på hyllan, samt i "El-lådan" under bänken, där även reservlampr, voltmeter ligger. Ficklampor står i hörnhyllorna om det skulle behövas ljus utöver detta eller vid tekniskt fel. Fotogenlampor finns i några hyllor, och fotogen på golvet i uteskafferiet.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="burn" class="svg-inline--fa fa-burn fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0C79.7 101.3 0 220.9 0 300.5 0 425 79 512 192 512s192-87 192-211.5c0-79.9-80.2-199.6-192-300.5zm0 448c-56.5 0-96-39-96-94.8 0-13.5 4.6-61.5 96-161.2 91.4 99.7 96 147.7 96 161.2 0 55.8-39.5 94.8-96 94.8z"></path></svg>
+		</div>
+		<h2>Propan/Gas till spisen</h2>
+		<p>Huvudkranen som sitter överst på tanken har en klo-liknande tapp, pekar klons-spets uppåt (vänster) är kranen öppen, pekar den nedår (höger) är den av. Reservbehållare finns i Ved-boden. Gör det till vana att huvudkranen är stängd när köket inte används. Det går inte att garandera full läckfrihet.</p>
+		<p>Inventering av skafferi och andra väsentligheter (t.ex. om propan-tanken tagit slut m.m.) skall göras innan avfärd och meddelas till Erik.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="broom" class="svg-inline--fa fa-broom fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M256.47 216.77l86.73 109.18s-16.6 102.36-76.57 150.12C206.66 523.85 0 510.19 0 510.19s3.8-23.14 11-55.43l94.62-112.17c3.97-4.7-.87-11.62-6.65-9.5l-60.4 22.09c14.44-41.66 32.72-80.04 54.6-97.47 59.97-47.76 163.3-40.94 163.3-40.94zM636.53 31.03l-19.86-25c-5.49-6.9-15.52-8.05-22.41-2.56l-232.48 177.8-34.14-42.97c-5.09-6.41-15.14-5.21-18.59 2.21l-25.33 54.55 86.73 109.18 58.8-12.45c8-1.69 11.42-11.2 6.34-17.6l-34.09-42.92 232.48-177.8c6.89-5.48 8.04-15.53 2.55-22.44z"></path></svg>
+		</div>
+		<h2>Städning</h2>
+		<p>Stugan skall i möjlig mån vara i samma skick vid avfärd som vid ankomst.</p>
+		<p>Täcken och kuddar hängs över bjälkar och säng-gavlar för luftning.</p>
+		<p>Ventilerna skall vara öppna och de bägge kaminerna/ved-spisarna.</p>
+		<p>Ventilerna i överigt stängda (vedbod och annat)</p>
+		<p>Matskåp i stugan - Lämna inga rester som kan fördrävas. Mus har ännu inte hittat dit och förvaringsboxar är än så länge inte nödvändigt.</p>
+		<p>Skafferi i vindfånget. Tillhåll för mus. Använd glasburk, plåt-lådor, grytor, spannar med lock till att hejda muskalas.</p>
+		<p>Fönsterluckorna skall sättas på.</p>
+		<p>Yxor förvaras inne i stugan i verktygslådan.</p>
+		<p>Spetten ställs i hörnet bakom spisen.</p>
+		<p>Spadar ställs i gången/vindfånget.</p>
+		<p>Kammerset låses inte, där skall inget värdefullt förvaras. Ljud, ved, täcken och torrmat från uteskafferiet bör räcka åt en nödställd.</p>
+		<p>Tändsticksaskar och ljus i vindfånget.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tree" class="svg-inline--fa fa-tree fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M378.31 378.49L298.42 288h30.63c9.01 0 16.98-5 20.78-13.06 3.8-8.04 2.55-17.26-3.28-24.05L268.42 160h28.89c9.1 0 17.3-5.35 20.86-13.61 3.52-8.13 1.86-17.59-4.24-24.08L203.66 4.83c-6.03-6.45-17.28-6.45-23.32 0L70.06 122.31c-6.1 6.49-7.75 15.95-4.24 24.08C69.38 154.65 77.59 160 86.69 160h28.89l-78.14 90.91c-5.81 6.78-7.06 15.99-3.27 24.04C37.97 283 45.93 288 54.95 288h30.63L5.69 378.49c-6 6.79-7.36 16.09-3.56 24.26 3.75 8.05 12 13.25 21.01 13.25H160v24.45l-30.29 48.4c-5.32 10.64 2.42 23.16 14.31 23.16h95.96c11.89 0 19.63-12.52 14.31-23.16L224 440.45V416h136.86c9.01 0 17.26-5.2 21.01-13.25 3.8-8.17 2.44-17.47-3.56-24.26z"></path></svg>
+		</div>
+		<h2>Ved</h2>
+		<p>Vi har under senaste år samlat ved under sommaren så att det räckt för vinterns behov, och har märkt att så många hjälpt till att fylla vedboden. Det är olagligt att såga från friska träd och rekomenderar därför att man håller sig till torrvirke. Under husets västra del ligger gamla plankor och stockar som man kan elda upp. ?? Stämmer det fortfarande? Man kommer åt den genom att man tar bort stenar ur grundmuren.</p>
+		<div class="headicon">
+			<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="fire-extinguisher" class="svg-inline--fa fa-fire-extinguisher fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M434.027 26.329l-168 28C254.693 56.218 256 67.8 256 72h-58.332C208.353 36.108 181.446 0 144 0c-39.435 0-66.368 39.676-52.228 76.203-52.039 13.051-75.381 54.213-90.049 90.884-4.923 12.307 1.063 26.274 13.37 31.197 12.317 4.926 26.279-1.075 31.196-13.37C75.058 112.99 106.964 120 168 120v27.076c-41.543 10.862-72 49.235-72 94.129V488c0 13.255 10.745 24 24 24h144c13.255 0 24-10.745 24-24V240c0-44.731-30.596-82.312-72-92.97V120h40c0 2.974-1.703 15.716 10.027 17.671l168 28C441.342 166.89 448 161.25 448 153.834V38.166c0-7.416-6.658-13.056-13.973-11.837zM144 72c-8.822 0-16-7.178-16-16s7.178-16 16-16 16 7.178 16 16-7.178 16-16 16z"></path></svg>
+		</div>
+		<h2>Eldsläckare</h2>
+		<p>Hänger vid gaveln av första vånings-sängen i storhytta! Och en vid kamminen i Kammerset!</p>
+		<p>För användning:<ol><li>Dra ut säkerhetssprinten.</li><li>Rikta slangen mot det material som brinner, ej lågorna</li><li>Tryck på avtryckaren.</li></ol></p>
+		<p>Typ pulversläckaren, bör duga mot brinnane vätska.</p>
+		<p>Ha dessutom alltid en fylld spann vatten stående i vart rum när hyttan används.</p>
+	</div>
+</body>
+</html>

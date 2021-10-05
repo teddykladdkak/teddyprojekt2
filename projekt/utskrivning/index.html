@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Utskrivning</title>
+	<script type="text/javascript">
+		var config = {
+			elementnames: ['ingrepp', 'indikation', 'stomityp'],
+			ingrepp: ['högersidig hemikolektomi', 'vänstersidig hemikolektomi', 'sigmoideumresektion', 'hög främre resektion', 'låg främre resektion', 'rektumamputation', 'rektopexi', 'TEM', 'loopnedläggning'],
+			indikation: ['cancer', 'adenom', 'Crohns sjukdom', 'ulcerös kolit', 'rektalprolaps'],
+			stomityp: ['ileostomi', 'loopileostomi', 'transversostomi', 'kolostomi', 'urostomi']
+		};
+		function loadconfig(){
+			for (var i = config.elementnames.length - 1; i >= 0; i--) {
+				document.getElementsByName(config.elementnames[i])[0].setAttribute('list', config.elementnames[i]);
+				var datalistwrapper = document.getElementById('datalistwrapper');
+				var datalist = document.createElement('datalist');
+					datalist.setAttribute('id', config.elementnames[i]);
+				for (var y = config[config.elementnames[i]].length - 1; y >= 0; y--) {
+					var option = document.createElement('option');
+						option.setAttribute('value', config[config.elementnames[i]][y]);
+					datalist.appendChild(option);
+				};
+				datalistwrapper.appendChild(datalist);
+			};
+		};
+		function checkbox(element){
+			var id = element.getAttribute('name');
+			if(element.checked){
+				showhide(id, true);
+			}else{
+				showhide(id, false);
+			};
+		};
+		function radio(element){
+			var id = element.getAttribute('name');
+			if(element.getAttribute('data-toshow') == 'true'){
+				showhide(id, true);
+			}else{
+				showhide(id, false);
+			};
+		};
+		function showhide(id, todo){
+			var target = document.getElementById(id);
+			if(todo){
+				target.setAttribute('style', 'display: block;');
+			}else{
+				target.removeAttribute('style');
+			};
+		};
+		function getradioval(elements){
+			for (var i = elements.length - 1; i >= 0; i--) {
+				if(elements[i].checked){
+					return abtypvalue = elements[i].value;
+				};
+			};
+		};
+		function getradiodata(elements){
+			for (var i = elements.length - 1; i >= 0; i--) {
+				if(elements[i].checked){
+					return abtypvalue = elements[i].getAttribute('data-val');
+				};
+			};
+		};
+		function demo(){
+			/*Anamnes*/
+				var ingrepp = document.getElementsByName('ingrepp')[0].value = 'Loopnedläggning';
+				var ingreppdate = document.getElementsByName('ingreppdate')[0].value = '2017-03-16';
+				var indikation = document.getElementsByName('indikation')[0].value = 'Crohn';
+				var stomi = document.getElementsByName('stomi')[0].click();
+				var stomityp = document.getElementsByName('stomityp')[0].value = 'Transversostomi';
+				var stomiansvar = document.getElementsByName('stomiansvar')[0].value = 'HSV';
+			/*Återbesök*/
+				/*var abdat = document.getElementsByName('abdat')[0].value = '2017-03-29';
+				var abtid = document.getElementsByName('abtid')[0].value = '12:00';*/
+				var abveckonummer = document.getElementsByName('abveckonummer')[0].value = '3';
+				var abveckotyp = document.getElementsByName('abveckotyp')[0].value = 'veckor';
+				var abtyp = document.getElementsByName('abtyp')[2].click();
+				var abplats = document.getElementsByName('abplats')[0].click();
+				var abundersok = document.getElementsByName('abundersok')[0].click();
+			/*Ordinationer*/
+				var inohep = document.getElementsByName('inohep')[0].click();
+				//var inohepdagar = document.getElementsByName('inohepdagar')[0].value;
+				var loperamid = document.getElementsByName('loperamid')[0].click();
+				var laktulos = document.getElementsByName('laktulos')[0].click();
+				//var laktulosveckor = document.getElementsByName('laktulosveckor')[0].value;
+		};
+		function maketext(todo){
+			/*Anamnes*/
+				var ingrepp = document.getElementsByName('ingrepp')[0].value;
+				var ingreppdate = document.getElementsByName('ingreppdate')[0].value;
+				var indikation = document.getElementsByName('indikation')[0].value;
+				var stomi = document.getElementsByName('stomi')[0].checked;
+				var stomityp = document.getElementsByName('stomityp')[0].value;
+				var stomiansvar = document.getElementsByName('stomiansvar')[0].value;
+			/*Återbesök*/
+				/*var abdat = document.getElementsByName('abdat')[0].value;
+				var abtid = document.getElementsByName('abtid')[0].value;*/
+				var abveckonummer = document.getElementsByName('abveckonummer')[0].value
+				var abveckotyp = document.getElementsByName('abveckotyp')[0].value
+				var abtyp = getradioval(document.getElementsByName('abtyp'));
+				var abtyptodo = getradiodata(document.getElementsByName('abtyp'));
+				var abplats = getradioval(document.getElementsByName('abplats'));
+				var abundersok = document.getElementsByName('abundersok')[0].checked;
+			/*Ordinationer*/
+				var inohep = document.getElementsByName('inohep')[0].checked;
+				var inohepdagar = document.getElementsByName('inohepdagar')[0].value;
+				var loperamid = document.getElementsByName('loperamid')[0].checked;
+				var laktulos = document.getElementsByName('laktulos')[0].checked;
+				var laktulosveckor = document.getElementsByName('laktulostid')[0].value;
+				var laktulostupavtid = document.getElementsByName('laktulostupavtid')[0].value;
+			/*Analys*/
+			if(ingrepp == ''){var ingrepp = 'XXXXXX';};
+			if(ingreppdate == ''){var ingreppdate = 'XX-XX-XX';};
+			if(indikation == ''){var indikation = 'XXXXXX';};
+			/*if(abdat == ''){var abdat = 'XX-XX-XX';};
+			if(abtid == ''){}else{var abtid = ' kl ' + abtid;};
+			var abtime = abdat + abtid;
+			*/
+
+			var abtime = abveckonummer + ' ' + abveckotyp;
+
+
+			
+			if(abtyptodo == 'mottag'){
+				if(abundersok){
+					var scopitext = 'och ska genomföra skopi under besöket';
+				}else{
+					var scopitext = '';
+				}
+				var uppfoljningmottag = ' om ' + abtime + abplats + scopitext;
+			}else if(abtyptodo == 'telefon'){
+				var uppfoljningmottag = ' om ' + abtime;
+			}else if(abtyptodo == 'inget'){
+				var uppfoljningmottag = ''
+			};
+			var uppfoljning = abtyp + uppfoljningmottag + '.';
+
+
+			if(stomi){
+				if(stomityp == ''){var typavstomi = 'stomi';}else{var typavstomi = stomityp;};
+				var stomitext = ' Har ' + typavstomi + ' som kommer skötas av ' + stomiansvar + '.';
+			}else{
+				var stomitext = '';
+			};
+
+
+			var anamnes = 'Patient inkommer för ' + ingrepp + ' pga ' + indikation + '.';
+			var vardforlopp = 'Opereras komplikationsfritt den ' + ingreppdate + '. Hemskrives med god smärtlindring, fungerande elimination och acceptabel försörjning per os.';
+			var ordinationarray = [];
+			if(inohep){ordinationarray.push('Behandlas med Innohep i ' + inohepdagar + ' dagar postoperativt');};
+			if(loperamid){ordinationarray.push('Loperamid vid behov');};
+			if(laktulos){ordinationarray.push('Ska fortsätta med Laktulos i ' + laktulosveckor + ' ' + laktulostupavtid + ' till');};
+
+
+			/*Samling av skapad text*/
+			var fardigtext = {
+				anamnes: 'Anamnes: ' + anamnes,
+				vardforlopp: 'Vårdförlopp: ' + vardforlopp + stomitext,
+				ordinationer: 'Ordinationer: ' + ordinationarray.join('. ') + '.',
+				uppfoljning: 'Uppföljning: ' + uppfoljning
+			};
+
+			var copy = document.getElementById('copy');
+			if(!todo){
+			/*Print*/
+			var resultatwrapper = document.getElementById('resultat');
+				var anamneselement = document.createElement('p');
+					var anamnestext = document.createTextNode(fardigtext.anamnes);
+					anamneselement.appendChild(anamnestext);
+				resultatwrapper.appendChild(anamneselement);
+				var vardforloppelement = document.createElement('p');
+					var vardforlopptext = document.createTextNode(fardigtext.vardforlopp);
+					vardforloppelement.appendChild(vardforlopptext);
+				resultatwrapper.appendChild(vardforloppelement);
+				var ordinationelement = document.createElement('p');
+					var ordinationtext = document.createTextNode(fardigtext.ordinationer);
+					ordinationelement.appendChild(ordinationtext);
+				resultatwrapper.appendChild(ordinationelement);
+				var brake = document.createElement('br');
+				resultatwrapper.appendChild(brake);
+				var uppfoljningelement = document.createElement('p');
+					var uppfoljningtext = document.createTextNode(fardigtext.uppfoljning);
+					uppfoljningelement.appendChild(uppfoljningtext);
+				resultatwrapper.appendChild(uppfoljningelement);
+				copy.value = '';
+			}else if(todo == 'allt'){
+				//console.log(fardigtext.anamnes + '\n\n' + fardigtext.vardforlopp + '\n\n' + fardigtext.ordinationer + '\n\n\n' + fardigtext.uppfoljning);
+				copy.value = fardigtext.anamnes + '\n\n' + fardigtext.vardforlopp + '\n\n' + fardigtext.ordinationer + '\n\n\n' + fardigtext.uppfoljning;
+			}else if(todo == 'sammanfattning'){
+				//console.log(fardigtext.anamnes + '\n\n' + fardigtext.vardforlopp + '\n\n' + fardigtext.ordinationer);
+				copy.value = fardigtext.anamnes + '\n\n' + fardigtext.vardforlopp + '\n\n' + fardigtext.ordinationer;
+			}else if(todo == 'plan'){
+				//console.log(fardigtext.uppfoljning);
+				copy.value = fardigtext.uppfoljning;
+			};
+			copy.focus();
+			copy.select();
+			document.execCommand("copy");
+
+		};
+		function radera(){
+			window.scrollTo(0, 0);
+			location.reload();
+		};
+	</script>
+	<style type="text/css">
+		.hiddenelement{
+			display: none;
+			padding-left: 20px;
+		}
+		#datalistwrapper{
+			display: none;
+		}
+		#copy{
+			position: relative;
+			top: -500px;
+			left: -500px;
+		}
+		input, select, textarea{
+			zoom: 1.5;
+		}
+		input[type=number]{
+			width: 50px;
+		}
+		input[type="button"]{
+			margin: 5px;
+		}
+	</style>
+</head>
+<body onload="loadconfig();">
+<h1>Anamnes</h1>
+<p>Indikation</p>
+<input type="text" name="indikation">
+<p>Ingrepp</p>
+<input type="text" name="ingrepp">
+<p>Datum för operation</p>
+<input type="date" name="ingreppdate">
+<p>Har patient stomi?</p>
+<p><input type="checkbox" name="stomi" onclick="checkbox(this)"> Ja</p>
+	<span class="hiddenelement" id="stomi">
+		<p>Stomi typ</p>
+		<input type="text" name="stomityp">
+		<p>Sköts av: <select name="stomiansvar"><option value="patienten själv">själv</option><option value="HSV">HSV</option></select></p>
+	</span>
+<h1>Återbesök</h1>
+<!--<p>Datum för återbesök/telefontid</p>
+<input type="date" name="abdat">
+<p>Tid för återbesök/telefontid</p>
+<input type="time" name="abtid">-->
+<p>Tid till återbesök</p>
+<input type="number" value="4" name="abveckonummer"><select><option name="abveckotyp" value="veckor">veckor</option><option value="månader">månader</option></select>
+<p>Typ av återkoppling</p>
+<p><input type="radio" name="abtyp" onclick="radio(this)" value="Inget återbesök planerat" data-val="inget" data-toshow="false" checked> Inget återbesök <input type="radio" name="abtyp" onclick="radio(this)" value="Telefontid"  data-val="telefon" data-toshow="false"> Telefontid <input type="radio" name="abtyp" onclick="radio(this)" value="Mottagningsbesök"  data-val="mottag" data-toshow="true"> Mottagning</p>
+	<span class="hiddenelement" id="abtyp">
+		<p>Var ska patient vid återbesök?</p>
+		<p><input type="radio" name="abplats" value=""> Mottagningen <input type="radio" name="abplats" value=" på kollorektalabb"> Kollorektal labb</p>
+		<p>Ska patient genomgå skopi vid återbesök? <input type="checkbox" name="abundersok"> Ja</p>
+	</span>
+<h1>Ordinationer</h1>
+<p>Innohep? <input type="checkbox" name="inohep" onclick="checkbox(this)"> Ja</p>
+	<span class="hiddenelement" id="inohep">
+		<p>Hur många dagar?</p>
+		<p><input type="number" value="7" name="inohepdagar"> dagar</p>
+	</span>
+<p>Loperamid vb? <input type="checkbox" name="loperamid"> Ja</p>
+<p>Laktulos? <input type="checkbox" name="laktulos" onclick="checkbox(this)"> Ja</p>
+	<span class="hiddenelement" id="laktulos">
+		<p>Antal dagar/veckors behandling</p>
+		<p><input type="number" value="2" name="laktulostid"><select name="laktulostupavtid"><option value="veckor">veckor</option><option value="dagar">dagar</option></select></p>
+	</span>
+<h1>Funktioner</h1>
+<p>Då detta i nuläget enbart är en prototyp kan du klicka i "Lägg till demotext" för att automatiskt registrera in data för en patient i formuläret.</p>
+<p>Om något av kopierings-knapperna klickas på läggs texten till i urklipp. Gå efter till melior och klistra in texten på önskat ställe (CTRL + V)</p>
+<input type="button" value="Lägg till demotext" onclick="demo();" name="">
+<input type="button" value="Titta på text" onclick="maketext();" name="">
+<input type="button" value="Kopiera all text" onclick="maketext('allt');" name="">
+<input type="button" value="Kopiera sammanfattning av vårdtid" onclick="maketext('sammanfattning');" name="">
+<input type="button" value="Kopiera Planering" onclick="maketext('plan');" name="">
+<input type="button" value="Radera info" onclick="radera();" name="">
+<div id="resultat"></div>
+<div id="datalistwrapper"></div>
+<textarea id="copy"></textarea>
+</body>
+</html>
