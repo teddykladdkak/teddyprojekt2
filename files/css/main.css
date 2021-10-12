@@ -370,6 +370,11 @@ a.button:hover {
 	background-color: #E87600; /*--bg-accent-color*/
 	color: #000;	 /*--text-accent-color*/
 }
+a.button svg {
+	width: 20px;
+	height: 20px;
+	vertical-align: top;
+}
 .supportwrapper {
 	display: inline-block;
 	padding-top: 10px;
@@ -844,6 +849,9 @@ a.button:hover {
 
 /*Telefon*/
 @media screen and (max-width: 809px) {
+	.mobile-hidden {
+		display: none;
+	}
 	body {
 		font-size: 18px;
 	}
