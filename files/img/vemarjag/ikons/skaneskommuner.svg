@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70" viewBox="0 0 70 70">
+  <defs>
+    <linearGradient id="linear-gradient" x2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f0aa31"/>
+      <stop offset="1" stop-color="#d94833"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="1.115" y1="0.296" x2="-0.641" y2="1.163" gradientUnits="objectBoundingBox">
+      <stop offset="0.12" stop-color="#d2232a"/>
+      <stop offset="0.29" stop-color="#d94423"/>
+      <stop offset="0.64" stop-color="#eb9812"/>
+      <stop offset="1" stop-color="#fff200"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="-0.471" y1="-0.088" x2="1.151" y2="1.048" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#d2232a"/>
+      <stop offset="0.09" stop-color="#d52c28"/>
+      <stop offset="0.25" stop-color="#db4622"/>
+      <stop offset="0.45" stop-color="#e77019"/>
+      <stop offset="0.69" stop-color="#f6a90d"/>
+      <stop offset="0.81" stop-color="#ffcb05"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="-0.291" y1="0.5" x2="2.565" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0.2" stop-color="#d2232a"/>
+      <stop offset="0.31" stop-color="#e2601d"/>
+      <stop offset="0.46" stop-color="#f7ad0c"/>
+      <stop offset="0.53" stop-color="#ffcb05"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="3.066" y1="0.751" x2="-0.875" y2="0.392" gradientUnits="objectBoundingBox">
+      <stop offset="0.07" stop-color="#d2232a"/>
+      <stop offset="0.15" stop-color="#d42a29"/>
+      <stop offset="0.26" stop-color="#d93c24"/>
+      <stop offset="0.39" stop-color="#e15b1e"/>
+      <stop offset="0.53" stop-color="#ec8514"/>
+      <stop offset="0.69" stop-color="#fbbb09"/>
+      <stop offset="0.73" stop-color="#ffcb05"/>
+    </linearGradient>
+    <clipPath id="clip-skaneskommuner">
+      <rect width="70" height="70"/>
+    </clipPath>
+  </defs>
+  <g id="skaneskommuner" clip-path="url(#clip-skaneskommuner)">
+    <rect width="70" height="70" fill="url(#linear-gradient)"/>
+    <g id="Group_19" data-name="Group 19" transform="translate(-750 99.82)">
+      <path id="Path_184" data-name="Path 184" d="M32.592,31.9s-3.383,5.709-9.328,5.709S11,41,11,48c0,5.968,4.834,10.285,10.8,10.285S33.2,51.93,33.2,45.651Z" transform="translate(751.461 -97.04)" fill="url(#linear-gradient-2)"/>
+      <path id="Path_185" data-name="Path 185" d="M33.041,40.076a12.271,12.271,0,0,1-4.969.84,17.182,17.182,0,0,0-2.5.394s11.607.264,13.01,11.4a13.2,13.2,0,0,0,.634-2.725c.405-2.35.617-3.906.617-3.906L33.676,39.8Z" transform="translate(745.449 -100.299)" fill="#bf2e2e"/>
+      <path id="Path_186" data-name="Path 186" d="M51.741,31.9s3.36,5.709,9.328,5.709S73.339,41,73.339,48c0,5.968-4.834,10.285-10.8,10.285S51.13,51.93,51.13,45.651Z" transform="translate(734.903 -97.04)" fill="url(#linear-gradient-3)"/>
+      <path id="Path_187" data-name="Path 187" d="M57.3,40.252a12.241,12.241,0,0,0,4.394.64,14.861,14.861,0,0,1,2.649.423s-11.583.952-12.881,11.771a12.922,12.922,0,0,1-.769-3.107c-.417-2.35-.617-3.906-.617-3.906L56.236,39.8Z" transform="translate(735.336 -100.299)" fill="#d3661b"/>
+      <path id="Path_188" data-name="Path 188" d="M28.588,29.109c-1.069-4.734-2.925-11.078-11.953-12.253C8.958,15.822,0,11.305,0,2.207A14.027,14.027,0,0,1,14.027-11.82,14.191,14.191,0,0,1,26.5-4.184c3.554,6.6,3.524,15.724,3.524,20.394a80.583,80.583,0,0,1-1.451,12.922" transform="translate(756 -79)" fill="url(#linear-gradient-4)"/>
+      <path id="Path_189" data-name="Path 189" d="M50.249,29.109c1.069-4.734,2.925-11.078,11.947-12.253,7.683-1,16.641-5.521,16.641-14.62A14.027,14.027,0,0,0,64.81-11.82,14.2,14.2,0,0,0,52.334-4.184C48.781,2.412,48.81,11.54,48.81,16.21a80.583,80.583,0,0,0,1.451,12.922" transform="translate(735.86 -79)" fill="url(#linear-gradient-5)"/>
+    </g>
+  </g>
+</svg>
