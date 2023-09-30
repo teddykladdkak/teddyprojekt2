@@ -216,8 +216,9 @@
             );
         };
         function skapa(img_size, img_size_typ, img_typ, qr_on, qr_size){
+            var dolda = [];
             if(!localStorage.getItem('sagor_dold')){}else{
-                var dolda = JSON.parse(localStorage.getItem('sagor_dold'));
+                dolda = JSON.parse(localStorage.getItem('sagor_dold'));
             };
             var wrapper = document.getElementById('wrapper');
                 wrapper.innerHTML = '';
