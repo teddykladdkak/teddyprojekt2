@@ -35,9 +35,19 @@
             background-color: #FFF;
             padding: 10px;
         }
+        #meny p {
+            max-width: 800px;
+        }
+        #wrapper {
+            text-align: center;
+            display: flex;
+            gap: 0px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .imageWrp {
-            display: inline-block;
             position: relative;
+            border: solid 1px #000;
         }
         .imageWrp.dold img {
             opacity: 0.2;
@@ -59,20 +69,19 @@
             position: relative;
             text-decoration: none;
         }
-        .link img {
-            border: solid 1px #000;
-        }
         .qr {
             position: absolute;
             bottom: 8px;
             right: 4px;
+        }
+        .qr img {
+            border: solid 1px #000;
         }
         img.source {
             position: absolute;
             bottom: 8px;
             left: 4px;
             width: 30px;
-            border: none;
         }
         .missing p {
             position: absolute;
@@ -95,10 +104,14 @@
             #meny, #loader {
                 display: none;
             }
-            .link, .link img {
+            .link, .link img, div.imageWrp, div.imageWrp a {
                 display: block;
                 width: 100%;
                 height: auto;
+            }
+            div.imageWrp, div.imageWrp a {
+                width: 100%!important;
+                height: auto!important;
             }
             img.source {
                 width: 30px;
@@ -128,34 +141,38 @@
     <div id="meny">
         <p>
             Häng med på det här supercoola projektet som är skapat speciellt för våra små äventyrare! Barnen kan nu ta och välja en fysisk ljudbok. Ta fram kameran, gör dig redo att skanna, och voilà - du är på väg till din favoritljudbok på Spotify eller någon annan inställd källa!
-        <p></p>
+        </p><p>
             Innan du börjar, gör bilderna precis så stora som du vill ha dem och passande för din skrivare. Sen är det bara att trycka på utskriftsknappen.
-        <p></p>
+        </p><p>
             Och vet du vad som är ännu mer coolt? Om du kollar på skärmen och den är smalare än 1000 pixlar, då visas istället mobilvyn, om du vill låta din lilla äventyrare använda telefonen istället.
-        <p></p>
+        </p><p>
             Har du några idéer eller önskemål om ändringar? Slå en kik på vår <a href="https://docs.google.com/spreadsheets/d/1HpH8xDiPDaFSpR3YUbQwIhTgHAt2nOMBw-XRE5otnFU/edit?usp=sharing" target="_blank">Google Sheet: Sagor</a>. Där kan du vara med och göra detta projekt ännu mer innehållsrik!
         </p>
-        <table>
+        <select id="inst_size_typ" style="display: none;"><option value="px">px</option><option value="%">%</option></select>
+        <table style="margin-bottom: 10px;">
             <tr>
                 <td>
-                    <input id="inst_size" type="number" value="400">
+                    <input type="radio" id="inst_typ1" name="typ" value="img_rek" checked>
+                    <label for="inst_typ1">img_rek</label><br>
+                    <input type="radio" id="inst_typ2" name="typ" value="img_full">
+                    <label for="inst_typ2">img_full</label>
                 </td>
                 <td>
-                    <select id="inst_size_typ">
-                        <option value="px">px</option>
-                        <option value="%">%</option>
-                    </select>
+                    <input id="inst_size" type="number" value="400" style="margin-left: 10px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="inst_qr" name="typ" value="img_full" checked>
+                    <label for="inst_qr">QR-kod</label>
+                </td>
+                <td>
+                    <input id="inst_qr_size" type="number" value="128" style="margin-left: 10px;">
                 </td>
             </tr>
         </table>
-        <input id="inst_qr_size" type="number" value="128"><br>
-        <input type="radio" id="inst_typ1" name="typ" value="img_rek" checked>
-        <label for="inst_typ1">img_rek</label><br>
-        <input type="radio" id="inst_typ2" name="typ" value="img_full">
-        <label for="inst_typ2">img_full</label><br>
-        <input type="checkbox" id="inst_qr" name="typ" value="img_full" checked>
-        <label for="inst_qr">QR-kod</label><br>
         <input type="button" value="Ändra" onclick="andra();">
+        <input type="button" value="Radera inställningar" onclick="raderaSpara();">
         <input type="button" value="Skriv ut" onclick="window.print();">
         <br><br>
     </div>
@@ -199,42 +216,55 @@
             );
         };
         function skapa(img_size, img_size_typ, img_typ, qr_on, qr_size){
+            if(!localStorage.getItem('sagor_dold')){}else{
+                var dolda = JSON.parse(localStorage.getItem('sagor_dold'));
+            };
             var wrapper = document.getElementById('wrapper');
                 wrapper.innerHTML = '';
             for (let i = 0; i < sagor.length; i++) {
+                var w = 0;
+                var h = 0;
+                var l = '';
+                if(img_typ == 'img_rek'){
+                    if(sagor[i].img_rek == ''){
+                        l = 'https://drive.google.com/uc?export=view&id=1dBBl3leRM-bcnY4UnSuENwLNj_CZFCxh';
+                        a.setAttribute('class', 'link missing');
+                        var missing = document.createElement('p');
+                            var missing_t = document.createTextNode(sagor[i].alt);
+                            missing.appendChild(missing_t);
+                        a.appendChild(missing);
+                    }else{
+                        l = sagor[i].img_rek;
+                    };
+                    w = img_size + img_size_typ;
+                    h = img_size + img_size_typ;
+                }else if(img_typ == 'img_full'){
+                    if(sagor[i].img_full == ''){
+                        l = 'https://drive.google.com/uc?export=view&id=1UorOs1E2Ulayw9DUJwttXk3FbemjB90T';
+                        a.setAttribute('class', 'link missing');
+                        var missing = document.createElement('p');
+                            var missing_t = document.createTextNode(sagor[i].alt);
+                            missing.appendChild(missing_t);
+                        a.appendChild(missing);
+                    }else{
+                        l = sagor[i].img_full;
+                    };
+                    w = img_size + img_size_typ;
+                    h = Math.round(img_size * 1.3333) + img_size_typ;
+                };
                 var imageWrp = document.createElement('div');
                     imageWrp.setAttribute('class', 'imageWrp');
+                    imageWrp.setAttribute('style', `width: ${w};height: ${h};`);
                     var a = document.createElement('a');
                         a.setAttribute('href', sagor[i].link);
                         a.setAttribute('class', 'link');
                         a.setAttribute('title', sagor[i].alt);
+                        a.setAttribute('style', `width: ${w};height: ${h};`);
                         var img = document.createElement('img');
                             img.setAttribute('alt', sagor[i].alt);
-                            if(img_typ == 'img_rek'){
-                                if(sagor[i].img_rek == ''){
-                                    sagor[i].img_rek = 'https://drive.google.com/uc?export=view&id=1dBBl3leRM-bcnY4UnSuENwLNj_CZFCxh';
-                                    a.setAttribute('class', 'link missing');
-                                    var missing = document.createElement('p');
-                                        var missing_t = document.createTextNode(sagor[i].alt);
-                                        missing.appendChild(missing_t);
-                                    a.appendChild(missing);
-                                };
-                                img.setAttribute('src', sagor[i].img_rek);
-                                img.setAttribute('width', img_size + img_size_typ);
-                                img.setAttribute('height', img_size + img_size_typ);
-                            }else if(img_typ == 'img_full'){
-                                if(sagor[i].img_full == ''){
-                                    sagor[i].img_full = 'https://drive.google.com/uc?export=view&id=1UorOs1E2Ulayw9DUJwttXk3FbemjB90T';
-                                    a.setAttribute('class', 'link missing');
-                                    var missing = document.createElement('p');
-                                        var missing_t = document.createTextNode(sagor[i].alt);
-                                        missing.appendChild(missing_t);
-                                    a.appendChild(missing);
-                                };
-                                img.setAttribute('src', sagor[i].img_full);
-                                img.setAttribute('width', img_size + img_size_typ);
-                                img.setAttribute('height', Math.round(img_size * 1.3333) + img_size_typ);
-                            };
+                            img.setAttribute('src', l);
+                            img.setAttribute('width', w);
+                            img.setAttribute('height', h);
                         a.appendChild(img);
                         var qr = document.createElement('div');
                             qr.setAttribute('class', 'qr');
@@ -255,6 +285,10 @@
                             dolj.setAttribute('type', 'button');
                             dolj.setAttribute('value', 'Dölj');
                             dolj.setAttribute('onclick', 'dolj(this);');
+                            dolj.setAttribute('data-link', sagor[i].link);
+                            if(!dolda[sagor[i].link]){}else{
+                                dolj.setAttribute('class', 'doljDessa');
+                            };
                         imageMenu.appendChild(dolj);
                     imageWrp.appendChild(imageMenu);
                 wrapper.appendChild(imageWrp);
@@ -269,7 +303,15 @@
                     });
                 };
             };
+            spara(img_size, img_size_typ, img_typ, qr_on, qr_size);
+            doljSparade();
             stopLoad();
+        };
+        function doljSparade(){
+            var allaAttDolja = document.getElementsByClassName('doljDessa');
+            for (let i = 0; i < allaAttDolja.length; i++) {
+                dolj(allaAttDolja[i]);
+            };
         };
         function bildURL(url){
             if(!url || url == ""){
@@ -285,7 +327,7 @@
             complete: function(results) {
                 for (var a = 0; a < results.data.length; a++){
                     if(results.data[a][0] == 'Namn'){}else{
-                        console.log(results.data[a][0]);
+                        //console.log(results.data[a][0]);
                         sagor.push({
                             "alt": results.data[a][0],
                             "img_full": bildURL(results.data[a][1]),
@@ -301,7 +343,7 @@
                     if (x > y) {return 1;}
                     return 0;
                 });
-                andra();
+                kollaSpara();
             },
             error: function(results) {
                 console.log('Något gick fel');
@@ -309,15 +351,49 @@
             }
         });
         function dolj(el){
+            var dolda = {};
+            if(!localStorage.getItem('sagor_dold')){}else{
+                dolda = JSON.parse(localStorage.getItem('sagor_dold'));
+            };
             if(!el.getAttribute('data-dold')){
                 el.parentElement.parentElement.setAttribute('class', 'imageWrp dold');
                 el.setAttribute('data-dold', 'true');
                 el.value = 'Visa';
+                dolda[el.getAttribute('data-link')] = true;
             }else{
                 el.parentElement.parentElement.setAttribute('class', 'imageWrp');
                 el.removeAttribute('data-dold');
                 el.value = 'Dölj';
+                dolda[el.getAttribute('data-link')] = false;
             };
+            localStorage.setItem('sagor_dold', JSON.stringify(dolda));
+        };
+        function spara(img_size, img_size_typ, img_typ, qr_on, qr_size){
+            var inst = {"img_size": img_size, "img_size_typ": img_size_typ, "img_typ": img_typ, "qr_on": qr_on, "qr_size": qr_size};
+            localStorage.setItem('sagor_inst', JSON.stringify(inst))
+        };
+        function kollaSpara(){
+            if(!localStorage.getItem('sagor_inst')){}else{
+                var inst = JSON.parse(localStorage.getItem('sagor_inst'));
+                console.log(inst);
+                if(inst.img_typ == 'img_rek'){
+                    document.getElementById('inst_typ1').checked = true;
+                }else if(inst.img_typ = 'img_full'){
+                    document.getElementById('inst_typ2').checked = true;
+                };
+                if(inst.qr_on){
+                    document.getElementById('inst_qr').checked = true;
+                };
+                document.getElementById('inst_size').value = inst.img_size;
+                document.getElementById('inst_size_typ').value = inst.img_size_typ;
+                document.getElementById('inst_qr_size').value = inst.qr_size;
+            };
+            andra();
+        };
+        function raderaSpara(){
+            localStorage.removeItem('sagor_inst');
+            localStorage.removeItem('sagor_dold');
+            location.reload();
         };
         var icons = {
             "sr": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuNCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiIFsKCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPgoJPCFFTlRJVFkgbnNfYWkgImh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVJbGx1c3RyYXRvci8xMC4wLyI+Cgk8IUVOVElUWSBuc19ncmFwaHMgImh0dHA6Ly9ucy5hZG9iZS5jb20vR3JhcGhzLzEuMC8iPgoJPCFFTlRJVFkgbnNfdmFycyAiaHR0cDovL25zLmFkb2JlLmNvbS9WYXJpYWJsZXMvMS4wLyI+Cgk8IUVOVElUWSBuc19pbXJlcCAiaHR0cDovL25zLmFkb2JlLmNvbS9JbWFnZVJlcGxhY2VtZW50LzEuMC8iPgoJPCFFTlRJVFkgbnNfc2Z3ICJodHRwOi8vbnMuYWRvYmUuY29tL1NhdmVGb3JXZWIvMS4wLyI+Cgk8IUVOVElUWSBuc19jdXN0b20gImh0dHA6Ly9ucy5hZG9iZS5jb20vR2VuZXJpY0N1c3RvbU5hbWVzcGFjZS8xLjAvIj4KCTwhRU5USVRZIG5zX2Fkb2JlX3hwYXRoICJodHRwOi8vbnMuYWRvYmUuY29tL1hQYXRoLzEuMC8iPgpdPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiCgkgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MzcuMyAzMTcuNyIKCSBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzcuMyAzMTcuNzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8bWV0YWRhdGE+Cgk8c2Z3ICB4bWxucz0iJm5zX3NmdzsiPgoJCTxzbGljZXM+PC9zbGljZXM+CgkJPHNsaWNlU291cmNlQm91bmRzICBib3R0b21MZWZ0T3JpZ2luPSJ0cnVlIiBoZWlnaHQ9IjMxNy43IiB3aWR0aD0iNTM3LjMiIHg9IjY1LjUiIHk9IjI3Ni4zIj48L3NsaWNlU291cmNlQm91bmRzPgoJPC9zZnc+CjwvbWV0YWRhdGE+CjxwYXRoIGQ9Ik00MzQuOCw4MGMwLTc5LjktNzguNi03NS4yLTEwMy03OS45aDExMy41QzQ3Ny44LDAuMSw1MzAsMjEuNSw1MzAsODBjMCw1OC40LTQwLjksNzkuOS03My40LDc5LjloLTUzLjMKCUM0MDMuMywxNTkuOSw0MzQuOCwxNTkuOSw0MzQuOCw4MCIvPgo8cG9seWdvbiBwb2ludHM9IjQuOCwzMTcuNiAxNDAuOCwzMTcuNiA0LjgsMTc1LjkgIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTQ4LjIsMCAyNzcuNiwxNTQuNiAyNzcuNiwwICIvPgo8cG9seWdvbiBwb2ludHM9IjM5Ny40LDE1OS45IDI4MS45LDE1OS45IDQxNCwzMTcuNiA1MzcuMywzMTcuNiAiLz4KPHBhdGggZD0iTTk3LjMsODBjMCw2MC4zLDE5LjQsNzUuMiw0My41LDc5LjlINzIuN0M0MC41LDE1OS45LDAsMTM4LjQsMCw3OS45QzAsMjEuNiw0MC41LDAsNzIuNywwaDY4LjEKCUMxMTYuNyw0LjcsOTcuMywxOS43LDk3LjMsODAiLz4KPHBhdGggZD0iTTE5MS43LDIzOC44YzAtNTkuNC0xOS42LTc0LjItNDQtNzguOWg2OC44YzMyLjUsMCw3My40LDIxLjIsNzMuNCw3OC45YzAsNTcuNy00MC45LDc4LjgtNzMuNCw3OC45aC02OC44CglDMTcyLjEsMzEzLDE5MS43LDI5OC4zLDE5MS43LDIzOC44Ii8+Cjwvc3ZnPgo=",
