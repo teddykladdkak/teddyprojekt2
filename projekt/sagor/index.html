@@ -25,6 +25,10 @@
             background-color: #000;
             padding-bottom: 10px;
         }
+        html, body, input, button {
+            font-size: 1rem;
+            font-family: sans-serif;
+        }
         p {
             margin-bottom: 10px;
         }
@@ -97,8 +101,14 @@
             width: 100px;
             height: 100px;
         }
-        input[type=button] {
+        input[type=button], button {
             padding: 2px 6px;
+        }
+        button svg {
+            display: inline-block;
+            vertical-align: middle;
+            width: 21px;
+            height: 21px;
         }
         @media only screen and (max-width: 1000px) {
             #meny, #loader {
@@ -141,13 +151,17 @@
     <div id="meny">
         <p>
             Häng med på det här supercoola projektet som är skapat speciellt för våra små äventyrare! Barnen kan nu ta och välja en fysisk ljudbok. Ta fram kameran, gör dig redo att skanna, och voilà - du är på väg till din favoritljudbok på Spotify eller någon annan inställd källa!
-        </p><p>
-            Innan du börjar, gör bilderna precis så stora som du vill ha dem och passande för din skrivare. Sen är det bara att trycka på utskriftsknappen.
-        </p><p>
-            Och vet du vad som är ännu mer coolt? Om du kollar på skärmen och den är smalare än 1000 pixlar, då visas istället mobilvyn, om du vill låta din lilla äventyrare använda telefonen istället.
-        </p><p>
+        </p>
+        <p>
+            Innan du börjar, gör bilderna precis så stora som du vill ha dem och passande för din skrivare. Sen är det bara att trycka på utskriftsknappen. Du har möjlighet att dölja enskilda böcker som du inte vill ha med vid utskrift för att spara papper. Håll musen över ljudbok och klicka på knappen "Dölj".
+        </p>
+        <p>
+            Och vet du vad som är ännu mer coolt? Om du kollar på skärmen och den är smalare än 1000 pixlar, då visas istället mobilvyn, om du vill låta din lilla äventyrare använda telefonen istället. Har du iPhone? Då kan du lägga till sidan som app genom att i menyn välja "Lägg till på hemskärmen". Steg för steg guide hittar du här: <a href="/manualer/iphone.html" target="_blank">Hur man installerar en webb app i iPhone</a>. Stöd för Android kommer längre fram.
+        </p>
+        <p>
             Har du några idéer eller önskemål om ändringar? Slå en kik på vår <a href="https://docs.google.com/spreadsheets/d/1HpH8xDiPDaFSpR3YUbQwIhTgHAt2nOMBw-XRE5otnFU/edit?usp=sharing" target="_blank">Google Sheet: Sagor</a>. Där kan du vara med och göra detta projekt ännu mer innehållsrik!
         </p>
+        <p><b>Inställningar:</b></p>
         <select id="inst_size_typ" style="display: none;"><option value="px">px</option><option value="%">%</option></select>
         <table style="margin-bottom: 10px;">
             <tr>
@@ -171,9 +185,18 @@
                 </td>
             </tr>
         </table>
-        <input type="button" value="Ändra" onclick="andra();">
-        <input type="button" value="Radera inställningar" onclick="raderaSpara();">
-        <input type="button" value="Skriv ut" onclick="window.print();">
+        <button onclick="andra();"">
+            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m14 1c.8284271.82842712.8284271 2.17157288 0 3l-9.5 9.5-4 1 1-3.9436508 9.5038371-9.55252193c.7829896-.78700064 2.0312313-.82943964 2.864366-.12506788z"/><path d="m6.5 14.5h8"/><path d="m12.5 3.5 1 1"/></g></svg>
+            Ändra
+        </button>
+        <button onclick="raderaSpara();">
+            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 2)"><path d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"/><path d="m.5 2.5h14"/><path d="m5.5 5.5v8"/><path d="m9.5 5.5v8"/></g></svg>
+            Radera inställningar
+        </button>
+        <button onclick="window.print();">
+            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="matrix(0 -1 1 0 2 19)"><path d="m3.5 4.38378906v-1.89752528c0-1.1045695.8954305-2 2-2h4c1.1045695 0 2 .8954305 2 2v12.01373622c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2v-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="m1.5 4.5h5.0013251v8h-5.0013251c-.55228475 0-1-.4477153-1-1v-6c0-.55228475.44771525-1 1-1zm12 0h2c.5522847 0 1 .44771525 1 1v6c0 .5522847-.4477153 1-1 1h-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="14" fill="currentColor" r="1"/></g></svg>
+            Skriv ut
+        </button>
         <br><br>
     </div>
     <div id="wrapper" style="display: none;"></div>
@@ -272,13 +295,8 @@
                         a.appendChild(qr);
                         var source = document.createElement('img');
                             source.setAttribute('class', 'source');
-                        if(sagor[i].link.includes('sverigesradio')){
-                            source.setAttribute('src', icons.sr);
-                            a.appendChild(source);
-                        }else if(sagor[i].link.includes('spotify')){
-                            source.setAttribute('src', icons.spotify);
-                            a.appendChild(source);
-                        };
+                            source.setAttribute('src', getIcon(sagor[i].link));
+                        a.appendChild(source);
                     imageWrp.appendChild(a);
                     var imageMenu = document.createElement('div');
                         imageMenu.setAttribute('class', 'imageMenu');
@@ -376,7 +394,6 @@
         function kollaSpara(){
             if(!localStorage.getItem('sagor_inst')){}else{
                 var inst = JSON.parse(localStorage.getItem('sagor_inst'));
-                console.log(inst);
                 if(inst.img_typ == 'img_rek'){
                     document.getElementById('inst_typ1').checked = true;
                 }else if(inst.img_typ = 'img_full'){
@@ -396,10 +413,33 @@
             localStorage.removeItem('sagor_dold');
             location.reload();
         };
-        var icons = {
-            "sr": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuNCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiIFsKCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPgoJPCFFTlRJVFkgbnNfYWkgImh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVJbGx1c3RyYXRvci8xMC4wLyI+Cgk8IUVOVElUWSBuc19ncmFwaHMgImh0dHA6Ly9ucy5hZG9iZS5jb20vR3JhcGhzLzEuMC8iPgoJPCFFTlRJVFkgbnNfdmFycyAiaHR0cDovL25zLmFkb2JlLmNvbS9WYXJpYWJsZXMvMS4wLyI+Cgk8IUVOVElUWSBuc19pbXJlcCAiaHR0cDovL25zLmFkb2JlLmNvbS9JbWFnZVJlcGxhY2VtZW50LzEuMC8iPgoJPCFFTlRJVFkgbnNfc2Z3ICJodHRwOi8vbnMuYWRvYmUuY29tL1NhdmVGb3JXZWIvMS4wLyI+Cgk8IUVOVElUWSBuc19jdXN0b20gImh0dHA6Ly9ucy5hZG9iZS5jb20vR2VuZXJpY0N1c3RvbU5hbWVzcGFjZS8xLjAvIj4KCTwhRU5USVRZIG5zX2Fkb2JlX3hwYXRoICJodHRwOi8vbnMuYWRvYmUuY29tL1hQYXRoLzEuMC8iPgpdPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiCgkgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MzcuMyAzMTcuNyIKCSBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzcuMyAzMTcuNzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8bWV0YWRhdGE+Cgk8c2Z3ICB4bWxucz0iJm5zX3NmdzsiPgoJCTxzbGljZXM+PC9zbGljZXM+CgkJPHNsaWNlU291cmNlQm91bmRzICBib3R0b21MZWZ0T3JpZ2luPSJ0cnVlIiBoZWlnaHQ9IjMxNy43IiB3aWR0aD0iNTM3LjMiIHg9IjY1LjUiIHk9IjI3Ni4zIj48L3NsaWNlU291cmNlQm91bmRzPgoJPC9zZnc+CjwvbWV0YWRhdGE+CjxwYXRoIGQ9Ik00MzQuOCw4MGMwLTc5LjktNzguNi03NS4yLTEwMy03OS45aDExMy41QzQ3Ny44LDAuMSw1MzAsMjEuNSw1MzAsODBjMCw1OC40LTQwLjksNzkuOS03My40LDc5LjloLTUzLjMKCUM0MDMuMywxNTkuOSw0MzQuOCwxNTkuOSw0MzQuOCw4MCIvPgo8cG9seWdvbiBwb2ludHM9IjQuOCwzMTcuNiAxNDAuOCwzMTcuNiA0LjgsMTc1LjkgIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTQ4LjIsMCAyNzcuNiwxNTQuNiAyNzcuNiwwICIvPgo8cG9seWdvbiBwb2ludHM9IjM5Ny40LDE1OS45IDI4MS45LDE1OS45IDQxNCwzMTcuNiA1MzcuMywzMTcuNiAiLz4KPHBhdGggZD0iTTk3LjMsODBjMCw2MC4zLDE5LjQsNzUuMiw0My41LDc5LjlINzIuN0M0MC41LDE1OS45LDAsMTM4LjQsMCw3OS45QzAsMjEuNiw0MC41LDAsNzIuNywwaDY4LjEKCUMxMTYuNyw0LjcsOTcuMywxOS43LDk3LjMsODAiLz4KPHBhdGggZD0iTTE5MS43LDIzOC44YzAtNTkuNC0xOS42LTc0LjItNDQtNzguOWg2OC44YzMyLjUsMCw3My40LDIxLjIsNzMuNCw3OC45YzAsNTcuNy00MC45LDc4LjgtNzMuNCw3OC45aC02OC44CglDMTcyLjEsMzEzLDE5MS43LDI5OC4zLDE5MS43LDIzOC44Ii8+Cjwvc3ZnPgo=",
-            "spotify": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OTYgNTEyIj48IS0tISBGb250IEF3ZXNvbWUgUHJvIDYuNC4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlIChDb21tZXJjaWFsIExpY2Vuc2UpIENvcHlyaWdodCAyMDIzIEZvbnRpY29ucywgSW5jLiAtLT48cGF0aCBkPSJNMjQ4IDhDMTExLjEgOCAwIDExOS4xIDAgMjU2czExMS4xIDI0OCAyNDggMjQ4IDI0OC0xMTEuMSAyNDgtMjQ4UzM4NC45IDggMjQ4IDh6bTEwMC43IDM2NC45Yy00LjIgMC02LjgtMS4zLTEwLjctMy42LTYyLjQtMzcuNi0xMzUtMzkuMi0yMDYuNy0yNC41LTMuOSAxLTkgMi42LTExLjkgMi42LTkuNyAwLTE1LjgtNy43LTE1LjgtMTUuOCAwLTEwLjMgNi4xLTE1LjIgMTMuNi0xNi44IDgxLjktMTguMSAxNjUuNi0xNi41IDIzNyAyNi4yIDYuMSAzLjkgOS43IDcuNCA5LjcgMTYuNXMtNy4xIDE1LjQtMTUuMiAxNS40em0yNi45LTY1LjZjLTUuMiAwLTguNy0yLjMtMTIuMy00LjItNjIuNS0zNy0xNTUuNy01MS45LTIzOC42LTI5LjQtNC44IDEuMy03LjQgMi42LTExLjkgMi42LTEwLjcgMC0xOS40LTguNy0xOS40LTE5LjRzNS4yLTE3LjggMTUuNS0yMC43YzI3LjgtNy44IDU2LjItMTMuNiA5Ny44LTEzLjYgNjQuOSAwIDEyNy42IDE2LjEgMTc3IDQ1LjUgOC4xIDQuOCAxMS4zIDExIDExLjMgMTkuNy0uMSAxMC44LTguNSAxOS41LTE5LjQgMTkuNXptMzEtNzYuMmMtNS4yIDAtOC40LTEuMy0xMi45LTMuOS03MS4yLTQyLjUtMTk4LjUtNTIuNy0yODAuOS0yOS43LTMuNiAxLTguMSAyLjYtMTIuOSAyLjYtMTMuMiAwLTIzLjMtMTAuMy0yMy4zLTIzLjYgMC0xMy42IDguNC0yMS4zIDE3LjQtMjMuOSAzNS4yLTEwLjMgNzQuNi0xNS4yIDExNy41LTE1LjIgNzMgMCAxNDkuNSAxNS4yIDIwNS40IDQ3LjggNy44IDQuNSAxMi45IDEwLjcgMTIuOSAyMi42IDAgMTMuNi0xMSAyMy4zLTIzLjIgMjMuM3oiLz48L3N2Zz4="
-        }
+        function getIcon(t){
+            for (let i = 0; i < icons.length; i++) {
+                if(t.includes(icons[i].search)){
+                    return icons[i].svg;
+                };
+            };
+            return "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIxIiB2aWV3Qm94PSIwIDAgMjEgMjEiIHdpZHRoPSIyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIgMikiPjxjaXJjbGUgY3g9IjguNSIgY3k9IjguNSIgcj0iOCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Im04LjUgOS41di0xbDEuNDE0MjEzNTYtMS40MTQyMTM1NmMuMzc1MDcyNzQtLjM3NTA3Mjc2LjU4NTc4NjQ0LS44ODM3ODA1OS41ODU3ODY0NC0xLjQxNDIxMzU2di0uMTcxNTcyODhjMC0uNjEyODY2MDYtLjM0NjI2MzEtMS4xNzMxMzE1Ni0uODk0NDI3MTktMS40NDcyMTM2bC0uMjExMTQ1NjItLjEwNTU3MjhjLS41NjMwNTQ5OC0uMjgxNTI3NS0xLjIyNTc5OTQtLjI4MTUyNzUtMS43ODg4NTQzOCAwbC0uMTA1NTcyODEuMDUyNzg2NGMtLjYxMjg2NjA2LjMwNjQzMzAzLTEgLjkzMjgyODktMSAxLjYxODAzMzk5di44ODE5NjYwMSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjguNSIgY3k9IjEyLjUiIGZpbGw9ImN1cnJlbnRDb2xvciIgcj0iMSIvPjwvZz48L3N2Zz4=";
+        };
+        var icons = [{
+            "search": "sverigesradio",
+            "svg": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuNCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiIFsKCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPgoJPCFFTlRJVFkgbnNfYWkgImh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVJbGx1c3RyYXRvci8xMC4wLyI+Cgk8IUVOVElUWSBuc19ncmFwaHMgImh0dHA6Ly9ucy5hZG9iZS5jb20vR3JhcGhzLzEuMC8iPgoJPCFFTlRJVFkgbnNfdmFycyAiaHR0cDovL25zLmFkb2JlLmNvbS9WYXJpYWJsZXMvMS4wLyI+Cgk8IUVOVElUWSBuc19pbXJlcCAiaHR0cDovL25zLmFkb2JlLmNvbS9JbWFnZVJlcGxhY2VtZW50LzEuMC8iPgoJPCFFTlRJVFkgbnNfc2Z3ICJodHRwOi8vbnMuYWRvYmUuY29tL1NhdmVGb3JXZWIvMS4wLyI+Cgk8IUVOVElUWSBuc19jdXN0b20gImh0dHA6Ly9ucy5hZG9iZS5jb20vR2VuZXJpY0N1c3RvbU5hbWVzcGFjZS8xLjAvIj4KCTwhRU5USVRZIG5zX2Fkb2JlX3hwYXRoICJodHRwOi8vbnMuYWRvYmUuY29tL1hQYXRoLzEuMC8iPgpdPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiCgkgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MzcuMyAzMTcuNyIKCSBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzcuMyAzMTcuNzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8bWV0YWRhdGE+Cgk8c2Z3ICB4bWxucz0iJm5zX3NmdzsiPgoJCTxzbGljZXM+PC9zbGljZXM+CgkJPHNsaWNlU291cmNlQm91bmRzICBib3R0b21MZWZ0T3JpZ2luPSJ0cnVlIiBoZWlnaHQ9IjMxNy43IiB3aWR0aD0iNTM3LjMiIHg9IjY1LjUiIHk9IjI3Ni4zIj48L3NsaWNlU291cmNlQm91bmRzPgoJPC9zZnc+CjwvbWV0YWRhdGE+CjxwYXRoIGQ9Ik00MzQuOCw4MGMwLTc5LjktNzguNi03NS4yLTEwMy03OS45aDExMy41QzQ3Ny44LDAuMSw1MzAsMjEuNSw1MzAsODBjMCw1OC40LTQwLjksNzkuOS03My40LDc5LjloLTUzLjMKCUM0MDMuMywxNTkuOSw0MzQuOCwxNTkuOSw0MzQuOCw4MCIvPgo8cG9seWdvbiBwb2ludHM9IjQuOCwzMTcuNiAxNDAuOCwzMTcuNiA0LjgsMTc1LjkgIi8+Cjxwb2x5Z29uIHBvaW50cz0iMTQ4LjIsMCAyNzcuNiwxNTQuNiAyNzcuNiwwICIvPgo8cG9seWdvbiBwb2ludHM9IjM5Ny40LDE1OS45IDI4MS45LDE1OS45IDQxNCwzMTcuNiA1MzcuMywzMTcuNiAiLz4KPHBhdGggZD0iTTk3LjMsODBjMCw2MC4zLDE5LjQsNzUuMiw0My41LDc5LjlINzIuN0M0MC41LDE1OS45LDAsMTM4LjQsMCw3OS45QzAsMjEuNiw0MC41LDAsNzIuNywwaDY4LjEKCUMxMTYuNyw0LjcsOTcuMywxOS43LDk3LjMsODAiLz4KPHBhdGggZD0iTTE5MS43LDIzOC44YzAtNTkuNC0xOS42LTc0LjItNDQtNzguOWg2OC44YzMyLjUsMCw3My40LDIxLjIsNzMuNCw3OC45YzAsNTcuNy00MC45LDc4LjgtNzMuNCw3OC45aC02OC44CglDMTcyLjEsMzEzLDE5MS43LDI5OC4zLDE5MS43LDIzOC44Ii8+Cjwvc3ZnPgo="
+        },{
+            "search": "spotify",
+            "svg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OTYgNTEyIj48IS0tISBGb250IEF3ZXNvbWUgUHJvIDYuNC4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlIChDb21tZXJjaWFsIExpY2Vuc2UpIENvcHlyaWdodCAyMDIzIEZvbnRpY29ucywgSW5jLiAtLT48cGF0aCBkPSJNMjQ4IDhDMTExLjEgOCAwIDExOS4xIDAgMjU2czExMS4xIDI0OCAyNDggMjQ4IDI0OC0xMTEuMSAyNDgtMjQ4UzM4NC45IDggMjQ4IDh6bTEwMC43IDM2NC45Yy00LjIgMC02LjgtMS4zLTEwLjctMy42LTYyLjQtMzcuNi0xMzUtMzkuMi0yMDYuNy0yNC41LTMuOSAxLTkgMi42LTExLjkgMi42LTkuNyAwLTE1LjgtNy43LTE1LjgtMTUuOCAwLTEwLjMgNi4xLTE1LjIgMTMuNi0xNi44IDgxLjktMTguMSAxNjUuNi0xNi41IDIzNyAyNi4yIDYuMSAzLjkgOS43IDcuNCA5LjcgMTYuNXMtNy4xIDE1LjQtMTUuMiAxNS40em0yNi45LTY1LjZjLTUuMiAwLTguNy0yLjMtMTIuMy00LjItNjIuNS0zNy0xNTUuNy01MS45LTIzOC42LTI5LjQtNC44IDEuMy03LjQgMi42LTExLjkgMi42LTEwLjcgMC0xOS40LTguNy0xOS40LTE5LjRzNS4yLTE3LjggMTUuNS0yMC43YzI3LjgtNy44IDU2LjItMTMuNiA5Ny44LTEzLjYgNjQuOSAwIDEyNy42IDE2LjEgMTc3IDQ1LjUgOC4xIDQuOCAxMS4zIDExIDExLjMgMTkuNy0uMSAxMC44LTguNSAxOS41LTE5LjQgMTkuNXptMzEtNzYuMmMtNS4yIDAtOC40LTEuMy0xMi45LTMuOS03MS4yLTQyLjUtMTk4LjUtNTIuNy0yODAuOS0yOS43LTMuNiAxLTguMSAyLjYtMTIuOSAyLjYtMTMuMiAwLTIzLjMtMTAuMy0yMy4zLTIzLjYgMC0xMy42IDguNC0yMS4zIDE3LjQtMjMuOSAzNS4yLTEwLjMgNzQuNi0xNS4yIDExNy41LTE1LjIgNzMgMCAxNDkuNSAxNS4yIDIwNS40IDQ3LjggNy44IDQuNSAxMi45IDEwLjcgMTIuOSAyMi42IDAgMTMuNi0xMSAyMy4zLTIzLjIgMjMuM3oiLz48L3N2Zz4="
+        },{
+            "search": "bookbeat",
+            "svg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDEzMC41MyAxNTMuMDUiIHZpZXdCb3g9IjAgMCAxMzAuNTMgMTUzLjA1Ij48cGF0aCBkPSJNMTAuNCAxMjcuN1YxNC4xYzAtNy40LTQuNC05LTkuNC05LjZWLjloNTAuNGMyNC44IDAgNTAuNCA3IDUwLjQgMjcuOCAwIDE0LjYtMTMgMjUuMi0yOC44IDI1LjggMjcuOCAwIDQ3LjQgMTYuOCA0Ny40IDQxLjggMCAyOC4yLTIyLjYgNDQuNi02Mi44IDQ0LjZIMXYtMy42YzQuOC0uNiA5LjQtMi4yIDkuNC05LjZ6bTYyLjItOTguNkM3Mi42IDEzLjkgNjIgNi43IDUxLjggNi43SDQ4djQ2LjhjMTEuMiAwIDI0LjYtNi44IDI0LjYtMjQuNHpNNTMgMTM1LjFjOC4yIDAgMjctNS44IDI3LTM4LjggMC0zMy42LTI1LjYtMzctMzItMzd2NzUuOGg1ek0xMzAuNiIvPjwvc3ZnPg=="
+        },{
+            "search": "nextory",
+            "svg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDE2LjcgMjQiIHZpZXdCb3g9IjAgMCAxNi43IDI0Ij4KCTxwYXRoIGQ9Ik0wLDEuMnYxOWMwLDAsMCwwLjEsMC4xLDAuMnMwLjIsMC4xLDAuMiwwLjFoMi45YzAsMCwwLjEsMCwwLjItMC4xYzAuMS0wLjEsMC4xLTAuMiwwLjEtMC4yVjYuOWwxMC4yLDEzLjUgICBjMCwwLDAsMCwwLjEsMC4xYzAuMSwwLDAuMSwwLDAuMSwwaDIuNWMwLDAsMC4xLDAsMC4yLTAuMXMwLjEtMC4yLDAuMS0wLjJ2LTE5YzAsMCwwLTAuMS0wLjEtMC4yYy0wLjMsMC0wLjQsMC0wLjQsMGgtMi45ICAgYzAsMC0wLjEsMC0wLjIsMC4xQzEzLDEuMiwxMywxLjMsMTMsMS4zdjEzTDMuMiwxLjFjMCwwLDAsMC0wLjEtMC4xQzMuMSwxLDMsMSwzLDFIMC4yYzAsMC0wLjEsMC0wLjIsMC4xVjEuMnoiLz4KPC9zdmc+"
+        },{
+            "search": "storytel",
+            "svg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMyIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDIxIDI0Ij4KICAgIDxwYXRoIGQ9Ik0yMC40NjYgMTEuMTA5Yy44NzYtNC44LTIuMDQ5LTkuMDkzLTYuNjI3LTEwLjUxOUM1LjcwOS0xLjk0LS4wNTIgNS41MDYuMDE0IDEzLjAxNWMuMDUzIDYuMDY2IDEuMzU0IDEwLjA5OCAxLjM1NCAxMC4xMDEtLjA1OC0uMTggMS41MzYtMS4wMiAxLjcyLTEuMTE0LjYyNS0uMzIgMS4yOC0uNTgyIDEuOTQ0LS44MDIgMS4zNzItLjQ1NiAyLjc5LS43NDMgNC4xOTctMS4wNjQgNC4zOTktMS4wMDYgOS4xMjctMi45MDIgMTAuODEtNy40Ny4xOS0uNTE1LjMzLTEuMDM2LjQyNy0xLjU1N1oiPjwvcGF0aD4KPC9zdmc+"
+        },{
+            "search": "bokus",
+            "svg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OC4xIDYyIiB3aWR0aD0iNDguMSIgaGVpZ2h0PSI2MiI+CiAgICA8cGF0aCBkPSJNNDUuNSAyOS43Yy0xLTIuNy0yLjQtNS4xLTQuMi03LjEtMS44LTItNC0zLjYtNi41LTQuOC0yLjUtMS4yLTUuMy0xLjctOC40LTEuNy0yIDAtMy44LjItNS4zLjYtMS41LjQtMi45LjktNC4xIDEuNi0xLjIuNy0yLjIgMS40LTMgMi4xLS44LjctMS41IDEuNS0yIDIuMmgtLjNWMUgxdjU4LjloMTAuMXYtNi40aC4yYzEuNSAyLjYgMy42IDQuNSA2LjIgNS43QzIwLjEgNjAuNCAyMyA2MSAyNiA2MWMzLjMgMCA2LjItLjYgOC44LTEuNyAyLjYtMS4yIDQuOC0yLjcgNi43LTQuOCAxLjgtMiAzLjItNC40IDQuMi03LjEuOS0yLjcgMS40LTUuNyAxLjQtOC44LS4xLTMuMi0uNi02LjEtMS42LTguOXptLTEwIDEzLjdjLS42IDEuNS0xLjQgMi45LTIuNSA0LjEtMS4xIDEuMi0yLjQgMi4xLTQgMi45LTEuNS43LTMuMyAxLjEtNS4yIDEuMS0yIDAtMy43LS40LTUuMi0xLjEtMS41LS43LTIuOS0xLjctNC0yLjlzLTEuOS0yLjYtMi41LTQuMWMtLjYtMS41LS44LTMuMS0uOC00LjggMC0xLjcuMy0zLjMuOC00LjguNi0xLjUgMS40LTIuOSAyLjUtNC4xIDEuMS0xLjIgMi40LTIuMSA0LTIuOSAxLjUtLjcgMy4zLTEuMSA1LjItMS4xIDIgMCAzLjcuNCA1LjIgMS4xIDEuNS43IDIuOSAxLjcgNCAyLjlzMS45IDIuNiAyLjUgNC4xYy42IDEuNS44IDMuMS44IDQuOC4xIi8+Cjwvc3ZnPg=="
+        }];
     </script>
 </body>
 </html>
