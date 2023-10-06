@@ -1,0 +1,251 @@
+<html>
+	<head>
+		<title>Explore</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="mobile-web-app-capable">
+		<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<meta property="og:title" content="GymLund">
+		<!-- <meta property="og:url" content="#lank#"> -->
+		<meta property="og:type" content="website">
+		<!--<meta property="og:description" content="Ger plats som man ska ta sig till.">-->
+		<!--<meta property="og:image" content="ico/icon.jpg">
+
+		<link rel="shortcut icon" href="ico/icon.ico">
+		<link rel="icon" type="image/vnd.microsoft.icon" href="ico/icon.ico">
+		<link rel="icon" type="image/png" href="ico/icon196x196.png">
+		<link rel="apple-touch-icon-precomposed" href="ico/icon180x180.png">
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="ico/icon76x76.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="ico/icon120x120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="ico/icon152x152.png">-->
+		<script src="papaparse.min.js"></script>
+		<script type="text/javascript">
+            var stader = [];
+			Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vS62litUjnRXwqy2jcQRNlBqRIrrzzHbpgY-hWWqoTcCNV6DXwL48GXi84tB0hVBV7G8tRfZlMtpeut/pub?gid=0&single=true&output=csv', {
+				download: true,
+				complete: function(results) {
+                    console.log(results);
+					var fistID = '';
+                    for (var a = 0; a < results.data.length; a++){
+            			if(results.data[a][0] == 'Städer'){}else{
+                            console.log(results.data[a][0]);
+                            console.log(results.data[a][1]);
+                            stader[results.data[a][1]] = results.data[a];
+							if(fistID == ''){
+								fistID = results.data[a][1];
+							};
+                        };
+                    };
+					if(!stader[location.hash.replace('#', '')]){
+						location.hash = '#' + fistID;
+					};
+					loadLocation();
+				},
+				error: function(results) {
+					console.log('Något gick fel');
+				}
+			});
+			function loadLocation(){
+                console.log(stader[location.hash.replace('#', '')]);
+                Papa.parse(stader[location.hash.replace('#', '')][2], {
+					download: true,
+					complete: function(results) {
+						console.log(results);
+						//if(!window['lon'] == '0' && !window['lat'] == '0'){addKm()};
+					},
+					error: function(results) {
+						console.log('Något gick fel');
+					}
+				});
+				/*for (var i = loadedData.length - 1; i >= 0; i--) {
+					if(loadedData[i].nr == location.hash.replace('#', '')){
+						document.getElementById('rubrik').innerText = 'Gym i ' + loadedData[i].stad;
+						document.getElementsByTagName('title')[0].innerText = 'Gym ' + loadedData[i].stad;
+						if(loadedData[i].nr == 3){
+							var linktoload = links.ssandby;
+						}else if(loadedData[i].nr == 4){
+							var linktoload = links.lund;
+						}else if(loadedData[i].nr == 5){
+							var linktoload = links.malmo;
+						}else if(loadedData[i].nr == 6){
+							var linktoload = links.landskrona;
+						}else if(loadedData[i].nr == 7){
+							var linktoload = links.vaxjo;
+						}else if(loadedData[i].nr == 8){
+							var linktoload = links.goteborg;
+						}else{
+							var linktoload = links.lund;
+						};
+						Papa.parse(linktoload, {
+							download: true,
+							complete: function(results) {
+								var reverse = [];
+        						for (var a = 0; a < results.data.length; a++){
+            						if(results.data[a][0] == 'Namn'){}else{
+										if(!results.data[a][6] || results.data[a][6] == ''){
+											var badge = okandPNG();
+										}else{
+											var badge = results.data[a][6];
+										};
+										reverse.push({ "namn": results.data[a][0], "smeknamn": results.data[a][1], "id": "", "lat": results.data[a][2], "long": results.data[a][3], "ex": results.data[a][4], "rip": results.data[a][5], "badge":  badge});
+									};
+								};
+								stadData = reverse;
+								if(!window['lon'] == '0' && !window['lat'] == '0'){addKm()};
+								andralista();
+							},
+							error: function(results) {
+								console.log('Något gick fel');
+							}
+						});
+					};
+				};*/
+			};
+			//När data laddats för en stad börjar den funktionen bygga.
+			function addContent(todo){
+				removechilds(document.getElementById('wrapper'));
+				removechilds(document.getElementById('searchelements'));
+				if(todo == 'names'){
+					stadData = stadData.sort(function(a, b) {
+						var nameA = a.namn.toUpperCase(); // ignore upper and lowercase
+						var nameB = b.namn.toUpperCase(); // ignore upper and lowercase
+						if (nameA < nameB) {
+							return -1;
+						}
+						if (nameA > nameB) {
+							return 1;
+						}
+						return 0;
+					});
+				}else if(todo == 'km'){
+					stadData = stadData.sort(function (a, b) {
+						return a.km - b.km;
+					});
+				}else{
+					console.log('addContent kunde inte förstå hur den ska sortera gymmen.');
+				};
+				buildMenu(stadData);
+				var listWrapper = document.getElementById('wrapper');
+				for (var a = 0; a < stadData.length; a++){
+					if(stadData[a].rip == 'TRUE'){
+						var rip_todo = ' rip';
+						var rip_icon = '[RIP]';
+						var rip_css = 'font-size: 0.5em;color: red;text-decoration: none;';
+					}else{
+						var rip_todo = '';
+						var rip_icon = '';
+					};
+					if(stadData[a].ex == 'TRUE'){
+						var ex_todo = ' extd';
+					}else{
+						var ex_todo = '';
+					};
+					if(!stadData[a].km){
+						var kminfo = '';
+					}else{
+						var kminfo = stadData[a].km + 'km ';
+					};
+					if(stadData[a].badge == okandPNG()){
+						var onlyOkanda = ' unown';
+					}else{
+						var onlyOkanda = '';
+					};
+					var line = document.createElement('div');
+						line.setAttribute('onclick', 'window.open(\'http://maps.google.com/?q=' + stadData[a].lat + ',' + stadData[a].long + '\')');
+						line.setAttribute('data-lon', stadData[a].long);
+						line.setAttribute('data-lat', stadData[a].lat);
+						line.setAttribute('class', 'tr ' + stadData[a].namn.split('')[0] + rip_todo + ex_todo + onlyOkanda);
+						var badge = document.createElement('div');
+							badge.setAttribute('class', 'td');
+							var badge_img = document.createElement('img');
+								badge_img.setAttribute('src', stadData[a].badge);
+							badge.appendChild(badge_img);
+						line.appendChild(badge);
+						var name = document.createElement('div');
+							name.setAttribute('class', 'td');
+							var name_t = document.createTextNode(stadData[a].namn);
+							name.appendChild(name_t);
+							var br = document.createElement('br');
+								name.appendChild(br);
+								var name_span = document.createElement('span');
+									name_span.setAttribute('class', 'smeknamn');
+							if(stadData[a].smeknamn == ''){
+								var name_span_s = document.createTextNode(kminfo);
+							}else{
+								var name_span_s = document.createTextNode(kminfo + '"' + stadData[a].smeknamn + '"');
+							};
+									name_span.appendChild(name_span_s);
+								name.appendChild(name_span);
+						line.appendChild(name);
+						var extra = document.createElement('div');
+							extra.setAttribute('class', 'td' + ex_todo);
+							var extra_span = document.createElement('span');
+								extra_span.setAttribute('height', '30px');
+								extra_span.setAttribute('style', 'padding-right: 35px;font-size: 20px;' + rip_css);
+								var extra_t = document.createTextNode(rip_icon);
+								extra_span.appendChild(extra_t);
+								if(stadData[a].ex == 'TRUE'){
+									var ex_img = document.createElement('img');
+										ex_img.setAttribute('src', 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODkuOTQgMTcyLjk0Ij48cGF0aCBkPSJNOTkuMTgsNDMuNjVjMy43Mi0xLjYxLDcuNDEtMy4yOSwxMS4xNi00LjgyLDExLjI1LTQuNiwyMi40OS05LjI0LDMzLjgyLTEzLjYyLDEuNzktLjY5LDQuMDUtLjE0LDYuMDktLjE1LS43MiwyLjA2LTEsNC40OS0yLjI1LDYuMTEtNC4xMSw1LjIyLTguNjEsMTAuMTQtMTIuOTMsMTUuMmE4LjM0LDguMzQsMCwwLDAtLjg3LDEuNzdjOS45MywyLjI4LDE5LjYzLDQuNDQsMjkuMjksNi43NkEzNC42OCwzNC42OCwwLDAsMSwxNzEsNTcuNTljMS4zMy42NywzLjA2LDIuMTksMy4wOCwzLjM2cy0xLjY5LDIuNzMtMywzLjQyYy03LjUyLDMuOTQtMTUuMTksNy41OS0yMi43MSwxMS41Mi00LjI3LDIuMjMtOC40Niw0LjY3LTEyLjUyLDcuMjgtNy41Nyw0Ljg3LTcuODgsMTAuNjEtLjM2LDE2LDguOTIsNi40LDE4LjI3LDEyLjE5LDI3LjQ0LDE4LjI0LjU2LjM2LDEuMTYuNjYsMS43MywxLDEwLjExLDYuMTIsMTAuNzgsNy44NSwzLjcyLDE3LjI1LTUuNTcsNy40LTEyLjA2LDE0LjEyLTE4LjMxLDIxLTIuODMsMy4xMS02LjA4LDIuNi05LjQ3LjQ0LTUuNjEtMy41OC0xMS4zLTctMTcuMDktMTAuMzMtMTQuMTktOC4wNy0yOS04LjMxLTQ0LjUtNC4wNmExMjIuODcsMTIyLjg3LDAsMCwxLTI0LjQ3LDQuMDdjLTMuNzkuMjUtOC0xLjgzLTExLjU4LTMuNzVzLTMuMzQtNC45NS4xOS02LjM3YzQuMy0xLjc0LDQuOC00LjQ0LDMuODctOC4yM2ExLDEsMCwwLDEsMC0uNDlsMS44My03LjMzYzIuMTUsMSw0LjU2LDEuNjgsNi40LDMuMDksNi4yMSw0Ljc2LDcuNTksNSwxMy45NC4zNGExMjMuNDksMTIzLjQ5LDAsMCwwLDEyLjI0LTEwLjIzYzEuODEtMS43NSw0LjY2LTQsMS42Ny03LjE3cy01LjMzLTEuMzYtNy43Ny42N2MtMS4yOCwxLjA2LTIuNTYsMi4xMy0zLjg5LDMuMTQtNC44OSwzLjczLTYuMTEsNC05LjQ0LTEuNC0zLjY4LTUuOS04LjM2LTcuNS0xNS03LjIyLTguMjEuMzUtMTYuMjQuMi0yMy40Nyw1LjE5LTMuMzIsMi4yOC02LC43MS03LTMuMjlBMjEuMjcsMjEuMjcsMCwwLDEsMTksODYuNDhjOC40NS0xMy42NywyMC40OC0yMywzNS0yOS40MmEzOS4wOCwzOS4wOCwwLDAsMCw5LjgyLTYuNTVjMTIuMTMtMTAuODUsMjQtMjEuOTQsMzYuMDctMzIuOTJhOS4xMyw5LjEzLDAsMCwxLDIuODUtMmMxLjI4LS40NSwzLjI4LTEuMDYsNC0uNDZzMS4wNiwyLjgzLjY0LDRjLTIuMDYsNS42My00LjQ0LDExLjEzLTYuNjYsMTYuNy0uODksMi4yNC0xLjY1LDQuNTMtMi40Nyw2Ljc5Wk01Mi45LDg1LjQ2YzEzLjE0LDcuNDcsMjguNDUtNS43LDMwLjYyLTE2LjhDNzEuNzcsNjguNjYsNTUuODEsNzcuNDEsNTIuOSw4NS40NloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAzIC0xLjAzKSIvPjxwYXRoIGQ9Ik01Mi45LDg1LjQ2YzIuOTEtOCwxOC44Ny0xNi44LDMwLjYyLTE2LjhDODEuMzUsNzkuNzYsNjYsOTIuOTMsNTIuOSw4NS40NloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAzIC0xLjAzKSIgc3R5bGU9ImZpbGw6I2ZmZiIvPjwvc3ZnPg==');
+									extra_span.appendChild(ex_img);
+								};
+							extra.appendChild(extra_span);
+						line.appendChild(extra);
+					wrapper.appendChild(line);
+					var data_wrapper = document.getElementById('searchelements');
+						var data_option = document.createElement('option');
+							data_option.setAttribute('value', stadData[a].namn);
+						data_wrapper.appendChild(data_option);
+				};
+				hideLoader();
+				getLocation();
+			};
+			//Frågar användaren om tillåtelse att använda geo-data
+			var lon = '0';
+			var lat = '0';
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				};
+			};
+			//Aktiveras när användaren godkänt GEO-data
+			function showPosition(position) {
+				window['lat'] = position.coords.latitude;
+				window['lon'] = position.coords.longitude;
+				var kmwrapper = document.getElementById('sortkm');
+					kmwrapper.removeAttribute('disabled');
+					document.getElementById('km').removeAttribute('class');
+				addKm();
+			};
+			//Lägger till nollor framför nummer
+			function pad (str, max) {str = str.toString();return str.length < max ? pad("0" + str, max) : str;};
+			//Räknar ut distans i km
+			function getDistanceFromLatLonInKm(lon2,lat2,lon1,lat1) {
+				if(lat1 == '0'){}else{
+					var R = 6371; // Radius of the earth in km
+					var dLat = deg2rad(lat2-lat1);  // deg2rad below
+					var dLon = deg2rad(lon2-lon1); 
+					var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+					var d = R * c; // Distance in km
+					return d;
+				};
+			};
+			function deg2rad(deg) {return deg * (Math.PI/180)};
+			function addKm(){
+				for (var i = stadData.length - 1; i >= 0; i--) {
+					var km = Math.round(getDistanceFromLatLonInKm(stadData[i].long,stadData[i].lat,window['lon'],window['lat']) * 10);
+					stadData[i].km = km;
+				};
+				andralista();
+			};
+			/*Funktion som räknar ut km*/
+		</script>
+	</head>
+	<body>
+	
+	</body>
+</html>
