@@ -24,6 +24,9 @@
 		<script src="papaparse.min.js"></script>
 		<script type="text/javascript">
             var stader = [];
+			var stadData = [];
+			var lon = '0';
+			var lat = '0';
 			Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vS62litUjnRXwqy2jcQRNlBqRIrrzzHbpgY-hWWqoTcCNV6DXwL48GXi84tB0hVBV7G8tRfZlMtpeut/pub?gid=0&single=true&output=csv', {
 				download: true,
 				complete: function(results) {
@@ -53,199 +56,130 @@
                 Papa.parse(stader[location.hash.replace('#', '')][2], {
 					download: true,
 					complete: function(results) {
-						console.log(results);
+						for (var a = 0; a < results.data.length; a++){
+            				if(results.data[a][0] == 'Namn'){}else{
+								stadData.push({
+									"namn": results.data[a][0],
+									"lat": results.data[a][1],
+									"long": results.data[a][2],
+									"img": results.data[a][3]
+								})
+							};
+						};
+						console.log(stadData);
 						//if(!window['lon'] == '0' && !window['lat'] == '0'){addKm()};
+						getLocation();
 					},
 					error: function(results) {
 						console.log('Något gick fel');
 					}
 				});
-				/*for (var i = loadedData.length - 1; i >= 0; i--) {
-					if(loadedData[i].nr == location.hash.replace('#', '')){
-						document.getElementById('rubrik').innerText = 'Gym i ' + loadedData[i].stad;
-						document.getElementsByTagName('title')[0].innerText = 'Gym ' + loadedData[i].stad;
-						if(loadedData[i].nr == 3){
-							var linktoload = links.ssandby;
-						}else if(loadedData[i].nr == 4){
-							var linktoload = links.lund;
-						}else if(loadedData[i].nr == 5){
-							var linktoload = links.malmo;
-						}else if(loadedData[i].nr == 6){
-							var linktoload = links.landskrona;
-						}else if(loadedData[i].nr == 7){
-							var linktoload = links.vaxjo;
-						}else if(loadedData[i].nr == 8){
-							var linktoload = links.goteborg;
-						}else{
-							var linktoload = links.lund;
-						};
-						Papa.parse(linktoload, {
-							download: true,
-							complete: function(results) {
-								var reverse = [];
-        						for (var a = 0; a < results.data.length; a++){
-            						if(results.data[a][0] == 'Namn'){}else{
-										if(!results.data[a][6] || results.data[a][6] == ''){
-											var badge = okandPNG();
-										}else{
-											var badge = results.data[a][6];
-										};
-										reverse.push({ "namn": results.data[a][0], "smeknamn": results.data[a][1], "id": "", "lat": results.data[a][2], "long": results.data[a][3], "ex": results.data[a][4], "rip": results.data[a][5], "badge":  badge});
-									};
-								};
-								stadData = reverse;
-								if(!window['lon'] == '0' && !window['lat'] == '0'){addKm()};
-								andralista();
-							},
-							error: function(results) {
-								console.log('Något gick fel');
-							}
-						});
-					};
-				};*/
 			};
-			//När data laddats för en stad börjar den funktionen bygga.
-			function addContent(todo){
-				removechilds(document.getElementById('wrapper'));
-				removechilds(document.getElementById('searchelements'));
-				if(todo == 'names'){
-					stadData = stadData.sort(function(a, b) {
-						var nameA = a.namn.toUpperCase(); // ignore upper and lowercase
-						var nameB = b.namn.toUpperCase(); // ignore upper and lowercase
-						if (nameA < nameB) {
-							return -1;
-						}
-						if (nameA > nameB) {
-							return 1;
-						}
-						return 0;
-					});
-				}else if(todo == 'km'){
-					stadData = stadData.sort(function (a, b) {
-						return a.km - b.km;
-					});
-				}else{
-					console.log('addContent kunde inte förstå hur den ska sortera gymmen.');
-				};
-				buildMenu(stadData);
-				var listWrapper = document.getElementById('wrapper');
-				for (var a = 0; a < stadData.length; a++){
-					if(stadData[a].rip == 'TRUE'){
-						var rip_todo = ' rip';
-						var rip_icon = '[RIP]';
-						var rip_css = 'font-size: 0.5em;color: red;text-decoration: none;';
-					}else{
-						var rip_todo = '';
-						var rip_icon = '';
-					};
-					if(stadData[a].ex == 'TRUE'){
-						var ex_todo = ' extd';
-					}else{
-						var ex_todo = '';
-					};
-					if(!stadData[a].km){
-						var kminfo = '';
-					}else{
-						var kminfo = stadData[a].km + 'km ';
-					};
-					if(stadData[a].badge == okandPNG()){
-						var onlyOkanda = ' unown';
-					}else{
-						var onlyOkanda = '';
-					};
-					var line = document.createElement('div');
-						line.setAttribute('onclick', 'window.open(\'http://maps.google.com/?q=' + stadData[a].lat + ',' + stadData[a].long + '\')');
-						line.setAttribute('data-lon', stadData[a].long);
-						line.setAttribute('data-lat', stadData[a].lat);
-						line.setAttribute('class', 'tr ' + stadData[a].namn.split('')[0] + rip_todo + ex_todo + onlyOkanda);
-						var badge = document.createElement('div');
-							badge.setAttribute('class', 'td');
-							var badge_img = document.createElement('img');
-								badge_img.setAttribute('src', stadData[a].badge);
-							badge.appendChild(badge_img);
-						line.appendChild(badge);
-						var name = document.createElement('div');
-							name.setAttribute('class', 'td');
-							var name_t = document.createTextNode(stadData[a].namn);
-							name.appendChild(name_t);
-							var br = document.createElement('br');
-								name.appendChild(br);
-								var name_span = document.createElement('span');
-									name_span.setAttribute('class', 'smeknamn');
-							if(stadData[a].smeknamn == ''){
-								var name_span_s = document.createTextNode(kminfo);
-							}else{
-								var name_span_s = document.createTextNode(kminfo + '"' + stadData[a].smeknamn + '"');
-							};
-									name_span.appendChild(name_span_s);
-								name.appendChild(name_span);
-						line.appendChild(name);
-						var extra = document.createElement('div');
-							extra.setAttribute('class', 'td' + ex_todo);
-							var extra_span = document.createElement('span');
-								extra_span.setAttribute('height', '30px');
-								extra_span.setAttribute('style', 'padding-right: 35px;font-size: 20px;' + rip_css);
-								var extra_t = document.createTextNode(rip_icon);
-								extra_span.appendChild(extra_t);
-								if(stadData[a].ex == 'TRUE'){
-									var ex_img = document.createElement('img');
-										ex_img.setAttribute('src', 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODkuOTQgMTcyLjk0Ij48cGF0aCBkPSJNOTkuMTgsNDMuNjVjMy43Mi0xLjYxLDcuNDEtMy4yOSwxMS4xNi00LjgyLDExLjI1LTQuNiwyMi40OS05LjI0LDMzLjgyLTEzLjYyLDEuNzktLjY5LDQuMDUtLjE0LDYuMDktLjE1LS43MiwyLjA2LTEsNC40OS0yLjI1LDYuMTEtNC4xMSw1LjIyLTguNjEsMTAuMTQtMTIuOTMsMTUuMmE4LjM0LDguMzQsMCwwLDAtLjg3LDEuNzdjOS45MywyLjI4LDE5LjYzLDQuNDQsMjkuMjksNi43NkEzNC42OCwzNC42OCwwLDAsMSwxNzEsNTcuNTljMS4zMy42NywzLjA2LDIuMTksMy4wOCwzLjM2cy0xLjY5LDIuNzMtMywzLjQyYy03LjUyLDMuOTQtMTUuMTksNy41OS0yMi43MSwxMS41Mi00LjI3LDIuMjMtOC40Niw0LjY3LTEyLjUyLDcuMjgtNy41Nyw0Ljg3LTcuODgsMTAuNjEtLjM2LDE2LDguOTIsNi40LDE4LjI3LDEyLjE5LDI3LjQ0LDE4LjI0LjU2LjM2LDEuMTYuNjYsMS43MywxLDEwLjExLDYuMTIsMTAuNzgsNy44NSwzLjcyLDE3LjI1LTUuNTcsNy40LTEyLjA2LDE0LjEyLTE4LjMxLDIxLTIuODMsMy4xMS02LjA4LDIuNi05LjQ3LjQ0LTUuNjEtMy41OC0xMS4zLTctMTcuMDktMTAuMzMtMTQuMTktOC4wNy0yOS04LjMxLTQ0LjUtNC4wNmExMjIuODcsMTIyLjg3LDAsMCwxLTI0LjQ3LDQuMDdjLTMuNzkuMjUtOC0xLjgzLTExLjU4LTMuNzVzLTMuMzQtNC45NS4xOS02LjM3YzQuMy0xLjc0LDQuOC00LjQ0LDMuODctOC4yM2ExLDEsMCwwLDEsMC0uNDlsMS44My03LjMzYzIuMTUsMSw0LjU2LDEuNjgsNi40LDMuMDksNi4yMSw0Ljc2LDcuNTksNSwxMy45NC4zNGExMjMuNDksMTIzLjQ5LDAsMCwwLDEyLjI0LTEwLjIzYzEuODEtMS43NSw0LjY2LTQsMS42Ny03LjE3cy01LjMzLTEuMzYtNy43Ny42N2MtMS4yOCwxLjA2LTIuNTYsMi4xMy0zLjg5LDMuMTQtNC44OSwzLjczLTYuMTEsNC05LjQ0LTEuNC0zLjY4LTUuOS04LjM2LTcuNS0xNS03LjIyLTguMjEuMzUtMTYuMjQuMi0yMy40Nyw1LjE5LTMuMzIsMi4yOC02LC43MS03LTMuMjlBMjEuMjcsMjEuMjcsMCwwLDEsMTksODYuNDhjOC40NS0xMy42NywyMC40OC0yMywzNS0yOS40MmEzOS4wOCwzOS4wOCwwLDAsMCw5LjgyLTYuNTVjMTIuMTMtMTAuODUsMjQtMjEuOTQsMzYuMDctMzIuOTJhOS4xMyw5LjEzLDAsMCwxLDIuODUtMmMxLjI4LS40NSwzLjI4LTEuMDYsNC0uNDZzMS4wNiwyLjgzLjY0LDRjLTIuMDYsNS42My00LjQ0LDExLjEzLTYuNjYsMTYuNy0uODksMi4yNC0xLjY1LDQuNTMtMi40Nyw2Ljc5Wk01Mi45LDg1LjQ2YzEzLjE0LDcuNDcsMjguNDUtNS43LDMwLjYyLTE2LjhDNzEuNzcsNjguNjYsNTUuODEsNzcuNDEsNTIuOSw4NS40NloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAzIC0xLjAzKSIvPjxwYXRoIGQ9Ik01Mi45LDg1LjQ2YzIuOTEtOCwxOC44Ny0xNi44LDMwLjYyLTE2LjhDODEuMzUsNzkuNzYsNjYsOTIuOTMsNTIuOSw4NS40NloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAzIC0xLjAzKSIgc3R5bGU9ImZpbGw6I2ZmZiIvPjwvc3ZnPg==');
-									extra_span.appendChild(ex_img);
-								};
-							extra.appendChild(extra_span);
-						line.appendChild(extra);
-					wrapper.appendChild(line);
-					var data_wrapper = document.getElementById('searchelements');
-						var data_option = document.createElement('option');
-							data_option.setAttribute('value', stadData[a].namn);
-						data_wrapper.appendChild(data_option);
-				};
-				hideLoader();
-				getLocation();
-			};
-			//Frågar användaren om tillåtelse att använda geo-data
-			var lon = '0';
-			var lat = '0';
 			function getLocation() {
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(showPosition);
 				};
 			};
-			//Aktiveras när användaren godkänt GEO-data
 			function showPosition(position) {
 				window['lat'] = position.coords.latitude;
 				window['lon'] = position.coords.longitude;
-				var kmwrapper = document.getElementById('sortkm');
-					kmwrapper.removeAttribute('disabled');
-					document.getElementById('km').removeAttribute('class');
 				addKm();
 			};
-			//Lägger till nollor framför nummer
 			function pad (str, max) {str = str.toString();return str.length < max ? pad("0" + str, max) : str;};
-			//Räknar ut distans i km
 			function getDistanceFromLatLonInKm(lon2,lat2,lon1,lat1) {
 				if(lat1 == '0'){}else{
-					var R = 6371; // Radius of the earth in km
-					var dLat = deg2rad(lat2-lat1);  // deg2rad below
+					var R = 6371;
+					var dLat = deg2rad(lat2-lat1);
 					var dLon = deg2rad(lon2-lon1); 
 					var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
 					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-					var d = R * c; // Distance in km
+					var d = R * c;
 					return d;
 				};
 			};
 			function deg2rad(deg) {return deg * (Math.PI/180)};
 			function addKm(){
+				var maxKM = 0;
 				for (var i = stadData.length - 1; i >= 0; i--) {
 					var km = Math.round(getDistanceFromLatLonInKm(stadData[i].long,stadData[i].lat,window['lon'],window['lat']) * 10);
 					stadData[i].km = km;
+					if(km > maxKM){maxKM = km + 1;};
 				};
-				andralista();
+				document.getElementById('max').value = maxKM;
+				document.getElementById('loader').setAttribute('style', 'display: none;');
+				document.getElementById('content').setAttribute('style', 'display: block;');
 			};
-			/*Funktion som räknar ut km*/
+			function randomIntFromInterval(min, max) {
+				return Math.floor(Math.random() * (max - min + 1) + min)
+			};
+			function dice(){
+				var filtrerad = [];
+				for (let i = 0; i < stadData.length; i++) {
+					if(stadData[i].km >= document.getElementById('min').value && stadData[i].km <= document.getElementById('max').value){
+						filtrerad.push(stadData[i]);
+					};
+				};
+				var num = randomIntFromInterval(0, (filtrerad.length - 1));
+				console.log(filtrerad[num]);
+				if(filtrerad.length == 0){
+					document.getElementById('result').innerHTML = `<p>Kunde inte hitta någon plats med inställda kliometer.</p>`;
+				}else{
+					document.getElementById('result').innerHTML = `<p>${filtrerad[num].namn} (${filtrerad[num].km} km)</p><div style="background-image: url('${filtrerad[num].img}');" class="previewIMG">`;
+				};
+			};
 		</script>
+		<style>
+			body {
+				text-align: center;
+			}
+			button {
+				padding: 3px;
+				margin-top: 10px;
+			}
+			#loader {
+				width: 50px;
+				height: 50px;
+			}
+			#content {
+				display: none;
+			}
+			label {
+				margin-right: 10px;
+			}
+			.previewIMG {
+				display: inline-block;
+				max-width: 500px;
+				max-height: 500px;
+				width: 100%;
+				height: 100%;
+				background-color: #000;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+		</style>
 	</head>
 	<body>
-	
+		<svg id="loader" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_EUy1{animation:spinner_grm3 1.2s infinite}.spinner_f6oS{animation-delay:.1s}.spinner_g3nX{animation-delay:.2s}.spinner_nvEs{animation-delay:.3s}.spinner_MaNM{animation-delay:.4s}.spinner_4nle{animation-delay:.5s}.spinner_ZETM{animation-delay:.6s}.spinner_HXuO{animation-delay:.7s}.spinner_YaQo{animation-delay:.8s}.spinner_GOx1{animation-delay:.9s}.spinner_4vv9{animation-delay:1s}.spinner_NTs9{animation-delay:1.1s}.spinner_auJJ{transform-origin:center;animation:spinner_T3O6 6s linear infinite}@keyframes spinner_grm3{0%,50%{animation-timing-function:cubic-bezier(.27,.42,.37,.99);r:1px}25%{animation-timing-function:cubic-bezier(.53,0,.61,.73);r:2px}}@keyframes spinner_T3O6{0%{transform:rotate(360deg)}100%{transform:rotate(0deg)}}</style><g class="spinner_auJJ"><circle class="spinner_EUy1" cx="12" cy="3" r="1"/><circle class="spinner_EUy1 spinner_f6oS" cx="16.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_NTs9" cx="7.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_g3nX" cx="19.79" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_4vv9" cx="4.21" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_nvEs" cx="21.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_GOx1" cx="3.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_MaNM" cx="19.79" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_YaQo" cx="4.21" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_4nle" cx="16.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_HXuO" cx="7.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_ZETM" cx="12" cy="21" r="1"/></g></svg>
+		<div id="content">
+			<label for="min">Min km</label><input type="number" id="min" value="0"><br>
+			<label for="max">Max km</label><input type="number" placeholder="max km" id="max"><br>
+			<button onclick="dice();" id="dice">Välj plats</button>
+			<div id="result"></div>
+		</div>
+		<!--
+			* Fixa layout
+			* Länk och info om hur data kan läggas in
+			* Lägg till fler städer
+			* Möjlighet att byta stad
+			* Visa vilken stad som för tillfället är vald
+			* Länk till Google Map
+			* Möjlighet att ta bort plats
+			* Möjlighet att återställa tidigare bortvalda platser
+			  * Återställa alla
+			  * Återställa specifikt valda platser
+			* Även lägga in olika sätt att ta sig till platsen på, alltså tränings instruktioner
+			* Möjlighet för användare att lägga in egna träningsinstruktioner
+			* Spara tidigare session, så även om sida laddas om kommer tidigare plats visas igen
+		-->
 	</body>
 </html>
