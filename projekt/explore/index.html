@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Explore</title>
+		<title>Upptäck</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta content="yes" name="apple-mobile-web-app-capable">
@@ -53,6 +53,7 @@
 			});
 			function loadLocation(){
                 console.log(stader[location.hash.replace('#', '')]);
+				document.getElementById('header').innerHTML = stader[location.hash.replace('#', '')][0];
                 Papa.parse(stader[location.hash.replace('#', '')][2], {
 					download: true,
 					complete: function(results) {
@@ -124,55 +125,143 @@
 				if(filtrerad.length == 0){
 					document.getElementById('result').innerHTML = `<p>Kunde inte hitta någon plats med inställda kliometer.</p>`;
 				}else{
-					document.getElementById('result').innerHTML = `<p>${filtrerad[num].namn} (${filtrerad[num].km} km)</p><div style="background-image: url('${filtrerad[num].img}');" class="previewIMG">`;
+					document.getElementsByTagName('body')[0].setAttribute('style', `background-image: url('${filtrerad[num].img}');`);
+					document.getElementById('result').innerHTML = `
+						
+							<h2>${filtrerad[num].namn} <span style="white-space: nowrap;">(${filtrerad[num].km} km)</span></h2>
+							<p><a href="http://maps.google.com/?q=${filtrerad[num].lat},${filtrerad[num].long}" class="button3" target="_blank"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 4)"><path d="m1.5.5h11l2 2-2 2h-11c-.55228475 0-1-.44771525-1-1v-2c0-.55228475.44771525-1 1-1z"/><path d="m1.5 7.5h11l2 2-2 2h-11c-.55228475 0-1-.4477153-1-1v-2c0-.55228475.44771525-1 1-1z" transform="matrix(-1 0 0 1 15 0)"/><path d="m7.5 4.5v3"/><path d="m7.5 11.5v3"/></g></svg>Google Maps</a></p>
+					`;
 				};
+				document.getElementById('dice').innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 -1 0 18.5 2.5)"><g transform="matrix(0 -1 1 0 .5 16.5)"><path d="m16 0v5h-5" transform="matrix(0 1 1 0 11 -11)"/><path d="m16 5c-2.8366699-3.33333333-5.6700033-5-8.5-5-2.82999674 0-5.32999674 1-7.5 3"/></g><g transform="matrix(0 1 -1 0 14 1)"><path d="m16 0v5h-5" transform="matrix(0 1 1 0 11 -11)"/><path d="m16 5c-2.8366699-3.33333333-5.6700033-5-8.5-5-2.82999674 0-5.32999674 1-7.5 3"/></g></g></svg>Välj ny plats';
 			};
 		</script>
 		<style>
 			body {
 				text-align: center;
+				height: 100vh;
+				margin: 0px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #000;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				font-family:'Roboto',sans-serif;
+			}
+			p, table, input, button, span.button3 {
+				font-size: 1.1rem;
+				font-weight:300;
+			}
+			h1 {
+				font-size: 1.7rem;
+				font-weight:600;
+			}
+			h2 {
+				font-size: 1.4rem;
+				font-weight:600;
 			}
 			button {
 				padding: 3px;
 				margin-top: 10px;
 			}
 			#loader {
-				width: 50px;
-				height: 50px;
+				width: 80px;
+				height: 80px;
+				fill: #FFF
 			}
 			#content {
 				display: none;
+				padding: 14px 18px;
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 16px;
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				backdrop-filter: blur(15px);
+				-webkit-backdrop-filter: blur(15px);
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				color: #fff;
+				max-width: 400px;
+				text-shadow: 1px 1px 2px #000;
 			}
 			label {
 				margin-right: 10px;
 			}
-			.previewIMG {
-				display: inline-block;
-				max-width: 500px;
-				max-height: 500px;
+			#min, #max {
 				width: 100%;
-				height: 100%;
-				background-color: #000;
-				background-repeat: no-repeat;
-				background-size: cover;
+				max-width: 100px;
+			}
+			.installningar {
+				margin-right: auto;
+				margin-left: auto;
+			}
+			.installningar tr td:first-child {
+				text-align: right;
+				color: #fff;
+			}
+			.button3{
+				text-shadow: none;
+				display:inline-block;
+				padding:0.5em 1.2em;
+				margin: 10px 0.3em 0.3em 0;
+				border-radius:2em;
+				box-sizing: border-box;
+				text-decoration:none;
+				color:#FFFFFF;
+				background-color:#4eb5f1;
+				text-align:center;
+				transition: all 0.2s;
+			}
+			.button3:hover{
+				background-color:#4095c6;
+				cursor: pointer;
+			}
+			.button3 svg {
+				display: inline-block;
+				vertical-align: bottom;
+				margin-right: 5px;
+			}
+			@media all and (max-width:30em){
+				.button3{
+					display:block;
+					margin:0.2em auto;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<svg id="loader" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_EUy1{animation:spinner_grm3 1.2s infinite}.spinner_f6oS{animation-delay:.1s}.spinner_g3nX{animation-delay:.2s}.spinner_nvEs{animation-delay:.3s}.spinner_MaNM{animation-delay:.4s}.spinner_4nle{animation-delay:.5s}.spinner_ZETM{animation-delay:.6s}.spinner_HXuO{animation-delay:.7s}.spinner_YaQo{animation-delay:.8s}.spinner_GOx1{animation-delay:.9s}.spinner_4vv9{animation-delay:1s}.spinner_NTs9{animation-delay:1.1s}.spinner_auJJ{transform-origin:center;animation:spinner_T3O6 6s linear infinite}@keyframes spinner_grm3{0%,50%{animation-timing-function:cubic-bezier(.27,.42,.37,.99);r:1px}25%{animation-timing-function:cubic-bezier(.53,0,.61,.73);r:2px}}@keyframes spinner_T3O6{0%{transform:rotate(360deg)}100%{transform:rotate(0deg)}}</style><g class="spinner_auJJ"><circle class="spinner_EUy1" cx="12" cy="3" r="1"/><circle class="spinner_EUy1 spinner_f6oS" cx="16.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_NTs9" cx="7.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_g3nX" cx="19.79" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_4vv9" cx="4.21" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_nvEs" cx="21.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_GOx1" cx="3.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_MaNM" cx="19.79" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_YaQo" cx="4.21" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_4nle" cx="16.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_HXuO" cx="7.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_ZETM" cx="12" cy="21" r="1"/></g></svg>
 		<div id="content">
-			<label for="min">Min km</label><input type="number" id="min" value="0"><br>
-			<label for="max">Max km</label><input type="number" placeholder="max km" id="max"><br>
-			<button onclick="dice();" id="dice">Välj plats</button>
+			<h1>Upptäck <span id="header"></span></h1>
+			<table class="installningar">
+				<tbody>
+					<tr>
+						<td>
+							<label for="min">Min km:</label>
+						</td>
+						<td>
+							<input type="number" id="min" value="0">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="max">Max km:</label>
+						</td>
+						<td>
+							<input type="number" placeholder="max km" id="max">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<span onclick="dice();" id="dice" class="button3" role="button"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 1)"><path d="m6.5 18.5c3-2.5021966 4-5.5021966 4-9 0-3.49780342-1-6.49780342-4-9-3 2.50219658-4 5.50219658-4 9 0 3.4978034 1 6.4978034 4 9z"/><path d="m10.0620355 13.3616971c.4244504.2452152.814833.5459803 1.1711478.9022951 1.1190122 1.1190122 1.6901459 2.5740294 1.7134011 4.3650515-2.5082701-.109848-3.88207621-.7645704-4.92553235-1.6471655m-5.11545113-3.6201811c-.42445038.2452152-.81483298.5459803-1.17114781.9022951-1.11901221 1.1190122-1.6901459 2.5740294-1.71340106 4.3650515 2.50827003-.109848 3.88207616-.7645704 4.9255323-1.6471655"/><circle cx="6.5" cy="6.5" r="2"/></g></svg>Hitta plats</span>
 			<div id="result"></div>
 		</div>
 		<!--
-			* Fixa layout
+			X Fixa layout
 			* Länk och info om hur data kan läggas in
 			* Lägg till fler städer
 			* Möjlighet att byta stad
-			* Visa vilken stad som för tillfället är vald
-			* Länk till Google Map
+			X Visa vilken stad som för tillfället är vald
+			X Länk till Google Map
 			* Möjlighet att ta bort plats
 			* Möjlighet att återställa tidigare bortvalda platser
 			  * Återställa alla
