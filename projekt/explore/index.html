@@ -7,21 +7,159 @@
 		<meta content="yes" name="mobile-web-app-capable">
 		<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-		<meta property="og:title" content="GymLund">
-		<!-- <meta property="og:url" content="#lank#"> -->
-		<meta property="og:type" content="website">
-		<!--<meta property="og:description" content="Ger plats som man ska ta sig till.">-->
-		<!--<meta property="og:image" content="ico/icon.jpg">
-
-		<link rel="shortcut icon" href="ico/icon.ico">
-		<link rel="icon" type="image/vnd.microsoft.icon" href="ico/icon.ico">
-		<link rel="icon" type="image/png" href="ico/icon196x196.png">
-		<link rel="apple-touch-icon-precomposed" href="ico/icon180x180.png">
-		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="ico/icon76x76.png">
-		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="ico/icon120x120.png">
-		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="ico/icon152x152.png">-->
 		<script src="papaparse.min.js"></script>
+		<style>
+			body {
+				position: relative;
+				text-align: center;
+				height: 100vh;
+				margin: 0px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #000;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				font-family:'Roboto',sans-serif;
+			}
+			p, table, input, button, span.button3 {
+				font-size: 1.1rem;
+				font-weight:300;
+			}
+			h1 {
+				font-size: 1.7rem;
+				font-weight:600;
+			}
+			h2 {
+				font-size: 1.4rem;
+				font-weight:600;
+			}
+			button {
+				padding: 3px;
+				margin-top: 10px;
+			}
+			#loader {
+				width: 80px;
+				height: 80px;
+				fill: #FFF
+			}
+			#content {
+				display: none;
+				padding: 14px 18px;
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 16px;
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				backdrop-filter: blur(15px);
+				-webkit-backdrop-filter: blur(15px);
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				color: #fff;
+				max-width: 400px;
+				text-shadow: 1px 1px 2px #000;
+			}
+			#expand {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				padding: 14px 18px;
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 0 0 16px 0;
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				backdrop-filter: blur(15px);
+				-webkit-backdrop-filter: blur(15px);
+				border-right: 1px solid rgba(255, 255, 255, 0.3);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+				color: #fff;
+				display: none;
+			}
+			label {
+				margin-right: 10px;
+			}
+			#min, #max {
+				width: 100%;
+				max-width: 100px;
+			}
+			.installningar {
+				margin-right: auto;
+				margin-left: auto;
+			}
+			.installningar tr td:first-child {
+				text-align: right;
+				color: #fff;
+			}
+			.button3{
+				text-shadow: none;
+				display:inline-block;
+				padding:0.5em 1.2em;
+				margin: 10px 0.3em 0.3em 0;
+				border-radius:2em;
+				box-sizing: border-box;
+				text-decoration:none;
+				color:#FFFFFF;
+				background-color:#4eb5f1;
+				text-align:center;
+				transition: all 0.2s;
+			}
+			.button3:hover{
+				background-color:#4095c6;
+				cursor: pointer;
+			}
+			.button3 svg {
+				display: inline-block;
+				vertical-align: bottom;
+				margin-right: 5px;
+			}
+			@media all and (max-width:30em){
+				.button3{
+					display:block;
+					margin:0.2em auto;
+				}
+			}
+			.minska {
+				padding: 5px;
+				float: right;
+				margin: 0px;
+			}
+			.minska svg {
+				margin-right: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<svg id="loader" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_EUy1{animation:spinner_grm3 1.2s infinite}.spinner_f6oS{animation-delay:.1s}.spinner_g3nX{animation-delay:.2s}.spinner_nvEs{animation-delay:.3s}.spinner_MaNM{animation-delay:.4s}.spinner_4nle{animation-delay:.5s}.spinner_ZETM{animation-delay:.6s}.spinner_HXuO{animation-delay:.7s}.spinner_YaQo{animation-delay:.8s}.spinner_GOx1{animation-delay:.9s}.spinner_4vv9{animation-delay:1s}.spinner_NTs9{animation-delay:1.1s}.spinner_auJJ{transform-origin:center;animation:spinner_T3O6 6s linear infinite}@keyframes spinner_grm3{0%,50%{animation-timing-function:cubic-bezier(.27,.42,.37,.99);r:1px}25%{animation-timing-function:cubic-bezier(.53,0,.61,.73);r:2px}}@keyframes spinner_T3O6{0%{transform:rotate(360deg)}100%{transform:rotate(0deg)}}</style><g class="spinner_auJJ"><circle class="spinner_EUy1" cx="12" cy="3" r="1"/><circle class="spinner_EUy1 spinner_f6oS" cx="16.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_NTs9" cx="7.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_g3nX" cx="19.79" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_4vv9" cx="4.21" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_nvEs" cx="21.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_GOx1" cx="3.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_MaNM" cx="19.79" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_YaQo" cx="4.21" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_4nle" cx="16.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_HXuO" cx="7.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_ZETM" cx="12" cy="21" r="1"/></g></svg>
+		<div id="content">
+			<span class="button3 minska" onclick="toogleView();">
+				<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(180deg);"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 4)"><path d="m2.5.5h10c1.1045695 0 2 .8954305 2 2v8c0 1.1045695-.8954305 2-2 2h-10c-1.1045695 0-2-.8954305-2-2v-8c0-1.1045695.8954305-2 2-2z"/><path d="m9.5 6.5h2c.5522847 0 1 .44771525 1 1v2c0 .5522847-.4477153 1-1 1h-2c-.55228475 0-1-.4477153-1-1v-2c0-.55228475.44771525-1 1-1z" fill="currentColor"/></g></svg>
+			</span><br>
+			<h1>Upptäck <span id="header"></span></h1>
+			<table class="installningar">
+				<tbody>
+					<tr>
+						<td>
+							<label for="min">Min km:</label>
+						</td>
+						<td>
+							<input type="tel" id="min" value="0" class="preventZero">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="max">Max km:</label>
+						</td>
+						<td>
+							<input type="tel" id="max" class="preventZero">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<span onclick="dice();" id="dice" class="button3" role="button"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 1)"><path d="m6.5 18.5c3-2.5021966 4-5.5021966 4-9 0-3.49780342-1-6.49780342-4-9-3 2.50219658-4 5.50219658-4 9 0 3.4978034 1 6.4978034 4 9z"/><path d="m10.0620355 13.3616971c.4244504.2452152.814833.5459803 1.1711478.9022951 1.1190122 1.1190122 1.6901459 2.5740294 1.7134011 4.3650515-2.5082701-.109848-3.88207621-.7645704-4.92553235-1.6471655m-5.11545113-3.6201811c-.42445038.2452152-.81483298.5459803-1.17114781.9022951-1.11901221 1.1190122-1.6901459 2.5740294-1.71340106 4.3650515 2.50827003-.109848 3.88207616-.7645704 4.9255323-1.6471655"/><circle cx="6.5" cy="6.5" r="2"/></g></svg>Hitta plats</span>
+			<div id="result"></div>
+		</div>
+		<div id="expand">
+			<span class="button3 minska" onclick="toogleView();">
+				<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg);"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m15.5.5v5h-5" transform="matrix(1 0 0 -1 0 6)"/><path d="m12-.95v9.9" transform="matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)"/><path d="m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4"/></g></svg>
+			</span>
+		</div>
 		<script type="text/javascript">
             var stader = [];
 			var stadData = [];
@@ -30,12 +168,9 @@
 			Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vS62litUjnRXwqy2jcQRNlBqRIrrzzHbpgY-hWWqoTcCNV6DXwL48GXi84tB0hVBV7G8tRfZlMtpeut/pub?gid=0&single=true&output=csv', {
 				download: true,
 				complete: function(results) {
-                    console.log(results);
 					var fistID = '';
                     for (var a = 0; a < results.data.length; a++){
             			if(results.data[a][0] == 'Städer'){}else{
-                            console.log(results.data[a][0]);
-                            console.log(results.data[a][1]);
                             stader[results.data[a][1]] = results.data[a];
 							if(fistID == ''){
 								fistID = results.data[a][1];
@@ -52,7 +187,6 @@
 				}
 			});
 			function loadLocation(){
-                console.log(stader[location.hash.replace('#', '')]);
 				document.getElementById('header').innerHTML = stader[location.hash.replace('#', '')][0];
                 Papa.parse(stader[location.hash.replace('#', '')][2], {
 					download: true,
@@ -67,8 +201,6 @@
 								})
 							};
 						};
-						console.log(stadData);
-						//if(!window['lon'] == '0' && !window['lat'] == '0'){addKm()};
 						getLocation();
 					},
 					error: function(results) {
@@ -121,154 +253,40 @@
 					};
 				};
 				var num = randomIntFromInterval(0, (filtrerad.length - 1));
-				console.log(filtrerad[num]);
 				if(filtrerad.length == 0){
+					document.getElementsByTagName('body')[0].removeAttribute('style');
 					document.getElementById('result').innerHTML = `<p>Kunde inte hitta någon plats med inställda kliometer.</p>`;
 				}else{
 					document.getElementsByTagName('body')[0].setAttribute('style', `background-image: url('${filtrerad[num].img}');`);
 					document.getElementById('result').innerHTML = `
-						
 							<h2>${filtrerad[num].namn} <span style="white-space: nowrap;">(${filtrerad[num].km} km)</span></h2>
 							<p><a href="http://maps.google.com/?q=${filtrerad[num].lat},${filtrerad[num].long}" class="button3" target="_blank"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 4)"><path d="m1.5.5h11l2 2-2 2h-11c-.55228475 0-1-.44771525-1-1v-2c0-.55228475.44771525-1 1-1z"/><path d="m1.5 7.5h11l2 2-2 2h-11c-.55228475 0-1-.4477153-1-1v-2c0-.55228475.44771525-1 1-1z" transform="matrix(-1 0 0 1 15 0)"/><path d="m7.5 4.5v3"/><path d="m7.5 11.5v3"/></g></svg>Google Maps</a></p>
 					`;
 				};
 				document.getElementById('dice').innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 -1 0 18.5 2.5)"><g transform="matrix(0 -1 1 0 .5 16.5)"><path d="m16 0v5h-5" transform="matrix(0 1 1 0 11 -11)"/><path d="m16 5c-2.8366699-3.33333333-5.6700033-5-8.5-5-2.82999674 0-5.32999674 1-7.5 3"/></g><g transform="matrix(0 1 -1 0 14 1)"><path d="m16 0v5h-5" transform="matrix(0 1 1 0 11 -11)"/><path d="m16 5c-2.8366699-3.33333333-5.6700033-5-8.5-5-2.82999674 0-5.32999674 1-7.5 3"/></g></g></svg>Välj ny plats';
 			};
+			function toogleView(){
+				var e = document.getElementById('expand');
+				var c = document.getElementById('content');
+				if(!e.getAttribute('style')){
+					e.setAttribute('style', 'display: block;');
+					c.removeAttribute('style');
+				}else{
+					e.removeAttribute('style');
+					c.setAttribute('style', 'display: block;');
+				};
+			};
+			function addListener(){
+				var elToBind = document.getElementsByClassName('preventZero');
+				for (let i = 0; i < elToBind.length; i++) {
+					elToBind[i].addEventListener("change", (event) => {
+						if(event.target.value == ''){event.target.value = 0};
+					});
+				};
+			};
+			document.body.onload = function() {
+				addListener();
+			};
 		</script>
-		<style>
-			body {
-				text-align: center;
-				height: 100vh;
-				margin: 0px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: #000;
-				background-repeat: no-repeat;
-				background-size: cover;
-				background-position: center;
-				font-family:'Roboto',sans-serif;
-			}
-			p, table, input, button, span.button3 {
-				font-size: 1.1rem;
-				font-weight:300;
-			}
-			h1 {
-				font-size: 1.7rem;
-				font-weight:600;
-			}
-			h2 {
-				font-size: 1.4rem;
-				font-weight:600;
-			}
-			button {
-				padding: 3px;
-				margin-top: 10px;
-			}
-			#loader {
-				width: 80px;
-				height: 80px;
-				fill: #FFF
-			}
-			#content {
-				display: none;
-				padding: 14px 18px;
-				background: rgba(255, 255, 255, 0.2);
-				border-radius: 16px;
-				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-				backdrop-filter: blur(15px);
-				-webkit-backdrop-filter: blur(15px);
-				border: 1px solid rgba(255, 255, 255, 0.3);
-				color: #fff;
-				max-width: 400px;
-				text-shadow: 1px 1px 2px #000;
-			}
-			label {
-				margin-right: 10px;
-			}
-			#min, #max {
-				width: 100%;
-				max-width: 100px;
-			}
-			.installningar {
-				margin-right: auto;
-				margin-left: auto;
-			}
-			.installningar tr td:first-child {
-				text-align: right;
-				color: #fff;
-			}
-			.button3{
-				text-shadow: none;
-				display:inline-block;
-				padding:0.5em 1.2em;
-				margin: 10px 0.3em 0.3em 0;
-				border-radius:2em;
-				box-sizing: border-box;
-				text-decoration:none;
-				color:#FFFFFF;
-				background-color:#4eb5f1;
-				text-align:center;
-				transition: all 0.2s;
-			}
-			.button3:hover{
-				background-color:#4095c6;
-				cursor: pointer;
-			}
-			.button3 svg {
-				display: inline-block;
-				vertical-align: bottom;
-				margin-right: 5px;
-			}
-			@media all and (max-width:30em){
-				.button3{
-					display:block;
-					margin:0.2em auto;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<svg id="loader" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_EUy1{animation:spinner_grm3 1.2s infinite}.spinner_f6oS{animation-delay:.1s}.spinner_g3nX{animation-delay:.2s}.spinner_nvEs{animation-delay:.3s}.spinner_MaNM{animation-delay:.4s}.spinner_4nle{animation-delay:.5s}.spinner_ZETM{animation-delay:.6s}.spinner_HXuO{animation-delay:.7s}.spinner_YaQo{animation-delay:.8s}.spinner_GOx1{animation-delay:.9s}.spinner_4vv9{animation-delay:1s}.spinner_NTs9{animation-delay:1.1s}.spinner_auJJ{transform-origin:center;animation:spinner_T3O6 6s linear infinite}@keyframes spinner_grm3{0%,50%{animation-timing-function:cubic-bezier(.27,.42,.37,.99);r:1px}25%{animation-timing-function:cubic-bezier(.53,0,.61,.73);r:2px}}@keyframes spinner_T3O6{0%{transform:rotate(360deg)}100%{transform:rotate(0deg)}}</style><g class="spinner_auJJ"><circle class="spinner_EUy1" cx="12" cy="3" r="1"/><circle class="spinner_EUy1 spinner_f6oS" cx="16.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_NTs9" cx="7.50" cy="4.21" r="1"/><circle class="spinner_EUy1 spinner_g3nX" cx="19.79" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_4vv9" cx="4.21" cy="7.50" r="1"/><circle class="spinner_EUy1 spinner_nvEs" cx="21.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_GOx1" cx="3.00" cy="12.00" r="1"/><circle class="spinner_EUy1 spinner_MaNM" cx="19.79" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_YaQo" cx="4.21" cy="16.50" r="1"/><circle class="spinner_EUy1 spinner_4nle" cx="16.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_HXuO" cx="7.50" cy="19.79" r="1"/><circle class="spinner_EUy1 spinner_ZETM" cx="12" cy="21" r="1"/></g></svg>
-		<div id="content">
-			<h1>Upptäck <span id="header"></span></h1>
-			<table class="installningar">
-				<tbody>
-					<tr>
-						<td>
-							<label for="min">Min km:</label>
-						</td>
-						<td>
-							<input type="number" id="min" value="0">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="max">Max km:</label>
-						</td>
-						<td>
-							<input type="number" placeholder="max km" id="max">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<span onclick="dice();" id="dice" class="button3" role="button"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 1)"><path d="m6.5 18.5c3-2.5021966 4-5.5021966 4-9 0-3.49780342-1-6.49780342-4-9-3 2.50219658-4 5.50219658-4 9 0 3.4978034 1 6.4978034 4 9z"/><path d="m10.0620355 13.3616971c.4244504.2452152.814833.5459803 1.1711478.9022951 1.1190122 1.1190122 1.6901459 2.5740294 1.7134011 4.3650515-2.5082701-.109848-3.88207621-.7645704-4.92553235-1.6471655m-5.11545113-3.6201811c-.42445038.2452152-.81483298.5459803-1.17114781.9022951-1.11901221 1.1190122-1.6901459 2.5740294-1.71340106 4.3650515 2.50827003-.109848 3.88207616-.7645704 4.9255323-1.6471655"/><circle cx="6.5" cy="6.5" r="2"/></g></svg>Hitta plats</span>
-			<div id="result"></div>
-		</div>
-		<!--
-			X Fixa layout
-			* Länk och info om hur data kan läggas in
-			* Lägg till fler städer
-			* Möjlighet att byta stad
-			X Visa vilken stad som för tillfället är vald
-			X Länk till Google Map
-			* Möjlighet att ta bort plats
-			* Möjlighet att återställa tidigare bortvalda platser
-			  * Återställa alla
-			  * Återställa specifikt valda platser
-			* Även lägga in olika sätt att ta sig till platsen på, alltså tränings instruktioner
-			* Möjlighet för användare att lägga in egna träningsinstruktioner
-			* Spara tidigare session, så även om sida laddas om kommer tidigare plats visas igen
-		-->
 	</body>
 </html>
