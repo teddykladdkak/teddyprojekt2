@@ -110,6 +110,22 @@
             width: 21px;
             height: 21px;
         }
+        #playerWrapper {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 50%);
+        }
+        #player {
+            border-radius: 16px;
+            max-width: 400px;
+            margin: 15px auto;
+            padding: 0px;
+        }
         @media only screen and (max-width: 1000px) {
             #meny, #loader {
                 display: none;
@@ -125,7 +141,7 @@
             }
             img.source {
                 width: 30px;
-            };
+            }
             .qr {
                 display: none;
             }
@@ -203,7 +219,22 @@
     <div id="loader">
         <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_LWk7{animation:spinner_GWy6 1.2s linear infinite,spinner_BNNO 1.2s linear infinite}.spinner_yOMU{animation:spinner_GWy6 1.2s linear infinite,spinner_pVqn 1.2s linear infinite;animation-delay:.15s}.spinner_KS4S{animation:spinner_GWy6 1.2s linear infinite,spinner_6uKB 1.2s linear infinite;animation-delay:.3s}.spinner_zVee{animation:spinner_GWy6 1.2s linear infinite,spinner_Qw4x 1.2s linear infinite;animation-delay:.45s}@keyframes spinner_GWy6{0%,50%{width:9px;height:9px}10%{width:11px;height:11px}}@keyframes spinner_BNNO{0%,50%{x:1.5px;y:1.5px}10%{x:.5px;y:.5px}}@keyframes spinner_pVqn{0%,50%{x:13.5px;y:1.5px}10%{x:12.5px;y:.5px}}@keyframes spinner_6uKB{0%,50%{x:13.5px;y:13.5px}10%{x:12.5px;y:12.5px}}@keyframes spinner_Qw4x{0%,50%{x:1.5px;y:13.5px}10%{x:.5px;y:12.5px}}</style><rect class="spinner_LWk7" x="1.5" y="1.5" rx="1" width="9" height="9"/><rect class="spinner_yOMU" x="13.5" y="1.5" rx="1" width="9" height="9"/><rect class="spinner_KS4S" x="13.5" y="13.5" rx="1" width="9" height="9"/><rect class="spinner_zVee" x="1.5" y="13.5" rx="1" width="9" height="9"/></svg>
     </div>
+    <div id="playerWrapper" style="display: none;" onclick="hidePlayer();">
+        <div id="player">
+            
+        </div>
+    </div>
     <script>
+        function hidePlayer(){
+            document.getElementById('playerWrapper').setAttribute('style', 'display: none;');
+            document.getElementById('player').innerHTML = '';
+        };
+        function openPlayer(el){
+            console.log(el.getAttribute('data-player'));
+            document.getElementById('playerWrapper').removeAttribute('style');
+            document.getElementById('player').innerHTML = el.getAttribute('data-player');
+            event.preventDefault();
+        };
         function startLoad(){
             document.getElementById('wrapper').setAttribute('style', 'display: none;');
             document.getElementById('loader').removeAttribute('style');
@@ -281,6 +312,10 @@
                     imageWrp.setAttribute('style', `width: ${w};height: ${h};`);
                     var a = document.createElement('a');
                         a.setAttribute('href', sagor[i].link);
+                        if(sagor[i].html != ''){
+                            a.setAttribute('onclick', 'openPlayer(this);');
+                            a.setAttribute('data-player', sagor[i].html);
+                        };
                         a.setAttribute('class', 'link');
                         a.setAttribute('title', sagor[i].alt);
                         a.setAttribute('style', `width: ${w};height: ${h};`);
@@ -351,7 +386,8 @@
                             "alt": results.data[a][0],
                             "img_full": bildURL(results.data[a][1]),
                             "img_rek": bildURL(results.data[a][2]),
-                            "link": results.data[a][3]
+                            "link": results.data[a][3],
+                            "html": results.data[a][4]
                         });
                     };
                 };
