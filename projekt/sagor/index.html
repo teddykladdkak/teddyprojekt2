@@ -105,6 +105,9 @@
         input[type=button], button {
             padding: 2px 6px;
         }
+        button {
+            white-space: nowrap;
+        }
         button svg {
             display: inline-block;
             vertical-align: middle;
@@ -119,7 +122,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 50%);
+            background-color: rgba(0, 0, 0, 70%);
         }
         #player {
             border-radius: 16px;
@@ -127,9 +130,23 @@
             margin: 15px auto;
             padding: 0px;
         }
+        #menyButton {
+            display: none;
+        }
+        #player svg {
+            float: right;
+            color: #FFFFFF;
+            padding-bottom: 10px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+        }
         @media only screen and (max-width: 1000px) {
-            #meny, #loader {
+            #menyContent {
                 display: none;
+            }
+            #menyButton {
+                display: block;
             }
             .link, .link img, div.imageWrp, div.imageWrp a {
                 display: block;
@@ -152,6 +169,13 @@
             .imageWrp:hover .imageMenu {
                 display: none;
             }
+            #meny, #meny a {
+                background-color: #000;
+                color: #FFF;
+            }
+            #menyContent.mobile-show {
+                display: block;
+            }
         }
         @media print {
             #meny, .missing, #loader { display: none; }
@@ -166,55 +190,66 @@
 </head>
 <body>
     <div id="meny">
-        <p>
-            Häng med på det här supercoola projektet som är skapat speciellt för våra små äventyrare! Barnen kan nu ta och välja en fysisk ljudbok. Ta fram kameran, gör dig redo att skanna, och voilà - du är på väg till din favoritljudbok på Spotify eller någon annan inställd källa!
-        </p>
-        <p>
-            Innan du börjar, gör bilderna precis så stora som du vill ha dem och passande för din skrivare. Sen är det bara att trycka på utskriftsknappen. Du har möjlighet att dölja enskilda böcker som du inte vill ha med vid utskrift för att spara papper. Håll musen över ljudbok och klicka på knappen "Dölj".
-        </p>
-        <p>
-            Och vet du vad som är ännu mer coolt? Om du kollar på skärmen och den är smalare än 1000 pixlar, då visas istället mobilvyn, om du vill låta din lilla äventyrare använda telefonen istället. Har du iPhone? Då kan du lägga till sidan som app genom att i menyn välja "Lägg till på hemskärmen". Steg för steg guide hittar du här: <a href="/manualer/iphone.html" target="_blank">Hur man installerar en webb app i iPhone</a>. Stöd för Android kommer längre fram.
-        </p>
-        <p>
-            Har du några idéer eller önskemål om ändringar? Slå en kik på vår <a href="https://docs.google.com/spreadsheets/d/1HpH8xDiPDaFSpR3YUbQwIhTgHAt2nOMBw-XRE5otnFU/edit?usp=sharing" target="_blank">Google Sheet: Sagor</a>. Där kan du vara med och göra detta projekt ännu mer innehållsrik!
-        </p>
-        <p><b>Inställningar:</b></p>
-        <select id="inst_size_typ" style="display: none;"><option value="px">px</option><option value="%">%</option></select>
-        <table style="margin-bottom: 10px;">
-            <tr>
-                <td>
-                    <input type="radio" id="inst_typ1" name="typ" value="img_rek" checked>
-                    <label for="inst_typ1">img_rek</label><br>
-                    <input type="radio" id="inst_typ2" name="typ" value="img_full">
-                    <label for="inst_typ2">img_full</label>
-                </td>
-                <td>
-                    <input id="inst_size" type="number" value="400" style="margin-left: 10px;">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" id="inst_qr" name="typ" value="img_full" checked>
-                    <label for="inst_qr">QR-kod</label>
-                </td>
-                <td>
-                    <input id="inst_qr_size" type="number" value="128" style="margin-left: 10px;">
-                </td>
-            </tr>
-        </table>
-        <button onclick="andra();"">
-            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m14 1c.8284271.82842712.8284271 2.17157288 0 3l-9.5 9.5-4 1 1-3.9436508 9.5038371-9.55252193c.7829896-.78700064 2.0312313-.82943964 2.864366-.12506788z"/><path d="m6.5 14.5h8"/><path d="m12.5 3.5 1 1"/></g></svg>
-            Ändra
-        </button>
-        <button onclick="raderaSpara();">
-            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 2)"><path d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"/><path d="m.5 2.5h14"/><path d="m5.5 5.5v8"/><path d="m9.5 5.5v8"/></g></svg>
-            Radera inställningar
-        </button>
-        <button onclick="window.print();">
-            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="matrix(0 -1 1 0 2 19)"><path d="m3.5 4.38378906v-1.89752528c0-1.1045695.8954305-2 2-2h4c1.1045695 0 2 .8954305 2 2v12.01373622c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2v-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="m1.5 4.5h5.0013251v8h-5.0013251c-.55228475 0-1-.4477153-1-1v-6c0-.55228475.44771525-1 1-1zm12 0h2c.5522847 0 1 .44771525 1 1v6c0 .5522847-.4477153 1-1 1h-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="14" fill="currentColor" r="1"/></g></svg>
-            Skriv ut
-        </button>
-        <br><br>
+        <div style="display: flex;flex-direction: row;align-items: center;">
+            <h1>Sagor</h1>
+            <div style="width: 100%;"></div>
+            <div>
+                <button onclick="oppnaMeny(this);" id="menyButton">
+                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5h12"/><path d="m4.498 10.5h11.997"/><path d="m4.5 14.5h11.995"/></g></svg> Meny
+                </button>
+            </div>
+        </div>
+        <div id="menyContent">
+            <p>
+                Häng med på det här supercoola projektet som är skapat speciellt för våra små äventyrare! Barnen kan nu ta och välja en fysisk ljudbok. Ta fram kameran, gör dig redo att skanna, och voilà - du är på väg till din favoritljudbok på Spotify eller någon annan inställd källa!
+            </p>
+            <p>
+                Innan du börjar, gör bilderna precis så stora som du vill ha dem och passande för din skrivare. Sen är det bara att trycka på utskriftsknappen. Du har möjlighet att dölja enskilda böcker som du inte vill ha med vid utskrift för att spara papper. Håll musen över ljudbok och klicka på knappen "Dölj".
+            </p>
+            <p>
+                Och vet du vad som är ännu mer coolt? Om du kollar på skärmen och den är smalare än 1000 pixlar, då visas istället mobilvyn, om du vill låta din lilla äventyrare använda telefonen istället. Har du iPhone? Då kan du lägga till sidan som app genom att i menyn välja "Lägg till på hemskärmen". Steg för steg guide hittar du här: <a href="/manualer/iphone.html" target="_blank">iPhone</a> eller <a href="/manualer/android.html" target="_blank">Android</a>.
+            </p>
+            <p>
+                Har du några idéer eller önskemål om ändringar? Slå en kik på vår <a href="https://docs.google.com/spreadsheets/d/1HpH8xDiPDaFSpR3YUbQwIhTgHAt2nOMBw-XRE5otnFU/edit?usp=sharing" target="_blank">Google Sheet: Sagor</a>. Där kan du vara med och göra detta projekt ännu mer innehållsrik!
+            </p>
+            <p><b>Inställningar:</b></p>
+            <select id="inst_size_typ" style="display: none;"><option value="px">px</option><option value="%">%</option></select>
+            <table style="margin-bottom: 10px;">
+                <tr>
+                    <td>
+                        <input type="radio" id="inst_typ1" name="typ" value="img_rek" checked>
+                        <label for="inst_typ1">img_rek</label><br>
+                        <input type="radio" id="inst_typ2" name="typ" value="img_full">
+                        <label for="inst_typ2">img_full</label>
+                    </td>
+                    <td>
+                        <input id="inst_size" type="number" value="400" style="margin-left: 10px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="inst_qr" name="typ" value="img_full" checked>
+                        <label for="inst_qr">QR-kod</label>
+                    </td>
+                    <td>
+                        <input id="inst_qr_size" type="number" value="128" style="margin-left: 10px;">
+                    </td>
+                </tr>
+            </table>
+            <button onclick="andra();">
+                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m14 1c.8284271.82842712.8284271 2.17157288 0 3l-9.5 9.5-4 1 1-3.9436508 9.5038371-9.55252193c.7829896-.78700064 2.0312313-.82943964 2.864366-.12506788z"/><path d="m6.5 14.5h8"/><path d="m12.5 3.5 1 1"/></g></svg>
+                Ändra
+            </button>
+            <button onclick="raderaSpara();">
+                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 2)"><path d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"/><path d="m.5 2.5h14"/><path d="m5.5 5.5v8"/><path d="m9.5 5.5v8"/></g></svg>
+                Radera inställningar
+            </button>
+            <button onclick="window.print();">
+                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="matrix(0 -1 1 0 2 19)"><path d="m3.5 4.38378906v-1.89752528c0-1.1045695.8954305-2 2-2h4c1.1045695 0 2 .8954305 2 2v12.01373622c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2v-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="m1.5 4.5h5.0013251v8h-5.0013251c-.55228475 0-1-.4477153-1-1v-6c0-.55228475.44771525-1 1-1zm12 0h2c.5522847 0 1 .44771525 1 1v6c0 .5522847-.4477153 1-1 1h-2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="14" fill="currentColor" r="1"/></g></svg>
+                Skriv ut
+            </button>
+            <br><br>
+        </div>
     </div>
     <div id="wrapper" style="display: none;"></div>
     <div id="loader">
@@ -226,14 +261,23 @@
         </div>
     </div>
     <script>
+        function oppnaMeny(el){
+            document.getElementById('menyContent').setAttribute('class', 'mobile-show');
+            el.innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 5)"><path d="m10.5 10.5-10-10z"/><path d="m10.5.5-10 10"/></g></svg> Stäng meny';
+            el.setAttribute('onclick', 'stangMeny(this);');
+        };
+        function stangMeny(el){
+            document.getElementById('menyContent').removeAttribute('class');
+            el.innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5h12"/><path d="m4.498 10.5h11.997"/><path d="m4.5 14.5h11.995"/></g></svg> Meny';
+            el.setAttribute('onclick', 'oppnaMeny(this);');
+        };
         function hidePlayer(){
             document.getElementById('playerWrapper').setAttribute('style', 'display: none;');
             document.getElementById('player').innerHTML = '';
         };
         function openPlayer(el){
-            console.log(el.getAttribute('data-player'));
             document.getElementById('playerWrapper').removeAttribute('style');
-            document.getElementById('player').innerHTML = el.getAttribute('data-player');
+            document.getElementById('player').innerHTML = `<svg height="30" viewBox="0 0 21 21" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg><a href="${el.getAttribute('href')}"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m15.5.5v5h-5" transform="matrix(1 0 0 -1 0 6)"/><path d="m12-.95v9.9" transform="matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)"/><path d="m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4"/></g></svg></a>${el.getAttribute('data-player')}`;
             event.preventDefault();
         };
         function startLoad(){
