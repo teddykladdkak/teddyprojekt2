@@ -1,0 +1,22 @@
+{
+    "short_name": "Sagor",
+    "name": "Sagor",
+    "icons": [
+      {
+        "src": "/assets/images/icons/icons-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+          "src": "/favicon.svg",
+          "sizes": "48x48 72x72 96x96 128x128 150x150 256x256 512x512 1024x1024",
+          "type": "image/svg+xml",
+          "purpose": "any maskable"
+      }
+    ],
+    "start_url": "/projekt/sagor/index.html",
+    "background_color": "#000000",
+    "display": "minimal-ui",
+    "theme_color": "#000000",
+    "description": "Avskalad applikation som fokuserar på att hjälpa barn välja ljudbok."
+  }
