@@ -99,6 +99,25 @@
             background-color: #000;
             padding: 10px;
         }
+        #hojd, #bredd, #countDown {
+            background-color: #000;
+            color: #FFF;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(50, 50, 50, 0.4);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(50, 50, 50, 0.8);
+        }
+    </style>
+    <style id="storlekStyle">
+
     </style>
 </head>
 <body>
@@ -166,7 +185,7 @@
                                     for (let a = 0; a < roster.length; a++) {
                                         medel = medel + roster[a];
                                     };
-                                    medel = medel / roster.length;
+                                    medel = avrunda(medel / roster.length);
                                     testad = true;
                                 };
                                 if(results.data[i][2] == '#N/A'){
@@ -259,19 +278,101 @@
                 `Antal deltagare: ${deltagare.antal} st.`,
                 `Öl testade: ${valda.ja} av ${(valda.ja + valda.nej)}.`
             ];
-            skriv(attSkriva);
-        };
-        function skriv(txt){
-            var w = document.getElementById('wrapper');
+            var wrapper = document.getElementById('wrapper');
                 var pwrp = document.createElement('div');
                     pwrp.setAttribute('class', 'glass');
-                    for (let i = 0; i < txt.length; i++) {
-                        var p = document.createElement('p');
-                            var t = document.createTextNode(txt[i]);
-                            p.appendChild(t);
-                        pwrp.appendChild(p);
-                    }
-                w.appendChild(pwrp);
+                    pwrp.setAttribute('id', 'installningar');
+                    var width = document.createElement('input');
+                        width.setAttribute('type', 'number');
+                        if(!localStorage.getItem('ol_storlek_w')){
+                            width.setAttribute('value', '300');
+                        }else{
+                            width.setAttribute('value', localStorage.getItem('ol_storlek_w'));
+                        };
+                        width.setAttribute('id', 'bredd');
+                        width.setAttribute('onchange', 'andraStorlek();');
+                    pwrp.appendChild(width);
+                    var widthL = document.createElement('label');
+                        widthL.setAttribute('for', 'bredd');
+                        var widthLt = document.createTextNode('px Bredd');
+                        widthL.appendChild(widthLt);
+                    pwrp.appendChild(widthL);
+                    var br = document.createElement('br');
+                    pwrp.appendChild(br);
+                    var height = document.createElement('input');
+                        height.setAttribute('type', 'number');
+                        if(!localStorage.getItem('ol_storlek_h')){
+                            height.setAttribute('value', '250');
+                        }else{
+                            height.setAttribute('value', localStorage.getItem('ol_storlek_h'));
+                        };
+                        height.setAttribute('id', 'hojd');
+                        height.setAttribute('onchange', 'andraStorlek();');
+                    pwrp.appendChild(height);
+                    var heightL = document.createElement('label');
+                        heightL.setAttribute('for', 'hojd');
+                        var heightLt = document.createTextNode('px Höjd');
+                        heightL.appendChild(heightLt);
+                    pwrp.appendChild(heightL);
+                    var br = document.createElement('br');
+                    pwrp.appendChild(br);
+                    var countDown = document.createElement('input');
+                        countDown.setAttribute('type', 'number');
+                        countDown.setAttribute('id', 'countDown');
+                        countDown.setAttribute('placeholder', 'Minuter för uppdatering');
+                        countDown.setAttribute('onchange', 'addCountDown(this);');
+                        if(!wrapper.getAttribute('data-intervall')){}else{
+                            countDown.setAttribute('value', wrapper.getAttribute('data-intervall'));
+                            countDown.setAttribute('title', 'Uppdaterar med intervallet ' + wrapper.getAttribute('data-intervall') + ' minuter.');
+                        };
+                    pwrp.appendChild(countDown);
+                wrapper.appendChild(pwrp);
+            skriv(attSkriva);
+            andraStorlek();
+        };
+        var uppdateraInervall;
+        function addCountDown(el){
+            if(el.value == ''){
+                clearInterval(uppdateraInervall);
+                alert('Stängde av automatisk uppdatering');
+                return false;
+            };
+            if(el.value < 10){
+                alert('Under 10 minuter blir för ofta. Ändrar till 10.');
+                el.value = 10;
+            };
+            document.getElementById('wrapper').setAttribute('data-intervall', el.value);
+            el.setAttribute('title', 'Uppdaterar med intervallet ' + el.value + ' minuter.');
+            uppdateraInervall = setInterval(raknaNer, 60000);
+        };
+        function raknaNer(){
+            var raknare = document.getElementById('countDown');
+            raknare.value = raknare.value - 1;
+            if(raknare.value == 0){
+                raknare.value = document.getElementById('wrapper').getAttribute('data-intervall');
+                build();
+            };
+        };
+        function andraStorlek(){
+            var hojd = document.getElementById('hojd');
+            var bredd = document.getElementById('bredd');
+            document.getElementById('storlekStyle').innerHTML = `
+                .glass {
+                    height: ${hojd.value}px;
+                    width: ${bredd.value}px;
+                }
+            `;
+            localStorage.setItem('ol_storlek_h', hojd.value);
+            localStorage.setItem('ol_storlek_w', bredd.value);
+        };
+        function skriv(txt, id){
+            var w = document.getElementById('installningar');
+            for (let i = 0; i < txt.length; i++) {
+                var p = document.createElement('p');
+                    var t = document.createTextNode(txt[i]);
+                    p.appendChild(t);
+                w.appendChild(p);
+            };
         };
         function random(min, max){
            return Math.floor(Math.random() * (max - min + 1) + min);
@@ -325,10 +426,13 @@
                 if(deltagare.personer[i].s.length == 0){
                     deltagare.personer[i].m = '-';
                 }else{
-                    deltagare.personer[i].m = deltagare.personer[i].p / deltagare.personer[i].s.length;
+                    deltagare.personer[i].m = avrunda(deltagare.personer[i].p / deltagare.personer[i].s.length);
                 };
             };
             buildTable(['Namn', 'Total', 'Medel'], ['namn', 'p', 'm'], deltagare.personer);
+        };
+        function avrunda(v){
+            return Math.round(v*10)/10;
         };
         function buildTable(rubriker, tags, data){
             var w = document.getElementById('wrapper');
@@ -365,9 +469,9 @@
                 w.appendChild(tbw);
         };
         window.addEventListener('keydown', function (e) {
-            if(e.key == 'ArrowRight'){
+            if(e.key == 'PageDown'){
                 build();
-            }else if(e.key == 'ArrowLeft'){
+            }else if(e.key == 'PageUp'){
                 selectNext();
             };
         }, false);
