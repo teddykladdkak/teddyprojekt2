@@ -341,7 +341,7 @@
             };
         };
         function openLink(el){
-            window.open(el.parentElement.parentElement.getAttribute('data-link'));
+            window.open(el.parentElement.parentElement.getAttribute('data-link'), '_self');
         };
         function tala(el){
             responsiveVoice.speak(el.parentElement.parentElement.getAttribute('data-title'), 'Swedish Female', {onend: stoptala});
