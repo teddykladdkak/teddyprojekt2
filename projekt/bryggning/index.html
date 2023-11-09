@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Brygg räknare</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="mobile-web-app-capable">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="theme-color" content="#000000">
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMjEgMjEiIHdpZHRoPSIxOTIiIHN0eWxlPSImIzEwOyAgICBiYWNrZ3JvdW5kLWNvbG9yOiBibGFjazsmIzEwOyAgICBjb2xvcjogb3JhbmdlOyYjMTA7Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUgNCkiPjxwYXRoIGQ9Im0yLjUuNWg2YzEuMTA0NTY5NSAwIDIgLjg5NTQzMDUgMiAydjljMCAxLjEwNDU2OTUtLjg5NTQzMDUgMi0yIDJoLTZjLTEuMTA0NTY5NSAwLTItLjg5NTQzMDUtMi0ydi05YzAtMS4xMDQ1Njk1Ljg5NTQzMDUtMiAyLTJ6IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0ibS41IDUuNWgxMCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxnIGZpbGw9ImN1cnJlbnRDb2xvciI+PGNpcmNsZSBjeD0iMi41IiBjeT0iNy41IiByPSIxIi8+PGNpcmNsZSBjeD0iNC41IiBjeT0iNy41IiByPSIxIi8+PGNpcmNsZSBjeD0iNi41IiBjeT0iNy41IiByPSIxIi8+PGNpcmNsZSBjeD0iOC41IiBjeT0iNy41IiByPSIxIi8+PGNpcmNsZSBjeD0iMi41IiBjeT0iOS41IiByPSIxIi8+PGNpcmNsZSBjeD0iNC41IiBjeT0iOS41IiByPSIxIi8+PGNpcmNsZSBjeD0iNi41IiBjeT0iOS41IiByPSIxIi8+PGNpcmNsZSBjeD0iOC41IiBjeT0iOS41IiByPSIxIi8+PGNpcmNsZSBjeD0iMi41IiBjeT0iMTEuNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjQuNSIgY3k9IjExLjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI2LjUiIGN5PSIxMS41IiByPSIxIi8+PGNpcmNsZSBjeD0iOC41IiBjeT0iMTEuNSIgcj0iMSIvPjwvZz48L2c+PC9zdmc+">
+        <style>
+            body {
+                background-color: #000000;
+            }
+            h1 {
+                color: #FFFFFF;
+                margin: 10px;
+            }
+            p, input, label, select {
+                font-size: 16px;
+                font-family: arial,sans-serif;
+            }
+            table tr td:first-child {
+                text-align: right;
+            }
+            #addBar_volymalternativ {
+                width: 100%;
+                max-width: 120px;
+            }
+            input[type=tel] {
+                width: 100%;
+                max-width: 50px;
+            }
+            .glass {
+                display: inline-block;
+                margin: 10px;
+                background: rgba(255, 255, 255, 0.12);
+                padding: 16px;
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                overflow-y: scroll;
+                width: calc(100% - 54px);/* ( 10 + 1 + 16 ) * 2 */
+                max-width: 500px;
+                text-align: left;
+            }
+            .glass, .glass a {
+                color: #FFFFFF;
+            }
+            .min {
+                font-size: 10px;
+            }
+        </style>
+    </head>
+    <body onload="load();">
+        <h1>Brygg räknare</h1>
+        <div class="glass">
+            <h2>Räkna bar i fat</h2>
+            <p class="min">-16.6999 - 0.0101059 * (T * 1.8 + 32) + 0.00116512 * (T * 1.8 + 32)^2 + 0.173354 * (T * 1.8 + 32) * V + 4.24267 * V - 0.0684226 * V^2</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="addBar_temp">Fatets temperatur (°C):</label></td>
+                        <td><input type="tel" id="addBar_temp" title="Skriv in fatets temperatur" value="8"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="addBar_volumeco2">Önskad CO2 volym i fat:</label></td>
+                        <td>
+                            <input type="tel" id="addBar_volumeco2" title="Skriv in innehållets önskade volum av CO2" value="2.0">
+                            <select id="addBar_volymalternativ" onchange="addBar(this);" name="volymalternativ"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="getBar(this);">
+            <p>Du behöver <span class="resultat">???</span> bar</p>
+        </div>
+        <div class="glass">
+            <h2>Socker (g) i vätska</h2>
+            <p class="min">(O * 2) * L</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="raknaSocker_oechsle">Oechsle:</label></td>
+                        <td><input type="tel" id="raknaSocker_oechsle" title="Uppmätt Oechsle" value="" onchange="syncOechsle(this);" class="startOechsle"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="raknaSocker_mangd">Mängd vätska (L):</label></td>
+                        <td>
+                            <input type="tel" id="raknaSocker_mangd" title="Mängd vätska i liter" value="" onchange="syncMandVtsk(this);" class="mangdVtsk">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="raknaSocker(this);">
+            <p>Vätskan innehåller <span class="resultat">???</span> g socker</p>
+        </div>
+        <div class="glass">
+            <h2>Mängd socker för önskad procent</h2>
+            <p class="min">P * L * 17</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="hurMycketSocker_onskadprocent">Önskad procent (%):</label></td>
+                        <td><input type="tel" id="hurMycketSocker_onskadprocent" title="Önskad procent om full jäsning" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="hurMycketSocker_mangd">Mängd vätska (L):</label></td>
+                        <td>
+                            <input type="tel" id="hurMycketSocker_mangd" title="Mängd vätska i liter" value="" onchange="syncMandVtsk(this);" class="mangdVtsk">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="hurMycketSocker(this);">
+            <p>Du behöver totalt <span class="resultat">???</span> g socker</p>
+        </div>
+        <div class="glass">
+            <h2>Räkna alkohol</h2>
+            <p class="min">(O<sup>Start</sup> - O<sup>Slut</sup>) / 7,4</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="alkoholResultat_oechsleStart">Oechsle start:</label></td>
+                        <td><input type="tel" id="alkoholResultat_oechsleStart" title="Uppmätt Oechsle vid start" value="" onchange="syncOechsle(this);" class="startOechsle"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="alkoholResultat_oechsleSlut">Oechsle slut:</label></td>
+                        <td>
+                            <input type="tel" id="alkoholResultat_oechsleSlut" title="Uppmätt Oechsle vid slut" value="">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="alkoholResultat(this);">
+            <p>Vätska innehåller ungefär <span class="resultat">???</span> % alkohol</p>
+        </div>
+        <div class="glass">
+            <h2>Alkohol om full utjäsning</h2>
+            <p class="min">(S / L) / 17</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="evAlkohol_socker">Socker i vätska (g):</label></td>
+                        <td><input type="tel" id="evAlkohol_socker" title="Sammanlagd mängd gram socker i vätska" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="evAlkohol_mangd">Mängd vätska (L):</label></td>
+                        <td>
+                            <input type="tel" id="evAlkohol_mangd" title="Mängd vätska i liter" value="" onchange="syncMandVtsk(this);" class="mangdVtsk">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="evAlkohol(this);">
+            <p>Om allt jäser kan det bli <span class="resultat">???</span> % alkohol</p>
+        </div>
+        <script>
+            function evAlkohol(el){
+                var p = (document.getElementById('evAlkohol_socker').value / document.getElementById('evAlkohol_mangd').value) / 17;
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = p.toFixed(2);
+            };
+            function alkoholResultat(el){
+                var p = (document.getElementById('alkoholResultat_oechsleStart').value - document.getElementById('alkoholResultat_oechsleSlut').value) / 7.4;
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = p.toFixed(2);
+            };
+            function hurMycketSocker(el){
+                var g = document.getElementById('hurMycketSocker_onskadprocent').value * document.getElementById('hurMycketSocker_mangd').value * 17;
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = g.toFixed(2);
+            };
+            function raknaSocker(el){
+                var g = (document.getElementById('raknaSocker_oechsle').value * 2) * document.getElementById('raknaSocker_mangd').value;
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = g.toFixed(2);
+            };
+            function getBar(el){
+                var T = document.getElementById('addBar_temp').value.replace(',', '.') * 1.8 + 32;
+                var V = document.getElementById('addBar_volumeco2').value.replace(',', '.');
+                var count = -16.6999 - 0.0101059 * T + 0.00116512 * Math.pow(T, 2) + 0.173354 * T * V + 4.24267 * V - 0.0684226 * Math.pow(V, 2);
+                var result = (count * 0.0689475729).toFixed(2);
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = result;
+            };
+            function addBar(el){
+                document.getElementById('volumeco2').value = el.value;
+            };
+            var volumer = [{"namn": "American Amber Ale", "min": 2.3, "max": 2.3},
+                {"namn": "American Barleywine", "min": 1.8, "max": 2.5},
+                {"namn": "American Brown Ale", "min": 2.0, "max": 2.6},
+                {"namn": "American IPA", "min": 2.2, "max": 2.7},
+                {"namn": "American Lager, Dark", "min": 2.5, "max": 2.9},
+                {"namn": "American Lager, Light", "min": 2.5, "max": 2.8},
+                {"namn": "American Lager, Premium", "min": 2.5, "max": 2.8},
+                {"namn": "American Lager, Standard", "min": 2.5, "max": 2.8},
+                {"namn": "American Pale Ale", "min": 2.3, "max": 2.8},
+                {"namn": "American Pilsner", "min": 2.5, "max": 2.7},
+                {"namn": "American Stout", "min": 2.3, "max": 2.9},
+                {"namn": "American Wheat Beer", "min": 2.6, "max": 2.6},
+                {"namn": "Baltic Port", "min": 2.2, "max": 2.2},
+                {"namn": "Barley Wine", "min": 2.2, "max": 2.2},
+                {"namn": "Bavarian Dunkel", "min": 2.2, "max": 2.4},
+                {"namn": "Bavarian Hefe Weizen", "min": 3.6, "max": 3.6},
+                {"namn": "Bavarian Helles", "min": 2.4, "max": 2.4},
+                {"namn": "Belgian Ale", "min": 2.2, "max": 2.2},
+                {"namn": "Belgian Blonde Ale", "min": 2.2, "max": 2.8},
+                {"namn": "Belgian Dubbel", "min": 2.3, "max": 3.0},
+                {"namn": "Belgian Golden Strong Ale", "min": 2.5, "max": 3.2},
+                {"namn": "Belgian Pale Ale", "min": 2.1, "max": 2.7},
+                {"namn": "Belgian Specialty Ale", "min": 2.1, "max": 2.9},
+                {"namn": "Belgian Strong Dark Ale", "min": 2.3, "max": 2.9},
+                {"namn": "Belgian Strong Golden Ale", "min": 3.3, "max": 3.3},
+                {"namn": "Belgian Tripel", "min": 2.6, "max": 3.3},
+                {"namn": "Berliner Weiss", "min": 2.4, "max": 2.9},
+                {"namn": "Bière de Garde", "min": 2.3, "max": 2.9},
+                {"namn": "Bitter (Extra Special/Strong)", "min": 1.5, "max": 2.4},
+                {"namn": "Bitter (Special/Best/Premium)", "min": 0.8, "max": 2.1},
+                {"namn": "Bitter (Standard/Ordinary)", "min": 0.8, "max": 2.2},
+                {"namn": "Blonde Ale", "min": 2.4, "max": 2.8},
+                {"namn": "Bock", "min": 2.5, "max": 2.5},
+                {"namn": "Bock (Traditional)", "min": 2.2, "max": 2.7},
+                {"namn": "Breakfast Stout", "min": 2.0, "max": 2.0},
+                {"namn": "British Bitter", "min": 1.5, "max": 1.5},
+                {"namn": "British Old Ale", "min": 2.2, "max": 2.2},
+                {"namn": "California Common", "min": 2.4, "max": 2.8},
+                {"namn": "Cream Ale", "min": 2.5, "max": 2.9},
+                {"namn": "Czech Pilsner", "min": 2.3, "max": 2.6},
+                {"namn": "Dopplebock", "min": 2.3, "max": 2.6},
+                {"namn": "Dry Irish Stout", "min": 1.9, "max": 1.9},
+                {"namn": "Dry Stout", "min": 1.8, "max": 2.5},
+                {"namn": "Dunkelweizen", "min": 2.8, "max": 3.2},
+                {"namn": "Eisbock", "min": 2.2, "max": 2.6},
+                {"namn": "English Barleywine", "min": 1.6, "max": 2.5},
+                {"namn": "English Brown Ale", "min": 2.1, "max": 2.1},
+                {"namn": "English Brown Ale (Northern)", "min": 2.2, "max": 2.7},
+                {"namn": "English Brown Ale (Southern)", "min": 1.3, "max": 2.3},
+                {"namn": "English IPA", "min": 2.2, "max": 2.7},
+                {"namn": "English Pale Ale", "min": 1.5, "max": 2.4},
+                {"namn": "Extra Special Bitter", "min": 1.7, "max": 1.7},
+                {"namn": "Flanders Brown Ale", "min": 2.2, "max": 2.8},
+                {"namn": "Flanders Red Ale", "min": 2.2, "max": 2.7},
+                {"namn": "German Alt", "min": 2.3, "max": 2.3},
+                {"namn": "German Altbier", "min": 2.1, "max": 3.1},
+                {"namn": "German Pilsner", "min": 2.4, "max": 2.8},
+                {"namn": "Gueuze", "min": 2.4, "max": 3.1},
+                {"namn": "Imperial IPA/Double IPA", "min": 2.2, "max": 2.7},
+                {"namn": "Imperial Stout", "min": 2.2, "max": 2.2},
+                {"namn": "India Pale Ale", "min": 2.4, "max": 2.4},
+                {"namn": "Irish Red Ale", "min": 2.1, "max": 2.6},
+                {"namn": "Kölsch", "min": 2.4, "max": 2.8},
+                {"namn": "Lambic (Fruit)", "min": 2.4, "max": 3.1},
+                {"namn": "Lambic (Straight)", "min": 1.8, "max": 2.6},
+                {"namn": "Maibock", "min": 2.3, "max": 2.3},
+                {"namn": "Maibock/Helles Bock", "min": 2.2, "max": 2.7},
+                {"namn": "Mild Ale", "min": 1.8, "max": 1.8},
+                {"namn": "Mild Ale", "min": 1.3, "max": 2.3},
+                {"namn": "Munich Dunkel", "min": 2.2, "max": 2.7},
+                {"namn": "Munich Helles", "min": 2.3, "max": 2.7},
+                {"namn": "Oatmeal Stout", "min": 1.9, "max": 2.5},
+                {"namn": "Oktoberfest", "min": 2.5, "max": 2.5},
+                {"namn": "Oktoberfest/Marzan", "min": 2.5, "max": 2.8},
+                {"namn": "Old Ale", "min": 1.8, "max": 2.5},
+                {"namn": "Porter", "min": 1.8, "max": 2.5},
+                {"namn": "Rauchbier", "min": 2.4, "max": 2.8},
+                {"namn": "Roggenbier", "min": 2.5, "max": 3.0},
+                {"namn": "Saison", "min": 2.5, "max": 3.2},
+                {"namn": "Schwarzbier", "min": 2.2, "max": 2.7},
+                {"namn": "Scottish Export 80", "min": 1.5, "max": 2.3},
+                {"namn": "Scottish Heavy 70", "min": 1.5, "max": 2.3},
+                {"namn": "Scottish Light 60", "min": 1.5, "max": 2.3},
+                {"namn": "Stout", "min": 2.1, "max": 2.1},
+                {"namn": "Strong Scotch Ale", "min": 1.6, "max": 2.4},
+                {"namn": "Sweet Stout", "min": 2.0, "max": 2.4},
+                {"namn": "Vienna Lager", "min": 2.4, "max": 2.6},
+                {"namn": "Weizen/Weissbier", "min": 2.5, "max": 2.9},
+                {"namn": "Weizenbock", "min": 2.4, "max": 2.9},
+                {"namn": "Winter Ale", "min": 2.2, "max": 2.2},
+                {"namn": "Witbier", "min": 2.8, "max": 3.1}
+            ];
+            function loadVolumes(){
+                var optionHTML = [];
+                for (let i = 0; i < volumer.length; i++) {
+                    var volumeBetween = volumer[i].max;
+                    if(volumer[i].max != volumer[i].min){
+                        volumeBetween = volumer[i].max - ((volumer[i].max - volumer[i].min)/2);
+                    };
+                    optionHTML.push(`<option value=${volumeBetween}>${volumer[i].namn} (${volumer[i].min} - ${volumer[i].max})</option>`);
+                };
+                document.getElementById('addBar_volymalternativ').innerHTML = '<option value="2.0">Välj alternativ</option>' + optionHTML.join('');
+            };
+            function load(){
+                loadVolumes();
+            };
+            function syncMandVtsk(el){
+                var allVtskEl = document.getElementsByClassName('mangdVtsk');
+                for (let i = 0; i < allVtskEl.length; i++) {
+                    allVtskEl[i].value = el.value;
+                };
+            };
+            function syncOechsle(el){
+                var allOechsle = document.getElementsByClassName('startOechsle');
+                for (let i = 0; i < allOechsle.length; i++) {
+                    allOechsle[i].value = el.value;
+                };
+            };
+        </script>
+    </body>
+</html>
