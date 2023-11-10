@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="shortcut icon" href="icon.ico" />
-	<link rel="icon" type="image/vnd.microsoft.icon" href="icon.ico" />
+	<meta charset="utf-8">
+	<title>Bild till text</title>
+	<link rel="shortcut icon" href="icon.ico">
+	<link rel="icon" type="image/vnd.microsoft.icon" href="icon.ico">
 	<style type="text/css">
 		html, body {
 			height: 100%;
@@ -27,7 +27,7 @@
 </head>
 <body>
 	<input type="button" value="Ny Bild" onclick="location.reload();"><input type="file" id="raidimage"class="nooffline" onchange="makesmallimg(this.files[0]);imgtotext(this.files[0]);"><input type="button" value="Tala" onclick="talk(this, 'swe');" data-spr="swe" class="talaknapp"><input type="button" value="Speak" onclick="talk(this, 'eng');" data-spr="eng" class="talaknapp"><input type="button" value="Städa" onclick="stada();"><br/>
-	<img src="" id="preview"><br/>
+	<img src="" id="preview" alt="Preview"><br/>
 	<div id="text" contenteditable="true"></div>
 	<script src="script/megapix-image.js"></script>
 	<script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
