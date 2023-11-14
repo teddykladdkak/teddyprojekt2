@@ -1,0 +1,201 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+html, body {
+    background-color: #000;
+    padding-bottom: 10px;
+}
+html, body, input, button {
+    font-size: 1rem;
+    font-family: sans-serif;
+}
+p {
+    margin-bottom: 10px;
+}
+table {
+    border-spacing: 0px;
+}
+#meny {
+    background-color: #FFF;
+    padding: 10px;
+}
+#meny p {
+    max-width: 800px;
+}
+#wrapper {
+    text-align: center;
+    display: flex;
+    gap: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.imageWrp {
+    position: relative;
+    border: solid 1px #000;
+}
+.imageWrp.dold img {
+    opacity: 0.2;
+}
+.imageWrp.dold .qr {
+    display: none;
+}
+.imageMenu {
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    display: none;
+}
+.imageWrp:hover .imageMenu {
+    display: inline-block;
+}
+.link {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+}
+.qr {
+    position: absolute;
+    bottom: 8px;
+    right: 4px;
+}
+.qr img {
+    border: solid 1px #000;
+}
+img.source {
+    position: absolute;
+    bottom: 8px;
+    left: 4px;
+    width: 30px;
+}
+.missing p {
+    position: absolute;
+    top: 8px;
+    left: 4px;
+}
+#loader {
+    text-align: center;
+    padding: 10px;
+}
+#loader svg {
+    fill: #FFF;
+    width: 100px;
+    height: 100px;
+}
+input[type=button], button {
+    padding: 2px 6px;
+}
+button {
+    white-space: nowrap;
+}
+button svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 21px;
+    height: 21px;
+}
+#playerWrapper {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 70%);
+}
+#player {
+    border-radius: 16px;
+    max-width: 400px;
+    margin: 15px auto;
+    padding: 0px;
+}
+#menyButton {
+    display: none;
+}
+#player svg {
+    float: right;
+    color: #FFFFFF;
+    padding-bottom: 10px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+.alternativesMenu {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 8px 4px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 70%);
+    color: #FFFFFF;
+    text-align: right;
+    display: none;
+}
+.alternativesMenu svg {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+.alternativesMenu .alternativesButtons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+}
+.alternativesMenu .alternativesButtons svg {
+    width: 30%;
+    height: auto;
+    margin: 5px;
+}
+@media only screen and (max-width: 1000px) {
+    #menyContent {
+        display: none;
+    }
+    #menyButton {
+        display: block;
+    }
+    .link, .link img, div.imageWrp, div.imageWrp a {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    div.imageWrp, div.imageWrp a {
+        width: 100%!important;
+        height: auto!important;
+    }
+    img.source {
+        width: 30px;
+    }
+    .qr {
+        display: none;
+    }
+    .imageWrp.dold img {
+        opacity: 1;
+    }
+    .imageWrp:hover .imageMenu {
+        display: none;
+    }
+    #meny, #meny a {
+        background-color: #000;
+        color: #FFF;
+    }
+    #menyContent.mobile-show {
+        display: block;
+    }
+}
+@media print {
+    .alternativesMenu {
+        display: none!important;
+    }
+    #meny, .missing, #loader { display: none; }
+    html, body {
+        background-color: #FFF;
+    }
+    .imageWrp.dold {
+        display: none;
+    }
+}
