@@ -147,6 +147,7 @@ function skapa(img_size, img_size_typ, img_typ, qr_on, qr_size){
                 var source = document.createElement('img');
                     source.setAttribute('class', 'source');
                     source.setAttribute('src', getIcon(sagor[i].link));
+                    source.setAttribute('alt', sagor[i].link);
                 a.appendChild(source);
             imageWrp.appendChild(a);
             var imageMenu = document.createElement('div');
