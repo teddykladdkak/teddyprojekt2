@@ -152,7 +152,9 @@
             ol = [];
             if(!localStorage.getItem('ol_url')){
                 var url = prompt("Klistra in CSV delningslänk från Google Sheet", "");
-                localStorage.setItem('ol_url', url);
+                if (url != null) {
+                    localStorage.setItem('ol_url', url);
+                };
             }else{
                 var url = localStorage.getItem('ol_url');
             };
@@ -215,20 +217,26 @@
                         addPrisplall();
                     },
                     error: function(results) {
-                        document.getElementById('nuvarande').innerHTML = `
-                            <input type="button" value="Rensa" onclick="rensa();">
-                            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" class="loader"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg>
-                        `;
+                        errorLoad();
                     }
                 });
             }else{
-                document.getElementById('nuvarande').innerHTML = `
-                    <input type="button" value="Rensa" onclick="rensa();">
-                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" class="loader"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg>
-                `;
+                errorLoad();
             };
         };
         build();
+        function errorLoad(){
+            document.getElementById('nuvarande').innerHTML = `
+                <input type="button" value="Rensa" onclick="rensa();">
+                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" class="loader"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg>
+            `;
+            document.getElementById('prispall').innerHTML = `
+                <h2>Av någon anledning fungerar det inte</h2>
+                <p>Det verkar inte som du har någon CSV länk till ett Google Sheet?</p>
+                <p>För att denna sida ska fungera behöver du först skapa ett Google Sheet enligt följande mall: <a href="https://docs.google.com/spreadsheets/d/1ZvQZxMd68ND7XwAfnSKb0KgLIl5_1DFXjfAzNg1wjCI/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
+                <p>Du behöver därefter hämta CSV länken för dokumentet: Arkiv --> Dela --> Publicera på webben. Välj "Hela dokumentet" och "Kommaavgränsande värden (.csv)" och klicka sedan på publicera. Du har nu en länk som du kan klistra in.</p>
+            `;
+        };
         function rensa(){
             localStorage.clear();
             location.reload();
