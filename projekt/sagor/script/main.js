@@ -309,3 +309,6 @@ var icons = [{
     "search": "bokus",
     "svg": "img/sources/bokus.svg"
 }];
+if((("standalone" in window.navigator) && !window.navigator.standalone) || (!window.matchMedia('(display-mode: standalone)').matches)){
+    addToHomescreen();
+};
