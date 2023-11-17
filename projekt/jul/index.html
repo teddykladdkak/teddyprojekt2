@@ -192,7 +192,7 @@
                                     results.data[i][2] = '[Ingen beskrivning]';
                                 };
                                 if(results.data[i][4] == '[object Object]'){
-                                    results.data[i][4] = 'https://sb-web-ecommerce-app.azureedge.net/_next/static/media/placeholder-beer-bottle.b611c272.png?q=75&w=2000';
+                                    results.data[i][4] = 'okand.svg';
                                 };
                                 ol.push({
                                     namn: results.data[i][1],
@@ -394,7 +394,7 @@
         function writeNewBeer(){
             if(!localStorage.getItem('ol_namn')){
                 var ol_namn = '';
-                var ol_img = 'https://sb-web-ecommerce-app.azureedge.net/_next/static/media/placeholder-beer-bottle.b611c272.png?q=75&w=2000';
+                var ol_img = 'okand.svg';
                 var ol_a = '#';
                 var ol_besk = 'Ingen öl vald';
             }else{
