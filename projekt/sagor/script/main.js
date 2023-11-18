@@ -308,6 +308,9 @@ var icons = [{
 },{
     "search": "bokus",
     "svg": "img/sources/bokus.svg"
+},{
+    "search": "urplay",
+    "svg": "img/sources/ur.svg"
 }];
 if((("standalone" in window.navigator) && !window.navigator.standalone) || (!window.matchMedia('(display-mode: standalone)').matches)){
     addToHomescreen();
