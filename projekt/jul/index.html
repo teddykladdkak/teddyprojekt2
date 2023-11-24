@@ -42,7 +42,7 @@
             text-align: left;
         }
         .glass, .glass a, input {
-            font-size: 14px;
+            font-size: 1em;
             font-family: arial,sans-serif;
         }
         .glass, .glass a {
@@ -81,11 +81,10 @@
             height: 100%;
         }
         .prispall td {
-            /*border: solid 1px #000;*/
             min-height: 50px;
             text-align: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 1.6em;
         }
         .prispall img {
             max-height: 140px;
@@ -99,9 +98,10 @@
             background-color: #000;
             padding: 10px;
         }
-        #hojd, #bredd, #countDown {
+        input[type=number] {
             background-color: #000;
             color: #FFF;
+            max-width: 80px;
         }
         ::-webkit-scrollbar {
             width: 5px;
@@ -114,6 +114,13 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(50, 50, 50, 0.8);
+        }
+        #installningar input, #installningar label {
+            opacity: 0.1;
+            transition: 0.3s;
+        }
+        #installningar:hover input, #installningar:hover label {
+            opacity: 1;
         }
     </style>
     <style id="storlekStyle">
@@ -282,8 +289,8 @@
                     valda.ja++;
                 };
             };
+            // `Antal deltagare: ${deltagare.antal} st.`,
             var attSkriva = [
-                `Antal deltagare: ${deltagare.antal} st.`,
                 `Öl testade: ${valda.ja} av ${(valda.ja + valda.nej)}.`
             ];
             var wrapper = document.getElementById('wrapper');
@@ -327,16 +334,42 @@
                     var countDown = document.createElement('input');
                         countDown.setAttribute('type', 'number');
                         countDown.setAttribute('id', 'countDown');
-                        countDown.setAttribute('placeholder', 'Minuter för uppdatering');
                         countDown.setAttribute('onchange', 'addCountDown(this);');
                         if(!wrapper.getAttribute('data-intervall')){}else{
                             countDown.setAttribute('value', wrapper.getAttribute('data-intervall'));
                             countDown.setAttribute('title', 'Uppdaterar med intervallet ' + wrapper.getAttribute('data-intervall') + ' minuter.');
                         };
                     pwrp.appendChild(countDown);
-                wrapper.appendChild(pwrp);
+                    var countDownL = document.createElement('label');
+                    countDownL.setAttribute('for', 'countDown');
+                        var countDownLt = document.createTextNode('min Uppdatering');
+                        countDownL.appendChild(countDownLt);
+                    pwrp.appendChild(countDownL);
+                    var br = document.createElement('br');
+                    pwrp.appendChild(br);
+                    var font = document.createElement('input');
+                        font.setAttribute('type', 'number');
+                        if(!localStorage.getItem('ol_font')){
+                            font.setAttribute('value', '14');
+                        }else{
+                            font.setAttribute('value', localStorage.getItem('ol_font'));
+                        };
+                        font.setAttribute('id', 'font');
+                        font.setAttribute('onchange', 'andraFontStorlek(this);');
+                    pwrp.appendChild(font);
+                    var fontL = document.createElement('label');
+                        fontL.setAttribute('for', 'font');
+                        var fontLt = document.createTextNode('px Textstorlek');
+                        fontL.appendChild(fontLt);
+                    pwrp.appendChild(fontL);
+                wrapper.insertBefore(pwrp, wrapper.firstChild);
             skriv(attSkriva);
             andraStorlek();
+            andraFontStorlek(document.getElementById('font'));
+        };
+        function andraFontStorlek(el){
+            localStorage.setItem('ol_font', el.value);
+            document.getElementsByTagName('body')[0].setAttribute('style', 'font-size: ' + el.value + 'px;');
         };
         var uppdateraInervall;
         function addCountDown(el){
@@ -379,7 +412,7 @@
                 var p = document.createElement('p');
                     var t = document.createTextNode(txt[i]);
                     p.appendChild(t);
-                w.appendChild(p);
+                w.insertBefore(p, w.firstChild);
             };
         };
         function random(min, max){
@@ -427,6 +460,7 @@
                     data.push(ol[i]);
                 };
             };
+            data.sort((a, b) => parseFloat(b.m) - parseFloat(a.m));
             buildTable(['Namn', 'Total', 'Medel'], ['namn', 'total', 'm'], data);
         };
         function personTable(){
@@ -437,6 +471,7 @@
                     deltagare.personer[i].m = avrunda(deltagare.personer[i].p / deltagare.personer[i].s.length);
                 };
             };
+            deltagare.personer.sort(function (a, b) {if(a.namn < b.namn) { return -1; } if(a.namn > b.namn) { return 1; } return 0; });
             buildTable(['Namn', 'Total', 'Medel'], ['namn', 'p', 'm'], deltagare.personer);
         };
         function avrunda(v){
