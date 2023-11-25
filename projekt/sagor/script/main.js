@@ -24,8 +24,12 @@ function hidePlayer(){
 };
 function openPlayer(el){
     if(document.getElementById('playerOpen').checked){
-        document.getElementById('playerWrapper').removeAttribute('style');
-        document.getElementById('player').innerHTML = `<svg height="30" viewBox="0 0 21 21" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg><a href="${el.getAttribute('href')}"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m15.5.5v5h-5" transform="matrix(1 0 0 -1 0 6)"/><path d="m12-.95v9.9" transform="matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)"/><path d="m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4"/></g></svg></a>${el.getAttribute('data-player')}`;
+        if (el.getAttribute('data-player') != null) {
+            document.getElementById('playerWrapper').removeAttribute('style');
+            document.getElementById('player').innerHTML = `<svg height="30" viewBox="0 0 21 21" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg><a href="${el.getAttribute('href')}"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"><path d="m15.5.5v5h-5" transform="matrix(1 0 0 -1 0 6)"/><path d="m12-.95v9.9" transform="matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)"/><path d="m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4"/></g></svg></a>${el.getAttribute('data-player')}`;
+        }else{
+            return false;
+        };
     }else{
         showAlternatives(el);
     };
@@ -128,8 +132,8 @@ function skapa(img_size, img_size_typ, img_typ, qr_on, qr_size){
             imageWrp.setAttribute('style', `width: ${w};height: ${h};`);
             var a = document.createElement('a');
                 a.setAttribute('href', sagor[i].link);
+                a.setAttribute('onclick', 'openPlayer(this);');
                 if(sagor[i].html != ''){
-                    a.setAttribute('onclick', 'openPlayer(this);');
                     a.setAttribute('data-player', sagor[i].html);
                 };
                 a.setAttribute('class', 'link');
