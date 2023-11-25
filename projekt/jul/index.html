@@ -56,13 +56,6 @@
         .nasta-knapp {
             float: right;
         }
-        .loader {
-            fill: #FFF;
-            display: block;
-            margin: 20px auto;
-            width: 200px;
-            height: 200px;
-        }
         #meny {
             position: absolute;
             top: 0px;
@@ -122,12 +115,34 @@
         #installningar:hover input, #installningar:hover label {
             opacity: 1;
         }
+        #loader {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 9999;
+            background: rgba(255, 150, 150, 0.12);
+            padding: 16px;
+            border-radius: 0px 0px 16px 0px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 150, 150, 0.3);
+            border-bottom: 1px solid rgba(255, 150, 150, 0.3);
+        }
+        .loader {
+            fill: #FFF;
+            color: #FFF;
+            display: block;
+            width: 50px;
+            height: 50px;
+        }
     </style>
     <style id="storlekStyle">
 
     </style>
 </head>
 <body>
+    <div id="loader"></div>
     <div id="meny">
         <button onclick="build();" class="uppdate">
             <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path d="m4.5 1.5c-2.41169541 1.37786776-4 4.02354835-4 7 0 4.418278 3.581722 8 8 8m4-1c2.2866288-1.4081018 4-4.1175492 4-7 0-4.418278-3.581722-8-8-8"/><path d="m4.5 5.5v-4h-4"/><path d="m12.5 11.5v4h4"/></g></svg>
@@ -145,13 +160,30 @@
             personer: []
         };
         var ol = [];
-        function build(){
+        function startLoad(){
+            var w = document.getElementById('loader');
+                w.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="loader"><style>.spinner_z9k8{transform-origin:center;animation:spinner_StKS .75s infinite linear}@keyframes spinner_StKS{100%{transform:rotate(360deg)}}</style><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" class="spinner_z9k8"/></svg>';
+                w.removeAttribute('style');
+        };
+        function endLoad(){
+            document.getElementById('loader').setAttribute('style', 'display: none;');
+        };
+        function errorLoad(){
+            var w = document.getElementById('loader');
+                w.innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" class="loader"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg>';
+                w.removeAttribute('style');
             document.getElementById('wrapper').innerHTML = `
-                <div id="nuvarande" class="glass">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="loader"><style>.spinner_z9k8{transform-origin:center;animation:spinner_StKS .75s infinite linear}@keyframes spinner_StKS{100%{transform:rotate(360deg)}}</style><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" class="spinner_z9k8"/></svg>
+                <div class="glass">
+                    <h2>Av någon anledning fungerar det inte</h2>
+                    <p>Det verkar inte som du har någon CSV länk till ett Google Sheet?</p>
+                    <p>För att denna sida ska fungera behöver du först skapa ett Google Sheet enligt följande mall: <a href="https://docs.google.com/spreadsheets/d/1ZvQZxMd68ND7XwAfnSKb0KgLIl5_1DFXjfAzNg1wjCI/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
+                    <p>Du behöver därefter hämta CSV länken för dokumentet: Arkiv --> Dela --> Publicera på webben. Välj "Hela dokumentet" och "Kommaavgränsande värden (.csv)" och klicka sedan på publicera. Du har nu en länk som du kan klistra in.</p>
+                    <input type="button" value="Rensa" onclick="rensa();">
                 </div>
-                <div class="glass prispall" id="prispall"></div>
             `;
+        };
+        function build(){
+            startLoad();
             deltagare = {
                 antal: 0,
                 personer: []
@@ -169,6 +201,13 @@
                 Papa.parse(url, {
                     download: true,
                     complete: function(results) {
+                        document.getElementById('wrapper').innerHTML = `
+                            <div id="installningar" class="glass"></div>    
+                            <div id="nuvarande" class="glass"></div>
+                            <div class="glass prispall" id="prispall"></div>
+                            <div id="ollista" class="glass"></div>
+                            <div id="deltagare" class="glass"></div>
+                        `;
                         console.log(results);
                         for (let i = 0; i < results.data.length; i++) {
                             if(i == 0){
@@ -222,6 +261,7 @@
                         personTable();
                         writeNewBeer();
                         addPrisplall();
+                        endLoad();
                     },
                     error: function(results) {
                         errorLoad();
@@ -232,18 +272,6 @@
             };
         };
         build();
-        function errorLoad(){
-            document.getElementById('nuvarande').innerHTML = `
-                <input type="button" value="Rensa" onclick="rensa();">
-                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg" class="loader"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg>
-            `;
-            document.getElementById('prispall').innerHTML = `
-                <h2>Av någon anledning fungerar det inte</h2>
-                <p>Det verkar inte som du har någon CSV länk till ett Google Sheet?</p>
-                <p>För att denna sida ska fungera behöver du först skapa ett Google Sheet enligt följande mall: <a href="https://docs.google.com/spreadsheets/d/1ZvQZxMd68ND7XwAfnSKb0KgLIl5_1DFXjfAzNg1wjCI/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
-                <p>Du behöver därefter hämta CSV länken för dokumentet: Arkiv --> Dela --> Publicera på webben. Välj "Hela dokumentet" och "Kommaavgränsande värden (.csv)" och klicka sedan på publicera. Du har nu en länk som du kan klistra in.</p>
-            `;
-        };
         function rensa(){
             localStorage.clear();
             location.reload();
@@ -293,76 +321,72 @@
             var attSkriva = [
                 `Öl testade: ${valda.ja} av ${(valda.ja + valda.nej)}.`
             ];
-            var wrapper = document.getElementById('wrapper');
-                var pwrp = document.createElement('div');
-                    pwrp.setAttribute('class', 'glass');
-                    pwrp.setAttribute('id', 'installningar');
-                    var width = document.createElement('input');
-                        width.setAttribute('type', 'number');
-                        if(!localStorage.getItem('ol_storlek_w')){
-                            width.setAttribute('value', '300');
-                        }else{
-                            width.setAttribute('value', localStorage.getItem('ol_storlek_w'));
-                        };
-                        width.setAttribute('id', 'bredd');
-                        width.setAttribute('onchange', 'andraStorlek();');
-                    pwrp.appendChild(width);
-                    var widthL = document.createElement('label');
-                        widthL.setAttribute('for', 'bredd');
-                        var widthLt = document.createTextNode('px Bredd');
-                        widthL.appendChild(widthLt);
-                    pwrp.appendChild(widthL);
-                    var br = document.createElement('br');
-                    pwrp.appendChild(br);
-                    var height = document.createElement('input');
-                        height.setAttribute('type', 'number');
-                        if(!localStorage.getItem('ol_storlek_h')){
-                            height.setAttribute('value', '250');
-                        }else{
-                            height.setAttribute('value', localStorage.getItem('ol_storlek_h'));
-                        };
-                        height.setAttribute('id', 'hojd');
-                        height.setAttribute('onchange', 'andraStorlek();');
-                    pwrp.appendChild(height);
-                    var heightL = document.createElement('label');
-                        heightL.setAttribute('for', 'hojd');
-                        var heightLt = document.createTextNode('px Höjd');
-                        heightL.appendChild(heightLt);
-                    pwrp.appendChild(heightL);
-                    var br = document.createElement('br');
-                    pwrp.appendChild(br);
-                    var countDown = document.createElement('input');
-                        countDown.setAttribute('type', 'number');
-                        countDown.setAttribute('id', 'countDown');
-                        countDown.setAttribute('onchange', 'addCountDown(this);');
-                        if(!wrapper.getAttribute('data-intervall')){}else{
-                            countDown.setAttribute('value', wrapper.getAttribute('data-intervall'));
-                            countDown.setAttribute('title', 'Uppdaterar med intervallet ' + wrapper.getAttribute('data-intervall') + ' minuter.');
-                        };
-                    pwrp.appendChild(countDown);
-                    var countDownL = document.createElement('label');
-                    countDownL.setAttribute('for', 'countDown');
-                        var countDownLt = document.createTextNode('min Uppdatering');
-                        countDownL.appendChild(countDownLt);
-                    pwrp.appendChild(countDownL);
-                    var br = document.createElement('br');
-                    pwrp.appendChild(br);
-                    var font = document.createElement('input');
-                        font.setAttribute('type', 'number');
-                        if(!localStorage.getItem('ol_font')){
-                            font.setAttribute('value', '14');
-                        }else{
-                            font.setAttribute('value', localStorage.getItem('ol_font'));
-                        };
-                        font.setAttribute('id', 'font');
-                        font.setAttribute('onchange', 'andraFontStorlek(this);');
-                    pwrp.appendChild(font);
-                    var fontL = document.createElement('label');
-                        fontL.setAttribute('for', 'font');
-                        var fontLt = document.createTextNode('px Textstorlek');
-                        fontL.appendChild(fontLt);
-                    pwrp.appendChild(fontL);
-                wrapper.insertBefore(pwrp, wrapper.firstChild);
+            var pwrp = document.getElementById('installningar');
+                var width = document.createElement('input');
+                    width.setAttribute('type', 'number');
+                    if(!localStorage.getItem('ol_storlek_w')){
+                        width.setAttribute('value', '300');
+                    }else{
+                        width.setAttribute('value', localStorage.getItem('ol_storlek_w'));
+                    };
+                    width.setAttribute('id', 'bredd');
+                    width.setAttribute('onchange', 'andraStorlek();');
+                pwrp.appendChild(width);
+                var widthL = document.createElement('label');
+                    widthL.setAttribute('for', 'bredd');
+                    var widthLt = document.createTextNode('px Bredd');
+                    widthL.appendChild(widthLt);
+                pwrp.appendChild(widthL);
+                var br = document.createElement('br');
+                pwrp.appendChild(br);
+                var height = document.createElement('input');
+                    height.setAttribute('type', 'number');
+                    if(!localStorage.getItem('ol_storlek_h')){
+                        height.setAttribute('value', '250');
+                    }else{
+                        height.setAttribute('value', localStorage.getItem('ol_storlek_h'));
+                    };
+                    height.setAttribute('id', 'hojd');
+                    height.setAttribute('onchange', 'andraStorlek();');
+                pwrp.appendChild(height);
+                var heightL = document.createElement('label');
+                    heightL.setAttribute('for', 'hojd');
+                    var heightLt = document.createTextNode('px Höjd');
+                    heightL.appendChild(heightLt);
+                pwrp.appendChild(heightL);
+                var br = document.createElement('br');
+                pwrp.appendChild(br);
+                var countDown = document.createElement('input');
+                    countDown.setAttribute('type', 'number');
+                    countDown.setAttribute('id', 'countDown');
+                    countDown.setAttribute('onchange', 'addCountDown(this);');
+                    if(!wrapper.getAttribute('data-intervall')){}else{
+                        countDown.setAttribute('value', wrapper.getAttribute('data-intervall'));
+                        countDown.setAttribute('title', 'Uppdaterar med intervallet ' + wrapper.getAttribute('data-intervall') + ' minuter.');
+                    };
+                pwrp.appendChild(countDown);
+                var countDownL = document.createElement('label');
+                countDownL.setAttribute('for', 'countDown');
+                    var countDownLt = document.createTextNode('min Uppdatering');
+                    countDownL.appendChild(countDownLt);
+                pwrp.appendChild(countDownL);
+                var br = document.createElement('br');
+                pwrp.appendChild(br);
+                var font = document.createElement('input');
+                    font.setAttribute('type', 'number');
+                    if(!localStorage.getItem('ol_font')){
+                        font.setAttribute('value', '14');
+                    }else{
+                        font.setAttribute('value', localStorage.getItem('ol_font'));
+                    };
+                    font.setAttribute('id', 'font');
+                    font.setAttribute('onchange', 'andraFontStorlek(this);');
+                pwrp.appendChild(font);
+                var fontL = document.createElement('label');
+                    fontL.setAttribute('for', 'font');
+                    var fontLt = document.createTextNode('px Textstorlek');
+                    fontL.appendChild(fontLt);
+                pwrp.appendChild(fontL);
             skriv(attSkriva);
             andraStorlek();
             andraFontStorlek(document.getElementById('font'));
@@ -461,7 +485,7 @@
                 };
             };
             data.sort((a, b) => parseFloat(b.m) - parseFloat(a.m));
-            buildTable(['Namn', 'Total', 'Medel'], ['namn', 'total', 'm'], data);
+            buildTable('ollista', ['Namn', 'Total', 'Medel'], ['namn', 'total', 'm'], data);
         };
         function personTable(){
             for (let i = 0; i < deltagare.personer.length; i++) {
@@ -472,15 +496,13 @@
                 };
             };
             deltagare.personer.sort(function (a, b) {if(a.namn < b.namn) { return -1; } if(a.namn > b.namn) { return 1; } return 0; });
-            buildTable(['Namn', 'Total', 'Medel'], ['namn', 'p', 'm'], deltagare.personer);
+            buildTable('deltagare', ['Namn', 'Total', 'Medel'], ['namn', 'p', 'm'], deltagare.personer);
         };
         function avrunda(v){
             return Math.round(v*10)/10;
         };
-        function buildTable(rubriker, tags, data){
-            var w = document.getElementById('wrapper');
-                var tbw = document.createElement('div');
-                    tbw.setAttribute('class', 'glass');
+        function buildTable(id, rubriker, tags, data){
+            var tbw = document.getElementById(id);
                 var tb = document.createElement('table');
                     var h = document.createElement('thead');
                         var hr = document.createElement('tr');
@@ -508,8 +530,7 @@
                         b.appendChild(r);
                     };
                     tb.appendChild(b);
-                    tbw.appendChild(tb);
-                w.appendChild(tbw);
+                tbw.appendChild(tb);
         };
         window.addEventListener('keydown', function (e) {
             if(e.key == 'PageDown'){
