@@ -158,7 +158,55 @@
             <input type="button" value="Räkna" onclick="evAlkohol(this);">
             <p>Om allt jäser kan det bli <span class="resultat">???</span> % alkohol</p>
         </div>
+        <div class="glass">
+            <h2>Kombinera alkohol</h2>
+            <p class="min">...</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="combineraAlkohol_procent1">Procent 1 (%):</label></td>
+                        <td><input type="tel" id="combineraAlkohol_procent1" title="Sammannlagd procent i första vätskan" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="combineraAlkohol_volym1">Mängd vätska 1 (ml):</label></td>
+                        <td>
+                            <input type="tel" id="combineraAlkohol_volym1" title="Mängd vätska i milliliter" value="0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="combineraAlkohol_procent2">Procent 2 (%):</label></td>
+                        <td><input type="tel" id="combineraAlkohol_procent2" title="Sammannlagd procent i andra vätskan" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="combineraAlkohol_volym2">Mängd vätska 2 (ml):</label></td>
+                        <td>
+                            <input type="tel" id="combineraAlkohol_volym2" title="Mängd vätska i milliliter" value="0">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Räkna" onclick="combineraAlkohol(this);">
+            <p>Den nya vätskan har nu <span class="resultat">???</span> % alkohol</p>
+        </div>
         <script>
+            function combineraAlkohol(el){
+                var strong = {
+                    procent: Number(document.getElementById('combineraAlkohol_procent1').value),
+                    vol: Number(document.getElementById('combineraAlkohol_volym1').value)
+                };
+                var weak = {
+                    procent: Number(document.getElementById('combineraAlkohol_procent2').value),
+                    vol: Number(document.getElementById('combineraAlkohol_volym2').value)
+                };
+                var extra = 0;
+                var alkoholInnehall = {
+                    "strong": strong.vol * (strong.procent / 100),
+                    "weak": weak.vol * (weak.procent / 100)
+                };
+                var alkohol = ((alkoholInnehall.strong + alkoholInnehall.weak) / (strong.vol + weak.vol + extra)) * 100;
+                console.log('Alkohol: ' + alkohol);
+                el.parentElement.getElementsByClassName('resultat')[0].innerHTML = alkohol.toFixed(2);
+            }
             function evAlkohol(el){
                 var p = (document.getElementById('evAlkohol_socker').value / document.getElementById('evAlkohol_mangd').value) / 17;
                 el.parentElement.getElementsByClassName('resultat')[0].innerHTML = p.toFixed(2);
