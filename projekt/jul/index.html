@@ -256,11 +256,11 @@
                         };
                         console.log(deltagare);
                         console.log(ol);
-                        statistik();
                         olTable();
                         personTable();
                         writeNewBeer();
                         addPrisplall();
+                        statistik();
                         endLoad();
                     },
                     error: function(results) {
@@ -319,7 +319,7 @@
             };
             // `Antal deltagare: ${deltagare.antal} st.`,
             var attSkriva = [
-                `Öl testade: ${valda.ja} av ${(valda.ja + valda.nej)}.`
+                `${valda.ja} av ${(valda.ja + valda.nej)} öl testade.`
             ];
             var pwrp = document.getElementById('installningar');
                 var width = document.createElement('input');
@@ -387,7 +387,7 @@
                     var fontLt = document.createTextNode('px Textstorlek');
                     fontL.appendChild(fontLt);
                 pwrp.appendChild(fontL);
-            skriv(attSkriva);
+            skriv(attSkriva, 'installningar');
             andraStorlek();
             andraFontStorlek(document.getElementById('font'));
         };
@@ -431,7 +431,7 @@
             localStorage.setItem('ol_storlek_w', bredd.value);
         };
         function skriv(txt, id){
-            var w = document.getElementById('installningar');
+            var w = document.getElementById(id);
             for (let i = 0; i < txt.length; i++) {
                 var p = document.createElement('p');
                     var t = document.createTextNode(txt[i]);
