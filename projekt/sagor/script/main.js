@@ -214,17 +214,25 @@ function bildURL(url){
     };
     return url;
 };
-Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQuwGoDuhnf3NI4EQ5v3qukR8rXcYVRLOLKa0HuhlVjXIVicbbuh2FqwbqtLtIP9vAiVhWxVZP8uUt0/pub?gid=0&single=true&output=csv', {
-    download: true,
-    complete: function(results) {
-        for (var a = 0; a < results.data.length; a++){
-            if(results.data[a][0] == 'Namn'){}else{
+const start = () => {
+    gapi.client.init({
+        'apiKey': 'AIzaSyBVaHVdl9RZ51x2GDvCKPv9HBmTOJh0WdM',
+        'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+    }).then(() => {
+        return gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: '1HpH8xDiPDaFSpR3YUbQwIhTgHAt2nOMBw-XRE5otnFU',
+            range: 'Installningar', // for example: List 1!A1:B6
+        })
+    }).then((response) => {
+        const r = response.result.values;
+        for (var a = 0; a < r.length; a++){
+            if(r[a][0] == 'Namn'){}else{
                 sagor.push({
-                    "alt": results.data[a][0],
-                    "img_full": bildURL(results.data[a][1]),
-                    "img_rek": bildURL(results.data[a][2]),
-                    "link": results.data[a][3],
-                    "html": results.data[a][4]
+                    "alt": r[a][0],
+                    "img_full": bildURL(r[a][1]),
+                    "img_rek": bildURL(r[a][2]),
+                    "link": r[a][3],
+                    "html": r[a][4]
                 });
             };
         };
@@ -236,12 +244,12 @@ Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQuwGoDuhnf3NI4EQ5v3
             return 0;
         });
         kollaSpara();
-    },
-    error: function(results) {
+    }).catch((err) => {
         console.log('Något gick fel');
         stopLoad();
-    }
-});
+    });
+};
+gapi.load('client', start);
 function dolj(el){
     var dolda = {};
     if(!localStorage.getItem('sagor_dold')){}else{
