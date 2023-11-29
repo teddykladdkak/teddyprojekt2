@@ -11,6 +11,35 @@ menu: projekt
     <div id="content">
         <div class="tablecontainer information">
             <div class="row">
+                <div class="left previewimg" style="background-image: url('/files/img/preview/sagor.jpg');background-position: 30% center;">
+                    <img src="/files/img/qr/sagor.png" class="qr-image" width="150px">
+                </div>
+                <div class="right descript">
+                    <span class="h3">Sagor</span>
+                    {% include support.html apple=true windows=true chrome=true firefox=true safari=true ie=false ios=true android=true %}
+                    <p>Applikation som gör det enkelt för barn av välja ljudbok.</p>
+                    <p>Flera källor stödjs och används.</p>
+                    <p>I desktop läge finns även möjlighet att skriva ut bilder med QR-kod till källan, så barnet kan hålla i ljudböckerna fysiskt. Förälder kan sedan scanna QR-koden med telefonen för att börja spela önskad ljudbok.</p>
+                    <a href="https://teddyprojekt.se/projekt/sagor/index.html" class="button">Till sidan</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/sagor" class="button">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="tablecontainer information">
+            <div class="row">
+                <div class="right descript">
+                    <span class="h3">Julölsprovning</span>
+                    {% include support.html apple=false windows=false chrome=true firefox=true safari=true ie=false ios=false android=false %}
+                    <p>Vy som kan användas där man har julölsprovning, ja eller annan typ av öl/cider/vin/wiskey m.m. provning om man kan leva med lite jultema.</p>
+                    <p>Applikationen hämtar data från Google Sheet och presenterar det i vyn. När du öppnar vyn får du instruktioner hur du ska gå tillväga.</p>
+                    <a href="https://teddyprojekt.se/projekt/jul/index.html" class="button">Till sidan</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/jul" class="button">GitHub</a>
+                </div>
+                <div class="left previewimg" style="background-image: url('/files/img/preview/julolsprovning.jpg');background-position: 30% center;"></div>
+            </div>
+        </div>
+        <div class="tablecontainer information">
+            <div class="row">
                 <div class="left previewimg" style="background-image: url('/files/img/preview/gronakorset.jpg');background-position: 30% center;">
                     <img src="/files/img/qr/gronakorset.png" class="qr-image" width="150px">
                 </div>
@@ -34,7 +63,7 @@ menu: projekt
                     <p>Projekt med målet att ersätta whiteboardtavlan i sjukvården. Eliminera behovet av att dokumentera "anteckningar" i journalen. Minimalistiskt och överskådlig design.</p>
                     <a href="projekt/digital_whiteboard/index.html" class="button">Till Sidan</a>
                     <a href="manualer/digital_whiteboard.html" class="button">Instruktioner</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/digital_whiteboard" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/digital_whiteboard" class="button">GitHub</a>
                 </div>
                 <div class="right previewimg" style="background-image: url('/files/img/preview/oversikt.jpg');background-position: center;"></div>
             </div>
@@ -74,7 +103,7 @@ menu: projekt
                     {% include support.html apple=false windows=false chrome=true firefox=false safari=false ie=false ios=true android=false %}
                     <p>Samling av flertalet lathundar som en sjuksköterska kan behöva under ett arbetspass. Allt samlat under en länk.</p>
                     <a href="projekt/lathund/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/lathund" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/lathund" class="button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -102,7 +131,7 @@ menu: projekt
                     <p>Projekt med målet att automatisera dokumentationen.</p>
                     <p>Troligen inte möjligt att genomföra detta helt, då någon typ av input behövs, däremot vill detta projekt utforska hur långt man kan komma i automatiseringen.</p>
                     <a href="projekt/dok/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/dok" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/dok" class="button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -152,7 +181,7 @@ menu: projekt
                     <p>Snabbar även upp processen att skriva, då man nu istället primärt behöver klicka, klicka behövs enbart ifall något utgår ifrån ett normalt vårdförlopp.</p>
                     <p>När formuläret är ifyllt, genererar programmet dokumentationstext utifrån svaren.</p>
                     <a href="projekt/slutanteckning/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/slutanteckning" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/slutanteckning" class="button">GitHub</a>
                     <a href="projekt/slutanteckning/Slutanteckning.bat" class="button" download="">Ladda ner genväg</a>
                 </div>
                 <div class="right previewimg" style="background-image: url('/files/img/preview/slutanteckning.jpg');background-position: center;"></div>
@@ -170,7 +199,7 @@ menu: projekt
                     <p>Projekt med målet att förenkla processen att föra vätskelista på patienter i hälso- och sjukvården. Enkel design vilket ger möjlighet för vårdpersonalen att inkludera patienten i registreringsprocessen. Genom att skiva in vikt eller lägga till maxdryck, får patient visuell information om hur mycket vätska den har kvar att dricka.</p>
                     <p>Om du håller mobilen lodrätt kan du registrera glas och vågrätt kan du ändra inställningar.</p>
                     <a href="projekt/vtsk/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/vtsk" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/vtsk" class="button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -200,7 +229,7 @@ menu: projekt
                     <p>Menat att användas av vårdgruppen på ett arbetspass, för att göra en "grov" registrering av patienternas dagliga kalori-intag.</p>
                     <p>I nuläget kan endast "huvudkosten" registreras och då med hur stor del av portionen en patient intagit.</p>
                     <a href="projekt/kcalcal/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/kcalcal" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/kcalcal" class="button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -212,7 +241,7 @@ menu: projekt
                     {% include support.html apple=false windows=false chrome=true firefox=false safari=false ie=false ios=true android=false %}
                     <p>Lär ut latinska namn och var de befinner sig i kroppen.</p>
                     <a href="projekt/anatomi/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/anatomi" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/anatomi" class="button">GitHub</a>
                 </div>
                 <div class="right previewimg" style="background-image: url('/files/img/preview/anatomi.jpg');background-position: 80% center;background-size: 250%;">
                     <img src="/files/img/qr/anatomi_quiz.png" class="qr-image" width="150px">
@@ -230,7 +259,7 @@ menu: projekt
                     {% include support.html apple=false windows=false chrome=true firefox=false safari=false ie=false ios=true android=false %}
                     <p>Samling av olika frågor och svar, inom området Farmakologi. Uppbyggt enligt memory tekniken.</p>
                     <a href="projekt/farmakologi/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/farmakologi" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/farmakologi" class="button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -243,7 +272,7 @@ menu: projekt
                     <p>Ersätta narkotikaböckerna och nuvarande narkotikaregistrering vilket görs för hand i dagens läge. Ger möjlighet för vårdpersonalen att i slutet av sitt pass, skriva ut en förteckning över vad för narkotikapreparat som tagits ut och till vem.</p>
                     <p>Mål är att minska svinn och felräkningar.</p>
                     <a href="projekt/piller/index.html" class="button">Till Sidan</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/piller" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/piller" class="button">GitHub</a>
                 </div>
                 <div class="right previewimg" style="background-image: url('/files/img/preview/pillerraknare.jpg');background-position: left top;">
                     <img src="/files/img/qr/pillerraknare.png" class="qr-image" width="150px">
@@ -299,13 +328,13 @@ menu: projekt
                     <p>Utifrån vad användaren svaras, genereras färdig dokumentationstext.</p>
                     <p>Del av målet att automatisera och standardisera dokumentationen.</p>
                     <a href="projekt/sarremiss/index.html" class="button">Sårremiss</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/sarremiss" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/sarremiss" class="button">GitHub</a>
                     <a href="projekt/fax/index.html" class="button">Fax försättsblad</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/fax" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/fax" class="button">GitHub</a>
                     <a href="projekt/utskrivning/index.html" class="button">Utskrivning</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/utskrivning" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/utskrivning" class="button">GitHub</a>
                     <a href="projekt/ankomst/index.html" class="button">Inskrivning</a>
-                    <a href="https://github.com/teddykladdkak/teddyprojekt/tree/master/public/projekt/ankomst" class="button">GitHub</a>
+                    <a href="https://github.com/teddykladdkak/teddyprojekt2/tree/main/projekt/ankomst" class="button">GitHub</a>
                 </div>
                 <div class="right previewimg"></div>
             </div>
