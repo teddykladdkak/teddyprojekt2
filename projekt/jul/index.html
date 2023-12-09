@@ -184,6 +184,9 @@
         };
         function build(data){
             console.log(data);
+            /*data = data.map(function(c){
+                return c.replace(/,/g, '.');
+            });*/
             deltagare = {
                 antal: 0,
                 personer: []
@@ -207,6 +210,7 @@
                     var roster = [];
                     for (let a = 5; a < data[i].length; a++) {
                         if(data[i][a] != ''){
+                            data[i][a] = avrunda(data[i][a].replace(/,/g, '.'));
                             deltagare.personer[a-5].p = deltagare.personer[a-5].p + Number(data[i][a]);
                             deltagare.personer[a-5].s.push(Number(data[i][a]));
                             summa = summa + Number(data[i][a]);
