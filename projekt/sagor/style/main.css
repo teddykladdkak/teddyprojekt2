@@ -37,7 +37,7 @@ table {
 .imageWrp.dold img {
     opacity: 0.2;
 }
-.imageWrp.dold .qr {
+.imageWrp.dold .qr, .imageWrp.dold .time {
     display: none;
 }
 .imageMenu {
@@ -58,6 +58,16 @@ table {
     position: absolute;
     bottom: 8px;
     right: 4px;
+}
+.time {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #000;
+    color: #FFF;
+    padding: 2px 5px 5px 2px;
+    border-radius: 0px 0px 10px 0px;
+    font-size: small;;
 }
 .qr img {
     border: solid 1px #000;

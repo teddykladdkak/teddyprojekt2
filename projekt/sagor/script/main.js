@@ -8,6 +8,16 @@ function oppnaSpelareInstallning(el){
 if(!localStorage.getItem('sagor_internSpelare')){}else{
     document.getElementById('playerOpen').checked = true;
 };
+function oppnaTidInstallning(el){
+    if(el.checked){
+        localStorage.setItem('sagor_visaTid', 'Nej');
+    }else{
+        localStorage.removeItem('sagor_visaTid');
+    };
+};
+if(!localStorage.getItem('sagor_visaTid')){}else{
+    document.getElementById('visaTid').checked = true;
+};
 function oppnaMeny(el){
     document.getElementById('menyContent').setAttribute('class', 'mobile-show');
     el.innerHTML = '<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 5)"><path d="m10.5 10.5-10-10z"/><path d="m10.5.5-10 10"/></g></svg> Stäng meny';
@@ -148,6 +158,15 @@ function skapa(img_size, img_size_typ, img_typ, qr_on, qr_size){
                 var qr = document.createElement('div');
                     qr.setAttribute('class', 'qr');
                 a.appendChild(qr);
+                if(!sagor[i].tid){}else{
+                    if(!localStorage.getItem('sagor_visaTid')){
+                        var time = document.createElement('div');
+                            time.setAttribute('class', 'time');
+                            var timeT = document.createTextNode(sagor[i].tid + ' min');
+                            time.appendChild(timeT);
+                        a.appendChild(time);
+                    };
+                };
                 var source = document.createElement('img');
                     source.setAttribute('class', 'source');
                     source.setAttribute('src', getIcon(sagor[i].link));
@@ -232,7 +251,8 @@ const start = () => {
                     "img_full": bildURL(r[a][1]),
                     "img_rek": bildURL(r[a][2]),
                     "link": r[a][3],
-                    "html": r[a][4]
+                    "html": r[a][4],
+                    "tid": r[a][5]
                 });
             };
         };
@@ -292,6 +312,8 @@ function kollaSpara(){
 function raderaSpara(){
     localStorage.removeItem('sagor_inst');
     localStorage.removeItem('sagor_dold');
+    localStorage.removeItem('sagor_visaTid');
+    localStorage.removeItem('sagor_internSpelare');
     location.reload();
 };
 function getIcon(t){
