@@ -31,12 +31,14 @@
 }
 
 /* ---------- Page background + snö -------------- */
-html,body{
-  height:100%;
-  margin:0;
-  background:
+html {
+	background:
     radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 10%),
     linear-gradient(180deg,var(--bg-deep) 0%, #082219 60%, #07221a 100%);
+}
+html,body{
+  min-height:100%;
+  margin:0;
   color:var(--muted);
   display:flex;
   align-items:center;
@@ -578,4 +580,5 @@ tr:hover td {
 		showSheet('Poäng');
 	</script>
 </body>
+
 </html>
