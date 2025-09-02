@@ -176,9 +176,39 @@
             document.getElementById('wrapper').innerHTML = `
                 <div class="glass">
                     <h2>Av någon anledning fungerar det inte${messageTxt}</h2>
-                    <p>Det verkar inte som du har någon länk till ett Google Sheet?</p>
-                    <p>För att denna sida ska fungera behöver du först skapa ett Google Sheet enligt följande mall: <a href="https://docs.google.com/spreadsheets/d/1ZvQZxMd68ND7XwAfnSKb0KgLIl5_1DFXjfAzNg1wjCI/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
-                    <p>Du behöver därefter delta dokumentet genom att klicka på "Dela" uppe i högra hörnet. Under rubriken "Allmän åtkomst" välj "Alla med länken" och räcker med läsbehörig (sålänge ni inte ska dela dokumentet med fler deltagande). Klistra sedan in länken du får här.</p>
+                    <p>Det kan vara så att du inte fyllt i eller fyllt i felaktigt "implementerings-id", följ instruktioner nedan.</p>
+                    <h3>Instruktioner</h3>
+                    <p><b>Google Sheet</b></p>
+				<p>Google Sheet används som databas och du behöver skapa upp ett Sheet i din Google Drive enligt följande mall <a style="color: #FFF" href="https://docs.google.com/spreadsheets/d/1L-DY4JtzJTwiMagMP2sF0XczAPLX4F_SsYsjoEjdjq4/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
+				<p><b>Lägg till Apps Script i ditt Google Sheet:</b></p>
+				<ol>
+					<li>Öppna ditt Google Sheet (det ark du vill jobba mot).</li>
+					<li>Klicka på Tillägg (Extensions) → Apps Script.<br/>➝ Nu öppnas en ny flik med Google Apps Script-redigeraren.</li>
+					<li>I redigeraren finns en fil som heter "Code.gs". Radera ev. exempel och klistra in koden från projektet: <a style="color: #FFF" href="https://github.com/teddykladdkak/teddyprojekt2/blob/main/projekt/jul/Kod.gs" target="_blank">Kod.gs</a>.</li>
+					<li>Spara projektet (Ctrl+S eller klicka på diskettikonen).<br/>➝ Ge projektet ett namn, t.ex. "Julölsprovning... API".</li>
+				</ol>
+				<p><b>Publicera som Web App</b></p>
+				<ol>
+					<li>Klicka på Implementera (Deploy) → Ny implementering (New deployment).</li>
+					<li>Klicka på Välj typ (Select type) → Webbapp (Web app).</li>
+					<li>
+						Fyll i:
+						<ul>
+							<li>Beskrivning: valfritt, t.ex. "Web API för mitt sheet".</li>
+							<li>Kör som: Jag (ägaren).</li>
+							<li>Vem har åtkomst: Alla (eller Anyone with the link).</li>
+						</ul>
+					</li>
+					<li>Klicka Implementera (Deploy).</li>
+					<li>
+						Första gången måste du ge behörigheter:
+						<ul>
+							<li>Klicka igenom dialogrutorna och välj ditt Google-konto.</li>
+							<li>Godkänn att skriptet får åtkomst till ditt ark.</li>
+						</ul>
+					</li>
+					<li>Du får nu ett "Implementerings-id" som du kan använda.</li>
+				</ol>
                     <input type="button" value="Rensa" onclick="rensa();">
                 </div>
             `;

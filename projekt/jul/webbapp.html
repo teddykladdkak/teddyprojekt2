@@ -367,26 +367,28 @@ tr:hover td {
 		<details>
 			<summary style="cursor: pointer;"><b>Instruktioner</b></summary>
 			<div style="padding-left: 20px;">
+				<h3>Google Sheet</h3>
+				<p>Google Sheet används som databas och du behöver skapa upp ett Sheet i din Google Drive enligt följande mall <a style="color: #FFF" href="https://docs.google.com/spreadsheets/d/1L-DY4JtzJTwiMagMP2sF0XczAPLX4F_SsYsjoEjdjq4/edit?usp=sharing">Julölsprovning - Exempel</a>.</p>
 				<h3>Lägg till Apps Script i ditt Google Sheet:</h3>
 				<ol>
 					<li>Öppna ditt Google Sheet (det ark du vill jobba mot).</li>
-					<li>Klicka på Extensions → Apps Script (”Tillägg → Apps Script” på svenska).<br/>➝ Nu öppnas en ny flik med Google Apps Script-redigeraren.</li>
-					<li>I redigeraren finns en fil som heter Code.gs. Radera ev. exempel och klistra in koden.</li>
-					<li>Spara projektet (Ctrl+S eller klicka på diskettikonen).<br/>➝ Ge projektet ett namn, t.ex. ”Sheet API”.</li>
+					<li>Klicka på Tillägg (Extensions) → Apps Script.<br/>➝ Nu öppnas en ny flik med Google Apps Script-redigeraren.</li>
+					<li>I redigeraren finns en fil som heter "Code.gs". Radera ev. exempel och klistra in koden från projektet: <a style="color: #FFF" href="https://github.com/teddykladdkak/teddyprojekt2/blob/main/projekt/jul/Kod.gs" target="_blank">Kod.gs</a>.</li>
+					<li>Spara projektet (Ctrl+S eller klicka på diskettikonen).<br/>➝ Ge projektet ett namn, t.ex. "Julölsprovning... API".</li>
 				</ol>
 				<h3>Publicera som Web App</h3>
 				<ol>
-					<li>Klicka på Deploy → New deployment.</li>
-					<li>Klicka på Select type → Web app.</li>
+					<li>Klicka på Implementera (Deploy) → Ny implementering (New deployment).</li>
+					<li>Klicka på Välj typ (Select type) → Webbapp (Web app).</li>
 					<li>
 						Fyll i:
 						<ul>
-							<li>Description: valfritt, t.ex. "Web API för mitt sheet".</li>
-							<li>Execute as: Me (ägaren).</li>
-							<li>Who has access: Anyone (eller Anyone with the link).</li>
+							<li>Beskrivning: valfritt, t.ex. "Web API för mitt sheet".</li>
+							<li>Kör som: Jag (ägaren).</li>
+							<li>Vem har åtkomst: Alla (eller Anyone with the link).</li>
 						</ul>
 					</li>
-					<li>Klicka Deploy.</li>
+					<li>Klicka Implementera (Deploy).</li>
 					<li>
 						Första gången måste du ge behörigheter:
 						<ul>
