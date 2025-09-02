@@ -340,7 +340,7 @@ tr:hover td {
 					</select>
 				</div>
 			</div>
-			<button onclick="startLoad();gePoang();" class="btn" style="margin-bottom: 20px;">Ge poäng!</button>
+			<button onclick="gePoang();" class="btn" style="margin-bottom: 20px;">Ge poäng!</button>
 		</div>
       </div>
 
@@ -419,6 +419,7 @@ tr:hover td {
 			document.getElementById('loader').setAttribute('style', 'display: none;');
 		}
 		function gePoang(){
+			startLoad();
 			var p = document.getElementById('poang').value;
 			var anv = document.getElementById('deltagare').value;
 			var ol = document.getElementById('ol').value;
@@ -432,7 +433,6 @@ tr:hover td {
 			}
 			console.log(p);
 			updateCell('Poäng', ol, anv, p);
-			endLoad();
 		};
 		function rensa(){
             localStorage.clear();
@@ -500,6 +500,7 @@ tr:hover td {
 		}
 		document.getElementById('ol').value = '-';
 		document.getElementById('poang').value = '-';
+		endLoad();
 		}
 		// Hämta hela bladet
 		function readSheet(sheetName) {
@@ -580,5 +581,4 @@ tr:hover td {
 		showSheet('Poäng');
 	</script>
 </body>
-
 </html>
