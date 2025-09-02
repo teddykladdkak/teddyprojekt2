@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Julölsprovning</title>
-    <script src="https://apis.google.com/js/api.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <style>
         html {
             background-color: #000;
@@ -140,7 +141,7 @@
 <body>
     <div id="loader"></div>
     <div id="meny">
-        <button onclick="gapi.load('client', start);" class="uppdate">
+        <button onclick="startLoad();showSheet('Poäng');" class="uppdate">
             <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path d="m4.5 1.5c-2.41169541 1.37786776-4 4.02354835-4 7 0 4.418278 3.581722 8 8 8m4-1c2.2866288-1.4081018 4-4.1175492 4-7 0-4.418278-3.581722-8-8-8"/><path d="m4.5 5.5v-4h-4"/><path d="m12.5 11.5v4h4"/></g></svg>
         </button>
         <button onclick="rensa();" class="uppdate">
@@ -488,42 +489,68 @@
         };
         window.addEventListener('keydown', function (e) {
             if(e.key == 'PageDown'){
-                gapi.load('client', start);
+                startLoad();
+                showSheet('Poäng');
             }else if(e.key == 'PageUp'){
                 selectNext();
             };
         }, false);
-        const start = () => {
-            if(!localStorage.getItem('ol_url')){
-                var url = prompt("Klistra in delningslänk från Google Sheet", "");
-                if (url != null) {
-                    localStorage.setItem('ol_url', url);
-                };
-            }else{
-                var url = localStorage.getItem('ol_url');
-            };
+        function jsonp(url, params = {}) {
+		return new Promise((resolve, reject) => {
+			const cbName = "cb_" + Math.random().toString(36).slice(2);
+			params.callback = cbName;
+			const qs = new URLSearchParams(params).toString();
+
+			const script = document.createElement("script");
+			script.src = url + "?" + qs;
+			script.async = true;
+
+			window[cbName] = (data) => {
+			try {
+				resolve(data);
+			} finally {
+				delete window[cbName];
+				script.remove();
+			}
+			};
+			script.onerror = () => {
+			    delete window[cbName];
+			    reject(new Error("JSONP-laddning misslyckades"));
+                errorLoad(result.error);
+			};
+
+			document.body.appendChild(script);
+		});
+		}
+        function readSheet(sheetName) {
+            var url = localStorage.getItem('ol_url');
+			return jsonp(`https://script.google.com/macros/s/${url}/exec`, { action: "readSheet", sheetName });
+		}
+
+		// Exempel: visa hela bladet i konsolen
+		async function showSheet(sheetName) {
+			const result = await readSheet(sheetName);
+			if (result.error) {
+				alert("Fel: " + result.error);
+                errorLoad(result.error);
+			} else {
+                build(result.values);
+			}
+		}
+        if(!localStorage.getItem('ol_url')){
+            var url = prompt("Skriv in Implementerings-id", "");
             if (url != null) {
-                startLoad();
-                var spreadsheetIdValue = url.split('/d/')[1].split('/edit')[0];
-                gapi.client.init({
-                    'apiKey': 'AIzaSyCmW0lxcVMn8ApVEiBY8y-R1t_-aiYvGvk',
-                    'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-                }).then(() => {
-                    return gapi.client.sheets.spreadsheets.values.get({
-                        spreadsheetId: spreadsheetIdValue,
-                        range: 'Poäng', // for example: List 1!A1:B6
-                    })
-                }).then((response) => {
-                    const loadedData = response.result.values;
-                    build(loadedData);
-                }).catch((err) => {
-                    errorLoad(err.error.message);
-                });
-            }else{
-                errorLoad();
+                localStorage.setItem('ol_url', url);
             };
+        }else{
+            var url = localStorage.getItem('ol_url');
         };
-        gapi.load('client', start);
+        if (url != null) {
+            startLoad();
+            showSheet('Poäng');
+        }else{
+            errorLoad();
+        };
         addEventListener("error", (event) => {
             errorLoad();
         });

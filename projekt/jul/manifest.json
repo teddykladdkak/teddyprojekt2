@@ -1,0 +1,21 @@
+{
+"background_color": "#0f2b1f",
+"description": "Webbapp för att registrera poäng under julölsprovning.",
+"dir": "ltr",
+"display": "standalone",
+"name": "Poäng Julöl",
+"orientation": "portrait",
+"short_name": "Poäng Julöl",
+"start_url": "/projekt/jul/webbapp.html",
+"theme_color": "#2e8b57",
+"categories": [],
+"screenshots": [],
+"icons": [
+{
+"src": "/projekt/jul/favicon.png",
+"type": "image/png",
+"sizes": "89x88"
+}],
+"id": "/projekt/jul/webbapp.html",
+"lang": "sv"
+}

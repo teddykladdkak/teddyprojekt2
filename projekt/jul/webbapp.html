@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Julölsprovning Poängregistrering</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#0f2b1f">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="webmanifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
+	<style>
+/* ---------- Bas ---------------------------------- */
+:root{
+  --bg-deep: #071a12;        /* mörk bakgrund (nära skog) */
+  --panel: #0f2b1f;         /* panel/kort bakgrund */
+  --accent-red: #c62828;    /* julröd */
+  --accent-green: #2e8b57;  /* grangrön (mjuk) */
+  --gold: #d4af37;          /* guldig accent */
+  --muted: #cfe8d8;         /* ljus text/tone */
+  --glass: rgba(255,255,255,0.04);
+  --radius: 12px;
+  --gap: 14px;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ---------- Page background + snö -------------- */
+html,body{
+  height:100%;
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 10%),
+    linear-gradient(180deg,var(--bg-deep) 0%, #082219 60%, #07221a 100%);
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  box-sizing:border-box;
+}
+
+/* Subtle snow animation using pseudo elements */
+body::before, body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.06) 0.5px, transparent 1px),
+    radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0.6px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  opacity:0.9;
+  mix-blend-mode:screen;
+  animation: drift 18s linear infinite;
+}
+body::after { animation-duration: 28s; opacity:0.6; transform: translateY(-10px); }
+
+@keyframes drift {
+  from { transform: translateY(-10px); }
+  to   { transform: translateY(20px); }
+}
+
+/* ---------- Container / kort -------------------- */
+.container {
+  width:100%;
+  max-width:820px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius: calc(var(--radius) + 4px);
+  padding:20px;
+  box-shadow: 0 8px 30px rgba(2,8,4,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+}
+
+/* Header */
+.header {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom:16px;
+}
+.logo {
+  min-width: 56px;
+  width:56px;height:56px;border-radius:12px;
+  background: linear-gradient(135deg,var(--accent-green),var(--accent-red));
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5), inset 0 -6px 18px rgba(0,0,0,0.15);
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+  color:white;font-size:20px;
+}
+.h1 {
+  font-size:18px;
+  margin:0;
+  color:var(--muted);
+}
+
+/* ---------- Form elements grid ------------------ */
+.grid {
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:var(--gap);
+  align-items:start;
+}
+
+/* Responsive: en kolumn på små skärmar */
+@media (max-width:520px){
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Form field common */
+.field {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:6px;
+}
+
+/* Label */
+label {
+  font-size:13px;
+  color: #d7efe3;
+}
+
+/* Select */
+select {
+  -webkit-appearance:none;
+  appearance:none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color:var(--muted);
+  padding:12px 44px 12px 14px;
+  border-radius:10px;
+  font-size:15px;
+  outline:none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  position:relative;
+  width:100%;
+}
+
+/* custom arrow */
+.select-wrap {
+  position:relative;
+}
+.select-wrap::after{
+  content: "▼";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:11px;
+  color:var(--gold);
+  pointer-events:none;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+/* Button styles */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background: linear-gradient(180deg, var(--accent-red), #8e1b1b);
+  color:white;
+  border:none;
+  padding:12px 18px;
+  font-size:15px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow: 0 8px 22px rgba(198,40,40,0.22), inset 0 -3px 0 rgba(0,0,0,0.18);
+  transition: transform .08s ease, box-shadow .12s ease;
+}
+.btn.secondary {
+  background: linear-gradient(180deg, var(--accent-green), #1f5941);
+  box-shadow: 0 8px 22px rgba(46,139,87,0.18), inset 0 -3px 0 rgba(0,0,0,0.18);
+}
+.btn:active { transform: translateY(1px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.btn:focus { outline: 3px solid rgba(212,175,55,0.18); outline-offset:2px; }
+
+/* Details / summary */
+details {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:10px;
+  padding:10px;
+  margin-top:8px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+summary {
+  list-style:none;
+  cursor:pointer;
+  font-weight:600;
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px;
+}
+summary::-webkit-details-marker { display:none; }
+
+/* small chevron */
+.summary-chev {
+  width:28px;height:28px;border-radius:8px;
+  display:inline-grid;place-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+  color:var(--muted);
+  font-weight:700;
+}
+details[open] .summary-chev { transform: rotate(180deg); }
+
+/* Inline hint / badges */
+.badge {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(212,175,55,0.12), rgba(255,255,255,0.02));
+  color:var(--gold);
+  font-size:13px;
+}
+
+/* Small utility */
+.small { font-size:13px; color:#bfead5; }
+
+/* Table-like pre for sheet preview */
+.sheet-preview {
+  width:100%;
+  overflow:auto;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  padding:10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* Accessibility / high-contrast option */
+@media (prefers-contrast: more) {
+  select, .btn { box-shadow:none; border:2px solid rgba(255,255,255,0.08); }
+}
+
+/* Small screens adjustments */
+@media (max-width:380px){
+  .logo { width:48px;height:48px;font-size:18px; }
+  .btn { font-size:14px; padding:10px 14px; }
+  select { padding:10px 40px 10px 12px; font-size:14px; }
+}
+#loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	fill: var(--accent-green);
+}
+/* Grundläggande tabellstil */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 15px;
+  background: #fffaf5; /* varm bakgrund */
+  border-radius: 12px;
+  overflow: hidden; /* rundade hörn på hela tabellen */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabellhuvud */
+th {
+  background: linear-gradient(180deg, var(--accent-green), #1f5941);
+  color: #fff;
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Vanliga celler */
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1e0e0;
+  color: #333;
+}
+
+/* Randiga rader för läsbarhet */
+tr:nth-child(even) {
+  background: #fdf5f5;
+}
+
+/* Hover-effekt */
+tr:hover td {
+  background: #f7eaea;
+}
+
+</style>
+</head>
+<body>
+	<div class="container" role="region" aria-label="Jultema UI">
+    <div class="header">
+      <div class="logo">🎄</div>
+      <div>
+        <h1 class="h1">Julölsprovning Poängregistrering</h1>
+        <div class="small">Välj användare och börja registrera poäng! Öler som ännu inte är aktiva kan inte poängsättas.</div>
+      </div>
+    </div>
+	<div class="grid">
+      <div style="position: relative;display: inline-block;">
+		<div id="loader">
+			<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" class="loader"><style>.spinner_z9k8{transform-origin:center;animation:spinner_StKS .75s infinite linear}@keyframes spinner_StKS{100%{transform:rotate(360deg)}}</style><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" class="spinner_z9k8"/></svg>
+		</div>
+		<div id="meny">
+			<div class="field">
+				<label for="sheetSelect">Användare</label>
+				<div class="select-wrap">
+					<select id="deltagare" onchange="sparaAnv(this)"></select>
+				</div>
+			</div>
+			<div class="field">
+				<label for="sheetSelect">Välj öl:</label>
+				<div class="select-wrap">
+					<select id="ol"></select>
+				</div>
+			</div>
+			<div class="field">
+				<label for="sheetSelect">Välj poäng:</label>
+				<div class="select-wrap">
+					<select id="poang">
+						<option value="-">-</option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+			<button onclick="startLoad();gePoang();" class="btn" style="margin-bottom: 20px;">Ge poäng!</button>
+		</div>
+      </div>
+
+      <aside style="min-width:200px;">
+		<div style="text-align: right;">
+			<button onclick="rensa()" class="btn secondary"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 2)"><path d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"/><path d="m.5 2.5h14"/><path d="m5.5 5.5v8"/><path d="m9.5 5.5v8"/></g></svg></button>
+			<button onclick="location.reload()" class="btn secondary"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path d="m4.5 1.5c-2.41169541 1.37786776-4 4.02354835-4 7 0 4.418278 3.581722 8 8 8m4-1c2.2866288-1.4081018 4-4.1175492 4-7 0-4.418278-3.581722-8-8-8"/><path d="m4.5 5.5v-4h-4"/><path d="m12.5 11.5v4h4"/></g></svg></button>
+		</div>
+        <details>
+			<summary style="cursor: pointer;"><b>Poänglista</b></summary>
+			<table class="small">
+				<thead>
+					<tr>
+						<th>Namn</th>
+						<th>Poäng</th>
+						<th>Aktiv</th>
+					</tr>
+				</thead>
+				<tbody id="poangTable"></tbody>
+			</table>
+			<br/>
+		</details>
+      </aside>
+    </div>
+	<div>
+		<details>
+			<summary style="cursor: pointer;"><b>Instruktioner</b></summary>
+			<div style="padding-left: 20px;">
+				<h3>Lägg till Apps Script i ditt Google Sheet:</h3>
+				<ol>
+					<li>Öppna ditt Google Sheet (det ark du vill jobba mot).</li>
+					<li>Klicka på Extensions → Apps Script (”Tillägg → Apps Script” på svenska).<br/>➝ Nu öppnas en ny flik med Google Apps Script-redigeraren.</li>
+					<li>I redigeraren finns en fil som heter Code.gs. Radera ev. exempel och klistra in koden.</li>
+					<li>Spara projektet (Ctrl+S eller klicka på diskettikonen).<br/>➝ Ge projektet ett namn, t.ex. ”Sheet API”.</li>
+				</ol>
+				<h3>Publicera som Web App</h3>
+				<ol>
+					<li>Klicka på Deploy → New deployment.</li>
+					<li>Klicka på Select type → Web app.</li>
+					<li>
+						Fyll i:
+						<ul>
+							<li>Description: valfritt, t.ex. "Web API för mitt sheet".</li>
+							<li>Execute as: Me (ägaren).</li>
+							<li>Who has access: Anyone (eller Anyone with the link).</li>
+						</ul>
+					</li>
+					<li>Klicka Deploy.</li>
+					<li>
+						Första gången måste du ge behörigheter:
+						<ul>
+							<li>Klicka igenom dialogrutorna och välj ditt Google-konto.</li>
+							<li>Godkänn att skriptet får åtkomst till ditt ark.</li>
+						</ul>
+					</li>
+					<li>Du får nu ett "Implementerings-id" som du kan använda.</li>
+				</ol>
+			</div>
+		</details>
+	  </div>
+  </div>
+	<script>
+		var sheet = '';
+		function sparaAnv(el){
+			localStorage.setItem('ANV', el.value);
+			buildOlLista();
+		};
+		function startLoad(){
+			document.getElementById('meny').setAttribute('style', 'opacity: 0.3;');
+			document.getElementById('loader').removeAttribute('style');
+		};
+		function endLoad(){
+			document.getElementById('meny').removeAttribute('style');
+			document.getElementById('loader').setAttribute('style', 'display: none;');
+		}
+		function gePoang(){
+			var p = document.getElementById('poang').value;
+			var anv = document.getElementById('deltagare').value;
+			var ol = document.getElementById('ol').value;
+			if(anv == '-'){
+				alert('Välj användare!');
+				return false;
+			}
+			if(ol == '-'){
+				alert('Välj öl!');
+				return false;
+			}
+			console.log(p);
+			updateCell('Poäng', ol, anv, p);
+			endLoad();
+		};
+		function rensa(){
+            localStorage.clear();
+            location.reload();
+        };
+		function jsonp(url, params = {}) {
+		return new Promise((resolve, reject) => {
+			const cbName = "cb_" + Math.random().toString(36).slice(2);
+			params.callback = cbName;
+			const qs = new URLSearchParams(params).toString();
+
+			const script = document.createElement("script");
+			script.src = url + "?" + qs;
+			script.async = true;
+
+			window[cbName] = (data) => {
+			try {
+				resolve(data);
+			} finally {
+				delete window[cbName];
+				script.remove();
+			}
+			};
+			script.onerror = () => {
+			delete window[cbName];
+			reject(new Error("JSONP-laddning misslyckades"));
+			};
+
+			document.body.appendChild(script);
+		});
+		}
+
+		function readCell(sheetName, row, col) {
+			
+		return jsonp(`https://script.google.com/macros/s/${SCRIPT_URL}/exec`, { action: "read", sheetName, row, col });
+		}
+
+		// Stödjer (valfritt) "ifUnchanged" för enkel låsning
+		function writeCell(sheetName, row, col, value, ifUnchanged) {
+		const params = { action: "write", sheetName, row, col, value };
+		if (typeof ifUnchanged !== "undefined") params.ifUnchanged = ifUnchanged;
+		return jsonp(`https://script.google.com/macros/s/${SCRIPT_URL}/exec`, params);
+		}
+
+		async function updateCell(sheetName, row, col, newValue) {
+		// 1) Läs nuvarande värde
+		const current = await readCell(sheetName, row, col);
+
+		// 2) Fråga användaren om överskrivning behövs
+		if (current && current.value) {
+			const ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
+			if (!ok) return;
+		}
+
+		// 3) Skriv nytt värde (skicka med ifUnchanged för att undvika race)
+		const result = await writeCell(sheetName, row, col, newValue, (current && current.value) || "");
+		if (result.status === "conflict") {
+			alert(`Värdet hann ändras till "${result.current}". Försök igen.`);
+		} else if (result.status === "ok") {
+			alert("Klart! Skrev: " + result.written);
+		} else if (result.error) {
+			alert("Fel: " + result.error);
+		} else {
+			console.log(result);
+		}
+		document.getElementById('ol').value = '-';
+		document.getElementById('poang').value = '-';
+		}
+		// Hämta hela bladet
+		function readSheet(sheetName) {
+			return jsonp(`https://script.google.com/macros/s/${SCRIPT_URL}/exec`, { action: "readSheet", sheetName });
+		}
+
+		// Exempel: visa hela bladet i konsolen
+		async function showSheet(sheetName) {
+			startLoad();
+			const result = await readSheet(sheetName);
+			if (result.error) {
+				alert("Fel: " + result.error);
+			} else {
+				console.log(result.values);
+				sheet = result.values;
+				build();
+			}
+		}
+		async function build(){
+				var param = {
+					"deltagare": parseInt(sheet[0][0]),
+					"deltagareArr": [],
+					"deltagareHTML": [],
+					"antalOl": sheet[0][1],
+					"antalOlArr": [],
+					"antalOlHTML": []
+				};
+				for (let i = 0; i < param.deltagare; i++) {
+					param.deltagareArr.push(sheet[1][9+i]);
+					var selectEd = '';
+					var indx = 9+i+1;
+					if(localStorage.getItem('ANV') == indx){
+						selectEd = ' selected="selected"';
+						buildOlLista();
+					};
+					param.deltagareHTML.push(`<option value="${indx}"${selectEd}>${sheet[1][9+i]}</option>`);
+				};
+				for (let i = 0; i < param.antalOl; i++) {
+					var active = true;
+					if(sheet[4+i][8] == ''){
+						active = false;
+					};
+					param.antalOlArr.push({"namn": sheet[4+i][1], "active": active});
+					if(active){
+						param.antalOlHTML.push(`<option value="${4+i+1}">${sheet[4+i][1]}</option>`);
+					};
+				};
+				document.getElementById('deltagare').innerHTML = '<option value="-">-</option>' + param.deltagareHTML.join('');
+				document.getElementById('ol').innerHTML = '<option value="-">-</option>' + param.antalOlHTML.join('');
+				
+				console.log(param);
+				endLoad();
+		}
+		function buildOlLista(){
+			var anvID = localStorage.getItem('ANV');
+			if(anvID == '-'){return false};
+			console.log(sheet[4][anvID]);
+			var olLista = [];
+			for (let i = 0; i < sheet[0][1]; i++) {
+				var active = 'Ja';
+				if(sheet[4+i][8] == ''){
+					active = 'Nej';
+				};
+				olLista.push(`<tr><td>${sheet[4+i][1]}</td><td>${sheet[4+i][anvID-1]}</td><td>${active}</td></tr>`);
+			};
+			document.getElementById('poangTable').innerHTML = olLista.join('');
+			console.log(olLista);
+		}
+		var SCRIPT_URL = localStorage.getItem('SCRIPT_URL');
+		if (SCRIPT_URL == null || SCRIPT_URL == '') {
+			SCRIPT_URL = prompt("Skriv in Implementerings-id", "");
+			if (SCRIPT_URL == null || SCRIPT_URL == '') {
+				alert('Du har inte fyllt i "Implementerings-id", denna sida kommer inte fungera.')
+			}else{
+				localStorage.setItem('SCRIPT_URL', SCRIPT_URL);
+			};
+		};
+		showSheet('Poäng');
+	</script>
+</body>
+</html>
