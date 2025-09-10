@@ -157,6 +157,7 @@
             personer: []
         };
         var ol = [];
+		var ol_rubriker = [];
         function startLoad(){
             var w = document.getElementById('loader');
                 w.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="loader"><style>.spinner_z9k8{transform-origin:center;animation:spinner_StKS .75s infinite linear}@keyframes spinner_StKS{100%{transform:rotate(360deg)}}</style><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" class="spinner_z9k8"/></svg>';
@@ -218,6 +219,7 @@
         };
         function build(data){
             console.log(data);
+			ol_rubriker = [data[1][1], data[1][8], data[1][5], data[1][6], data[1][7]];
             deltagare = {
                 antal: data[0][0],
                 personer: []
@@ -239,7 +241,8 @@
                     total: makeNum(data[4+i][5]),
                     m: makeNum(data[4+i][6]),
                     v: makeNum(data[4+i][7]),
-                    t: testad
+                    t: testad,
+					order: data[4+i][8]
                 });
             };
             document.getElementById('wrapper').innerHTML = `
@@ -477,7 +480,8 @@
                 };
             };
             data.sort((a, b) => parseFloat(b.v) - parseFloat(a.v));
-            buildTable('ollista', ['Namn', 'Total', 'Medel', 'Vikt'], ['namn', 'total', 'm', 'v'], data);
+			//['Namn', 'Ordning', 'Total', 'Medel', 'Vikt']
+            buildTable('ollista', ol_rubriker, ['namn', 'order', 'total', 'm', 'v'], data);
         };
         function personTable(){
             deltagare.personer.sort(function (a, b) {if(a.namn < b.namn) { return -1; } if(a.namn > b.namn) { return 1; } return 0; });
