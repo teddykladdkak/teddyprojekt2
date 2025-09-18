@@ -276,7 +276,7 @@
             if(w > h){
                 qrW = h-10;
             }
-            var link = window.location.href;
+            var link = window.location.href.replace('index', 'webbapp');
             new QRCode(qr, {
                 text: link + '?id=' + url,
                 width: qrW,
