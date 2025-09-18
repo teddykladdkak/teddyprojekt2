@@ -405,6 +405,11 @@ tr:hover td {
 	  </div>
   </div>
 	<script>
+		var params = new URLSearchParams(window.location.search);
+		var urlId = params.get("id");
+		if(urlId == null){
+			urlId = "";
+		};
 		var sheet = '';
 		function sparaAnv(el){
 			localStorage.setItem('ANV', el.value);
@@ -571,7 +576,7 @@ tr:hover td {
 		}
 		var SCRIPT_URL = localStorage.getItem('SCRIPT_URL');
 		if (SCRIPT_URL == null || SCRIPT_URL == '') {
-			SCRIPT_URL = prompt("Skriv in Implementerings-id", "");
+			SCRIPT_URL = prompt("Skriv in Implementerings-id", urlId);
 			if (SCRIPT_URL == null || SCRIPT_URL == '') {
 				alert('Du har inte fyllt i "Implementerings-id", denna sida kommer inte fungera.')
 			}else{
@@ -582,4 +587,3 @@ tr:hover td {
 	</script>
 </body>
 </html>
-
