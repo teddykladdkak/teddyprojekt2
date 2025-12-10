@@ -110,7 +110,7 @@ body::after { animation-duration: 28s; opacity:0.6; transform: translateY(-10px)
 }
 
 /* Responsive: en kolumn på små skärmar */
-@media (max-width:520px){
+@media (max-width:650px){
   .grid { grid-template-columns: 1fr; }
 }
 
@@ -296,7 +296,12 @@ tr:nth-child(even) {
 tr:hover td {
   background: #f7eaea;
 }
-
+#poangTable tr td:first-child {
+	max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -592,5 +597,6 @@ tr:hover td {
 </body>
 
 </html>
+
 
 
