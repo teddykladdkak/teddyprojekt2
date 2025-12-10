@@ -488,9 +488,10 @@ tr:hover td {
 
 		// 2) Fråga användaren om överskrivning behövs
 		if (current && current.value) {
-			if (current.value == '-') return;
-			const ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
-			if (!ok) return;
+			if (current.value != '-'){
+				const ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
+				if (!ok) return;
+			}
 		}
 
 		// 3) Skriv nytt värde (skicka med ifUnchanged för att undvika race)
@@ -589,3 +590,4 @@ tr:hover td {
 </body>
 
 </html>
+
