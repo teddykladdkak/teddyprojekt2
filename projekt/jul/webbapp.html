@@ -488,6 +488,7 @@ tr:hover td {
 
 		// 2) Fråga användaren om överskrivning behövs
 		if (current && current.value) {
+			if (current.value == '-') return;
 			const ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
 			if (!ok) return;
 		}
@@ -586,4 +587,5 @@ tr:hover td {
 		showSheet('Poäng');
 	</script>
 </body>
+
 </html>
