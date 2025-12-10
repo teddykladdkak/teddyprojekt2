@@ -165,19 +165,19 @@ select {
   display:inline-flex;
   align-items:center;
   gap:10px;
-  background: linear-gradient(180deg, var(--accent-green), #8e1b1b);
+  background: linear-gradient(180deg, var(--accent-green), #1f5941);
   color:white;
   border:none;
   padding:12px 18px;
   font-size:15px;
   border-radius:12px;
   cursor:pointer;
-  box-shadow: 0 8px 22px rgba(198,40,40,0.22), inset 0 -3px 0 rgba(0,0,0,0.18);
+  box-shadow: 0 8px 22px rgba(46,139,87,0.18), inset 0 -3px 0 rgba(0,0,0,0.18);
   transition: transform .08s ease, box-shadow .12s ease;
 }
 .btn.secondary {
-  background: linear-gradient(180deg, var(--accent-red), #1f5941);
-  box-shadow: 0 8px 22px rgba(46,139,87,0.18), inset 0 -3px 0 rgba(0,0,0,0.18);
+  background: linear-gradient(180deg, var(--accent-red), #8e1b1b);
+  box-shadow: 0 8px 22px rgba(198,40,40,0.22), inset 0 -3px 0 rgba(0,0,0,0.18);
 }
 .btn:active { transform: translateY(1px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 .btn:focus { outline: 3px solid rgba(212,175,55,0.18); outline-offset:2px; }
@@ -489,8 +489,10 @@ tr:hover td {
 		// 2) Fråga användaren om överskrivning behövs
 		if (current && current.value) {
 			if (current.value != '-'){
-				const ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
+				var ok = confirm(`Cellen innehåller redan: "${current.value}".\nVill du skriva över det?`);
 				if (!ok) return;
+			}else{
+				var ok = true;
 			}
 		}
 
@@ -590,4 +592,5 @@ tr:hover td {
 </body>
 
 </html>
+
 
