@@ -267,11 +267,13 @@
             }else{
                 var h = Number(localStorage.getItem('ol_storlek_h'))-10;
             };
+			var h = 240;
             if(!localStorage.getItem('ol_storlek_w')){
                 var w = 290;
             }else{
                 var w = Number(localStorage.getItem('ol_storlek_w'));
             };
+			var w = 290;
             var qrW = w;
             if(w > h){
                 qrW = h-10;
