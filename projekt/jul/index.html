@@ -451,10 +451,16 @@
         function andraStorlek(){
             var hojd = document.getElementById('hojd');
             var bredd = document.getElementById('bredd');
-            document.getElementById('storlekStyle').innerHTML = `
+            /*document.getElementById('storlekStyle').innerHTML = `
                 .glass {
                     height: ${hojd.value}px;
                     width: ${bredd.value}px;
+                }
+            `;*/
+            document.getElementById('storlekStyle').innerHTML = `
+                .glass {
+                    height: 480px;
+                    width: 500px;
                 }
             `;
             localStorage.setItem('ol_storlek_h', hojd.value);
