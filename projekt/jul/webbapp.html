@@ -559,7 +559,7 @@ tr:hover td {
 					};
 					param.antalOlArr.push({"namn": sheet[5+i][1], "active": active});
 					if(active){
-						param.antalOlHTML.push(`<option value="${5+i+1}">${sheet[4+i][1]}</option>`);
+						param.antalOlHTML.push(`<option value="${5+i+1}">${sheet[5+i][1]}</option>`);
 					};
 				};
 				document.getElementById('deltagare').innerHTML = '<option value="-">-</option>' + param.deltagareHTML.join('');
@@ -597,6 +597,7 @@ tr:hover td {
 </body>
 
 </html>
+
 
 
 
