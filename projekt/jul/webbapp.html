@@ -554,12 +554,12 @@ tr:hover td {
 				};
 				for (let i = 0; i < param.antalOl; i++) {
 					var active = true;
-					if(sheet[4+i][8] == ''){
+					if(sheet[5+i][8] == ''){
 						active = false;
 					};
-					param.antalOlArr.push({"namn": sheet[4+i][1], "active": active});
+					param.antalOlArr.push({"namn": sheet[5+i][1], "active": active});
 					if(active){
-						param.antalOlHTML.push(`<option value="${4+i+1}">${sheet[4+i][1]}</option>`);
+						param.antalOlHTML.push(`<option value="${5+i+1}">${sheet[4+i][1]}</option>`);
 					};
 				};
 				document.getElementById('deltagare').innerHTML = '<option value="-">-</option>' + param.deltagareHTML.join('');
@@ -575,10 +575,10 @@ tr:hover td {
 			var olLista = [];
 			for (let i = 0; i < sheet[0][1]; i++) {
 				var active = 'Ja';
-				if(sheet[4+i][8] == ''){
+				if(sheet[5+i][8] == ''){
 					active = 'Nej';
 				};
-				olLista.push(`<tr><td>${sheet[4+i][1]}</td><td>${sheet[4+i][anvID-1]}</td><td>${active}</td></tr>`);
+				olLista.push(`<tr><td>${sheet[5+i][1]}</td><td>${sheet[5+i][anvID-1]}</td><td>${active}</td></tr>`);
 			};
 			document.getElementById('poangTable').innerHTML = olLista.join('');
 			console.log(olLista);
@@ -597,6 +597,7 @@ tr:hover td {
 </body>
 
 </html>
+
 
 
 
