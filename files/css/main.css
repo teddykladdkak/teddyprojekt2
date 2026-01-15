@@ -349,7 +349,7 @@ body {
 	color: #E87600; /*--bg-accent-color*/
 	margin-top: 0px;
 }
-#bloggcontent ul {
+#bloggcontent ul, #bloggcontent ol {
 	padding-left: 40px;
 }
 #bloggload {
