@@ -7,3 +7,5 @@ categories: studier
 Studier visar att digitala vårdmöten ökar kliniska effektiviteten. Däremot är det viktigt att belysa att dessa studier ofta ser till områden där digitala möten är fördelaktiga. Stort behov finns att kartlägga hälso- och sjukvården som helhet, förstå vilka vårdkontakter vi ska ta digitalt och vilka vi ska låta vara som de är.
 
 _Snoswell, C. L., Chelberg, G., De Guzman, K. R., Haydon, H. H., Thomas, E. E., Caffery, L. J., & Smith, A. C. (2021). The clinical effectiveness of telehealth: A systematic review of meta-analyses from 2010 to 2019. Journal of telemedicine and telecare._
+
+<img src="/files/img/blogg/undraw_05.png" alt="Illustration som framhäver texten" style="display: block;width: 100%;max-width: 504px;margin-right: auto;margin-left: auto;">

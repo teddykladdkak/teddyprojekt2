@@ -8,7 +8,7 @@ github_username:  teddykladdkak
 linkedin_username: mattias-masback
 
 permalink: /blogg/:year-:month-:day/:title:output_ext
-paginate: 5
+paginate: 20
 paginate_path: "/blogg/:num/"
 
 plugins:

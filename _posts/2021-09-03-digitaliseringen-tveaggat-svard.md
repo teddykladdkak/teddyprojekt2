@@ -9,3 +9,5 @@ Digitaliseringen är ett tveeggat svärd. Det har möjlighet att minska utbränd
 Teknologin ger möjligheter att skapa bättre vård samtidigt som konsumenternas förväntningar av snabbare kontaktvägar ökar stressnivån för vårdpersonalen.
 
 _Mer om detta togs upp i följande panel: [https://www.healthcareitnews.com/news/digital-transformation-can-reduce-burnout-and-cause-it](https://www.healthcareitnews.com/news/digital-transformation-can-reduce-burnout-and-cause-it)_
+
+<img src="/files/img/blogg/undraw_11.png" alt="Illustration som framhäver texten" style="display: block;width: 100%;max-width: 504px;margin-right: auto;margin-left: auto;">
